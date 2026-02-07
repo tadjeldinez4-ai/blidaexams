@@ -1,0 +1,974 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabor Study - Medical Exams</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#6C5DD3', 
+                        secondary: '#A098E6',
+                        bglight: '#F7F8FC',
+                        bgdark: '#111827',
+                        cardlight: '#FFFFFF',
+                        carddark: '#1F2937',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body { font-family: 'Inter', sans-serif; }
+        
+        /* Smooth fade */
+        .fade-in { animation: fadeIn 0.3s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        /* Hide scrollbar */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* Quiz Styles */
+        .option-btn.selected { border-color: #6C5DD3; background-color: #F3F0FF; color: #6C5DD3; font-weight: 600; }
+        .dark .option-btn.selected { background-color: #3730a3; border-color: #818cf8; color: #e0e7ff; }
+
+        .option-btn.correct { background-color: #dcfce7 !important; border-color: #10b981 !important; color: #065f46 !important; }
+        .dark .option-btn.correct { background-color: #064e3b !important; border-color: #059669 !important; color: #a7f3d0 !important; }
+
+        .option-btn.wrong { background-color: #fee2e2 !important; border-color: #ef4444 !important; color: #991b1b !important; }
+        .dark .option-btn.wrong { background-color: #7f1d1d !important; border-color: #f87171 !important; color: #fecaca !important; }
+
+        .option-btn.missed { border: 2px dashed #10b981 !important; }
+    </style>
+</head>
+<body class="text-gray-700 dark:text-gray-200 bg-bglight dark:bg-bgdark h-screen overflow-hidden transition-colors duration-300">
+
+    <div class="flex h-full">
+        
+        <!-- ================= SIDEBAR ================= -->
+        <aside class="w-64 bg-white dark:bg-gray-800 border-r border-gray-100 dark:border-gray-700 hidden flex-col z-20 transition-colors duration-300">
+            <div class="p-6 flex items-center gap-3">
+                <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-white font-bold">T</div>
+                <span class="font-bold text-xl text-gray-800 dark:text-white">Tabor Study</span>
+            </div>
+
+            <nav class="flex-1 px-4 space-y-2 mt-4">
+                <p class="px-4 text-xs font-semibold text-gray-400 mb-2 uppercase tracking-wider">Main</p>
+                
+                <button onclick="switchView('dashboard')" id="nav-dashboard" class="w-full flex items-center gap-3 px-4 py-3 bg-primary/10 text-primary dark:text-secondary rounded-xl font-medium transition-all duration-200">
+                    <i class="fas fa-th-large w-5"></i> Dashboard
+                </button>
+                
+                <button onclick="switchView('exams')" id="nav-exams" class="w-full flex items-center gap-3 px-4 py-3 text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-primary dark:hover:text-secondary rounded-xl font-medium transition-all duration-200">
+                    <i class="fas fa-file-medical w-5"></i> Exams (QCM)
+                </button>
+                
+                <button class="w-full flex items-center gap-3 px-4 py-3 text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-primary dark:hover:text-secondary rounded-xl font-medium transition-all duration-200">
+                    <i class="fas fa-layer-group w-5"></i> Flashcards
+                </button>
+
+                <p class="px-4 text-xs font-semibold text-gray-400 mt-6 mb-2 uppercase tracking-wider">Management</p>
+                <button class="w-full flex items-center gap-3 px-4 py-3 text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-primary dark:hover:text-secondary rounded-xl font-medium transition-all duration-200">
+                    <i class="fas fa-users w-5"></i> Students
+                </button>
+            </nav>
+        </aside>
+
+        <!-- ================= MAIN CONTENT ================= -->
+        <main class="flex-1 flex flex-col h-full relative">
+            
+            <!-- HEADER -->
+            <header class="bg-white/80 dark:bg-gray-800/90 backdrop-blur-sm sticky top-0 z-10 p-6 flex justify-between items-center border-b border-gray-100 dark:border-gray-700 transition-colors duration-300">
+                <div class="flex flex-col">
+                    <h1 id="header-title" class="text-2xl font-bold text-gray-800 dark:text-white">Exams Repository</h1>
+                    <p id="header-subtitle" class="text-sm text-gray-400">Select a university and session to practice.</p>
+                </div>
+                <div class="flex items-center gap-4">
+                    <!-- Dark Mode Toggle -->
+                    <button onclick="toggleDarkMode()" class="w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 transition">
+                        <i id="dark-icon" class="fas fa-moon"></i>
+                    </button>
+
+                    <div class="relative hidden sm:block">
+                        <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                        <input type="text" placeholder="Search..." class="pl-10 pr-4 py-2 rounded-full bg-gray-100 dark:bg-gray-700 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 w-64 dark:text-gray-200 placeholder-gray-400">
+                    </div>
+                    <button class="w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center text-gray-600 dark:text-gray-300 relative hover:bg-gray-200 dark:hover:bg-gray-600 transition">
+                        <i class="fas fa-bell"></i>
+                    </button>
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Tahsan" alt="User" class="w-10 h-10 rounded-full border-2 border-white shadow-sm hidden">
+                </div>
+            </header>
+
+            <!-- SCROLLABLE CONTENT AREA -->
+            <div class="flex-1 overflow-y-auto p-6 scroll-smooth" id="main-scroll-area">
+                
+                <!-- >>> VIEW 1: DASHBOARD (Default) <<< -->
+                <div id="view-dashboard" class="fade-in hidden space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <!-- Grade Stat -->
+                        <div class="bg-white dark:bg-gray-800 p-5 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700">
+                            <div class="flex justify-between items-start mb-4">
+                                <div><p class="text-gray-400 text-sm font-medium">Average Grade</p><h3 class="text-3xl font-bold text-gray-800 dark:text-white mt-1">87%</h3></div>
+                                <div class="w-12 h-12 rounded-full border-4 border-primary/20 flex items-center justify-center border-t-primary transform -rotate-45"><span class="text-xs font-bold text-primary transform rotate-45">A</span></div>
+                            </div>
+                            <div class="text-sm text-green-500 flex items-center gap-1"><i class="fas fa-arrow-up"></i> 4.5% vs last month</div>
+                        </div>
+                        <!-- SRS Widget -->
+                        <div class="bg-primary text-white p-5 rounded-2xl shadow-lg shadow-primary/30 relative overflow-hidden cursor-pointer hover:scale-[1.02] transition-transform" onclick="switchView('exams')">
+                            <div class="absolute right-0 top-0 w-32 h-32 bg-white/10 rounded-full blur-2xl -mr-10 -mt-10"></div>
+                            <div class="flex justify-between items-center mb-2"><p class="text-white/80 text-sm font-medium"><i class="fas fa-brain mr-2"></i>Spaced Repetition</p><span class="bg-white/20 text-xs px-2 py-1 rounded-lg">High Priority</span></div>
+                            <div class="flex items-end gap-2 mb-3"><h3 class="text-4xl font-bold">42</h3><p class="text-white/80 mb-1">cards due</p></div>
+                            <div class="w-full bg-black/20 rounded-full h-2 mb-2"><div class="bg-white w-2/3 h-2 rounded-full"></div></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Welcome Action -->
+                    <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 text-center">
+                        <div class="w-16 h-16 bg-purple-100 dark:bg-purple-900/50 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-rocket text-primary text-2xl"></i>
+                        </div>
+                        <h2 class="text-xl font-bold text-gray-800 dark:text-white mb-2">Ready to study?</h2>
+                        <p class="text-gray-500 dark:text-gray-400 mb-6">Access official exam sessions from Blida and Constantine.</p>
+                        <button onclick="switchView('exams')" class="px-8 py-3 bg-primary text-white rounded-xl font-bold hover:bg-purple-700 transition shadow-lg shadow-primary/30">Go to Exams</button>
+                    </div>
+                </div>
+
+                <!-- >>> VIEW 2: EXAM SELECTION (University List) <<< -->
+                <div id="view-exams" class="fade-in block space-y-6">
+                    <div class="bg-gradient-to-r from-primary to-purple-500 rounded-2xl p-8 text-white relative overflow-hidden shadow-lg mb-8">
+                        <div class="absolute right-0 top-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -mr-16 -mt-16"></div>
+                        <h2 class="text-3xl font-bold relative z-10">Medical Exams Repository</h2>
+                        <p class="text-white/80 mt-2 relative z-10">Select your university to access official sessions and QCM banks.</p>
+                    </div>
+
+                    <div class="max-w-4xl mx-auto space-y-4">
+                        
+                        <!-- BLIDA ACCORDION -->
+                        <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 overflow-hidden shadow-sm transition-colors">
+                            <button onclick="toggleAccordion('list-blida', 'arrow-blida')" class="w-full flex justify-between items-center p-6 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 h-12 rounded-xl bg-indigo-100 dark:bg-indigo-900 flex items-center justify-center text-xl text-indigo-600 dark:text-indigo-300"><i class="fas fa-university"></i></div>
+                                    <div class="text-left">
+                                        <h3 class="text-xl font-bold text-gray-800 dark:text-white">Université de Blida</h3>
+                                        <p class="text-sm text-gray-400">5 Sessions Available</p>
+                                    </div>
+                                </div>
+                                <i id="arrow-blida" class="fas fa-chevron-down text-gray-400 transition-transform duration-300"></i>
+                            </button>
+                            
+                            <div id="list-blida" class="hidden border-t border-gray-100 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-900/50 p-4 space-y-3">
+                                <button onclick="startExam('2024')" class="w-full flex items-center justify-between p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary dark:hover:border-primary hover:shadow-md transition-all group">
+                                    <div class="flex items-center gap-3">
+                                        <span class="bg-emerald-100 text-emerald-700 text-xs font-bold px-2 py-1 rounded">New</span>
+                                        <span class="font-semibold text-gray-700 dark:text-gray-200 group-hover:text-primary">Janvier 2025</span>
+                                    </div>
+                                    <i class="fas fa-play text-gray-300 dark:text-gray-600 group-hover:text-primary"></i>
+                                </button>
+                                <button onclick="startExam('2023')" class="w-full flex items-center justify-between p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary dark:hover:border-primary hover:shadow-md transition-all group">
+                                    <div class="flex items-center gap-3"><i class="fas fa-history text-indigo-400"></i><span class="font-semibold text-gray-700 dark:text-gray-200 group-hover:text-primary">Janvier 2024</span></div>
+                                    <i class="fas fa-play text-gray-300 dark:text-gray-600 group-hover:text-primary"></i>
+                                </button>
+                                <button onclick="startExam('2022')" class="w-full flex items-center justify-between p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary dark:hover:border-primary hover:shadow-md transition-all group">
+                                    <div class="flex items-center gap-3"><i class="fas fa-book-medical text-orange-400"></i><span class="font-semibold text-gray-700 dark:text-gray-200 group-hover:text-primary">Session 2022/2023</span></div>
+                                    <i class="fas fa-play text-gray-300 dark:text-gray-600 group-hover:text-primary"></i>
+                                </button>
+                                <button onclick="startExam('2021')" class="w-full flex items-center justify-between p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary dark:hover:border-primary hover:shadow-md transition-all group">
+                                    <div class="flex items-center gap-3"><i class="fas fa-file-signature text-cyan-400"></i><span class="font-semibold text-gray-700 dark:text-gray-200 group-hover:text-primary">Session 2021/2022</span></div>
+                                    <i class="fas fa-play text-gray-300 dark:text-gray-600 group-hover:text-primary"></i>
+                                </button>
+                                <button onclick="startExam('2020')" class="w-full flex items-center justify-between p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary dark:hover:border-primary hover:shadow-md transition-all group">
+                                    <div class="flex items-center gap-3"><i class="fas fa-microscope text-pink-400"></i><span class="font-semibold text-gray-700 dark:text-gray-200 group-hover:text-primary">Session 2020/2021</span></div>
+                                    <i class="fas fa-play text-gray-300 dark:text-gray-600 group-hover:text-primary"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- CONSTANTINE ACCORDION -->
+                        <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 overflow-hidden shadow-sm transition-colors">
+                            <button onclick="toggleAccordion('list-const', 'arrow-const')" class="w-full flex justify-between items-center p-6 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 h-12 rounded-xl bg-red-100 dark:bg-red-900 flex items-center justify-center text-xl text-red-600 dark:text-red-300"><i class="fas fa-bridge-water"></i></div>
+                                    <div class="text-left">
+                                        <h3 class="text-xl font-bold text-gray-800 dark:text-white">U. Constantine</h3>
+                                        <p class="text-sm text-gray-400">2 Sessions Available</p>
+                                    </div>
+                                </div>
+                                <i id="arrow-const" class="fas fa-chevron-down text-gray-400 transition-transform duration-300"></i>
+                            </button>
+                            
+                            <div id="list-const" class="hidden border-t border-gray-100 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-900/50 p-4 space-y-3">
+                                <button onclick="startExam('constantine22')" class="w-full flex items-center justify-between p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-red-500 dark:hover:border-red-500 hover:shadow-md transition-all group">
+                                    <div class="flex items-center gap-3"><span class="bg-red-100 text-red-700 text-xs font-bold px-2 py-1 rounded">Officiel</span><span class="font-semibold text-gray-700 dark:text-gray-200 group-hover:text-red-600 dark:group-hover:text-red-400">Session 2022/2023</span></div>
+                                    <i class="fas fa-play text-gray-300 dark:text-gray-600 group-hover:text-red-500"></i>
+                                </button>
+                                <button onclick="startExam('constantine21')" class="w-full flex items-center justify-between p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-red-500 dark:hover:border-red-500 hover:shadow-md transition-all group">
+                                    <div class="flex items-center gap-3"><i class="fas fa-notes-medical text-red-400"></i><span class="font-semibold text-gray-700 dark:text-gray-200 group-hover:text-red-600 dark:group-hover:text-red-400">Session 2021/2022</span></div>
+                                    <i class="fas fa-play text-gray-300 dark:text-gray-600 group-hover:text-red-500"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- >>> VIEW 3: ACTIVE QUIZ INTERFACE <<< -->
+                <div id="view-quiz" class="hidden fade-in min-h-full flex flex-col">
+                    <!-- Quiz Toolbar -->
+                    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 p-4 mb-6 sticky top-0 z-20 flex justify-between items-center transition-colors">
+                        <button onclick="closeQuiz()" class="text-gray-500 dark:text-gray-400 hover:text-primary dark:hover:text-primary font-medium flex items-center gap-2">
+                            <i class="fas fa-arrow-left"></i> Back
+                        </button>
+                        
+                        <div class="flex items-center gap-2">
+                            <span class="hidden sm:inline text-sm font-bold text-gray-400 uppercase tracking-wider" id="quiz-title-display">Session</span>
+                            <span class="hidden sm:inline w-px h-4 bg-gray-300 dark:bg-gray-600 mx-2"></span>
+                            <span class="text-primary font-bold" id="score-display">0</span> <span class="text-gray-400">/</span> <span id="total-display" class="text-gray-700 dark:text-gray-200">0</span>
+                        </div>
+
+                        <!-- Category Filters Inside Quiz -->
+                        <div class="flex gap-2">
+                            <button onclick="filterQuiz('all')" class="px-2 md:px-3 py-1 bg-gray-800 text-white rounded text-xs font-bold hover:bg-gray-700">ALL</button>
+                            <button onclick="filterQuiz('semiologie')" class="px-2 md:px-3 py-1 bg-blue-100 text-blue-700 rounded text-xs font-bold hover:bg-blue-200">SEM</button>
+                            <button onclick="filterQuiz('biochimie')" class="px-2 md:px-3 py-1 bg-yellow-100 text-yellow-700 rounded text-xs font-bold hover:bg-yellow-200">BIO</button>
+                            <button onclick="filterQuiz('radiologie')" class="px-2 md:px-3 py-1 bg-purple-100 text-purple-700 rounded text-xs font-bold hover:bg-purple-200">RAD</button>
+                        </div>
+                    </div>
+
+                    <!-- Question Container -->
+                    <div id="quiz-questions-container" class="max-w-3xl mx-auto w-full pb-10 space-y-6">
+                        <!-- Questions injected via JS -->
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC & DATA -->
+    <script>
+        // --- 1. FULL DATASETS ---
+        
+        const data2020 = [
+            { id: 1, cat: "biochimie", q: "Méningite virale chez un enfant : quels signes biologiques NE correspondent PAS ?", options: ["1000 leucocytes dont 85 % lymphocytes", "Liquide clair en eau de roche", "Glycémie 2 g/l et glycorachie 0,5 g/l", "Hypoprotéinorachie", "Chlorurorachie effondrée"], correct: [2, 3, 4], official: "D (3+4+5)", aiNote: "Glycorachie basse et chlorurorachie effondrée = bactérien/TB. Protéine basse est rare en méningite." },
+            { id: 2, cat: "biochimie", q: "Index IgG élevé dans le LCR :", options: ["Altération barrière hémato‑méningée", "Synthèse intrathécale d’IgG", "Maladie de Kahler", "Méningite bactérienne", "Méningite virale"], correct: [1], official: "B" },
+            { id: 3, cat: "biochimie", q: "Contre‑indications de la ponction lombaire :", options: ["Suspicion mal de Pott", "Suspicion hémorragie méningée", "Trouble hémostase", "Suspicion méningite tuberculeuse", "Suspicion maladie neuro‑dégénérative"], correct: [1, 2], official: "C (2+3)" },
+            { id: 4, cat: "biochimie", q: "Paramètre ne faisant pas partie du Fibrotest :", options: ["Alpha‑2 macroglobuline", "Bilirubine totale", "ALAT", "Gamma‑GT", "Haptoglobine"], correct: [2], official: "C" },
+            { id: 5, cat: "biochimie", q: "Bilan musculaire comprend les enzymes suivants sauf une :", options: ["CK", "LDH", "ASAT", "Aldolase", "Gamma‑GT"], correct: [4], official: "E" },
+            { id: 6, cat: "biochimie", q: "Bilan pancréatique – réponse fausse :", options: ["Lipase plus spécifique que l’amylase", "Pancréatite aiguë → augmentation importante lipase", "Augmentation modérée lipase dans affections extra‑pancréatiques", "Trois isoformes d’amylase chez l’homme", "Amylasémie augmentée dans oreillons"], correct: [3], official: "D est fausse" },
+            { id: 7, cat: "radiologie", q: "Radiographie conventionnelle ostéo‑articulaire – réponse fausse :", options: ["Toujours en première intention", "Ne visualise pas le ménisque", "Une incidence orthogonale suffit", "Os, travées, corticales, calcifications visibles"], correct: [2], official: "C est fausse" },
+            { id: 8, cat: "radiologie", q: "Ostéosclérose en radiographie :", options: ["Augmentation densité radiologique (os trop blanc)", "Radiotransparence", "Déformation osseuse", "Toutes fausses"], correct: [0], official: "A" },
+            { id: 9, cat: "radiologie", q: "Signes radiologiques de l’arthrose – réponse fausse :", options: ["Élargissement interligne articulaire", "Géodes sous‑chondrales", "Ostéophytes marginaux", "Condensation sous‑chondrale"], correct: [0], official: "A est fausse" },
+            { id: 10, cat: "radiologie", q: "Examen le plus performant pour pathologies ostéo‑articulaires :", options: ["Radiographie", "Scanner avec injection", "IRM", "Échographie"], correct: [2], official: "C" },
+            { id: 11, cat: "physiopathologie", q: "Modalités du système somatosensitif :", options: ["Proprioception", "Sensibilité nociceptive", "Sensibilité thermique", "Sensibilité tactile", "Toutes justes"], correct: [0, 1, 2, 3], official: "E est fausse (car question 'sauf une' implicite ou erreur formulation, mais A,B,C,D sont des modalités valides)" },
+            { id: 12, cat: "physiopathologie", q: "Étape de la transduction de la douleur assurée par :", options: ["Voie spino‑thalamique", "Voie spino‑réticulo‑thalamique", "Nocicepteurs", "Fibres Aα et Aβ", "Cerveau"], correct: [2], official: "C" },
+            { id: 13, cat: "physiopathologie", q: "Réflexe d’axone régi par :", options: ["Glutamate", "Substance P", "Bradykinine", "Prostaglandines", "Sérotonine"], correct: [1], official: "B" },
+            { id: 14, cat: "physiopathologie", q: "Nocicepteurs :", options: ["Unimodaux ou polymodaux", "Fibres Aδ et C", "Transforment stimulation en potentiel d’action", "Transmission fibres C plus lente que Aδ", "Toutes justes"], correct: [4], official: "E" },
+            { id: 15, cat: "physiopathologie", q: "Substances participant aux contrôles inhibiteurs descendants sauf une :", options: ["Histamine", "Endorphine", "Endomorphine", "Enképhalines", "Sérotonine"], correct: [0], official: "A est fausse" },
+            { id: 16, cat: "physiopathologie", q: "Cocher la réponse fausse :", options: ["Acidose = augmentation ions H+", "Acidose = augmentation ions OH‑", "Acidémie = diminution pH sanguin", "Alcalose = diminution ions H+", "Alcalémie = augmentation pH sanguin"], correct: [1], official: "B est fausse" },
+            { id: 17, cat: "physiopathologie", q: "Principal système tampon extracellulaire :", options: ["Phosphates", "Protéines", "Oxyhémoglobine", "Acide carbonique/bicarbonates", "Acide chlorhydrique/bicarbonate sodium"], correct: [3], official: "D" },
+            { id: 18, cat: "physiopathologie", q: "Les mécanismes régulateurs du pH – réponse fausse :", options: ["Régulation respiratoire rapide", "Régulation rénale lente", "Hyperventilation entraîne une augmentation de la PaCO₂", "Excrétion des ions H⁺ sous forme de H₂PO₄⁻", "Excrétion des ions H⁺ sous forme de NH₄⁺"], correct: [2], official: "C est fausse" },
+            { id: 19, cat: "physiopathologie", q: "Causes des acidoses respiratoires – réponse fausse :", options: ["Ventilation artificielle insuffisante", "Dépression des centres respiratoires par anesthésie", "BPCO", "Insuffisance hépatique sévère", "Syndrome de Pickwick"], correct: [3], official: "D est fausse" },
+            { id: 20, cat: "physiopathologie", q: "Les œdèmes – réponse fausse :", options: ["Anomalie du secteur extracellulaire", "Rétention eau/sodium interstitiel", "Donnent signe du godet", "Rétention eau/sodium intracellulaire", "Palpation dure du mollet"], correct: [3, 4], official: "D et E sont fausses" },
+            { id: 21, cat: "physiopathologie", q: "Mécanismes des œdèmes – réponse juste :", options: ["Diminution pression hydrostatique", "Augmentation pression oncotique", "Diminution perméabilité membranaire", "Altération drainage lymphatique"], correct: [3], official: "D" },
+            { id: 22, cat: "physiopathologie", q: "Causes médicamenteuses des œdèmes – réponse fausse :", options: ["Inhibiteurs calciques", "Alpha‑bloquants", "Corticoïdes", "Glitazones", "Céphalosporines"], correct: [4], official: "E est fausse" },
+            { id: 23, cat: "semiologie", q: "Cas clinique – premier geste devant coma brutal :", options: ["Évaluer profondeur du coma", "Rechercher menace vitale", "Resucrage immédiat", "Glycémie capillaire", "Scanner cérébral"], correct: [1], official: "B" },
+            { id: 24, cat: "semiologie", q: "Score de Glasgow du patient (Y3 M4 V1) :", options: ["8", "7", "9", "6", "10"], correct: [0], official: "A (8)" },
+            { id: 25, cat: "semiologie", q: "Selon le score de Glasgow (8), le patient est :", options: ["Au stade de coma", "Obnubilé", "Confus", "Conscient", "En stupeur"], correct: [0], official: "A" },
+            { id: 26, cat: "semiologie", q: "Diagnostic le plus probable (Brutal, Neuro) :", options: ["Coma toxique", "Méningite bactérienne", "AVC", "Coma métabolique", "Coma traumatique"], correct: [2], official: "C" },
+            { id: 27, cat: "semiologie", q: "Examen complémentaire indispensable (Suspicion AVC) :", options: ["Scanner cérébral", "Ponction lombaire", "Bilan glycémique", "Bilan toxicologique", "Bilan rénal"], correct: [0], official: "A" },
+            { id: 28, cat: "semiologie", q: "Examens systématiques devant céphalée :", options: ["Température", "Tonus oculaire", "Pression artérielle", "Pouls", "Œdème papillaire"], correct: [0, 2, 4], official: "A, C, E" },
+            { id: 29, cat: "semiologie", q: "Céphalées primaires – réponse fausse :", options: ["Liées à dysfonction SNC", "Absence lésion causale", "Très fréquentes", "Crises paroxystiques", "Jamais besoin examens complémentaires"], correct: [4], official: "E est fausse" },
+            { id: 30, cat: "semiologie", q: "Algies crânio‑faciales primaires – réponse fausse :", options: ["Migraine", "Cluster headache", "Névralgie symptomatique du trijumeau", "Tic douloureux de Trousseau", "Algies psychogènes"], correct: [2], official: "C est fausse" },
+            { id: 31, cat: "semiologie", q: "Migraines – propositions justes :", options: ["Accès répétitifs hémicrânie", "Vasodilatation cérébrale parfois précédée vasoconstriction", "Les plus fréquentes", "Touchent surtout femme après 40 ans", "Diagnostic clinique stéréotypé"], correct: [0, 1, 4], official: "A, B, E" },
+            { id: 32, cat: "semiologie", q: "Hypertonie pyramidale :", options: ["Succède à lésion chronique faisceau pyramidal", "Spastique", "Plastique", "Diffuse", "ROT vifs"], correct: [0, 1, 4], official: "A, B, E" },
+            { id: 33, cat: "semiologie", q: "Syndrome pyramidal – réponse fausse :", options: ["Paralysie", "Hypertonie spastique", "Hyperréflexie", "Troubles sphinctériens", "Babinski positif"], correct: [3], official: "D est fausse" },
+            { id: 34, cat: "semiologie", q: "L’hémiplégie : quelles propositions sont justes ?", options: ["Abolition ou diminution motricité hémicorps", "Due à atteinte faisceau pyramidal", "Flasque au début", "Spastique secondaire", "Toutes justes"], correct: [4], official: "E" },
+            { id: 35, cat: "semiologie", q: "Paralysie faciale centrale :", options: ["Prédomine partie inférieure", "Effacement pli nasogénien", "Impossibilité siffler/gonfler", "Attraction bouche côté atteint", "Partie supérieure épargnée"], correct: [0, 1, 2, 4], official: "A, B, C, E (D est fausse)" },
+            { id: 36, cat: "semiologie", q: "Syndrome parkinsonien :", options: ["Tremblement repos", "Prédomine racines membres", "Perte motricité auto/lenteur", "Hypertonie plastique", "Absence déficit moteur"], correct: [0, 2, 3], official: "A, C, D" },
+            { id: 37, cat: "semiologie", q: "Surdité de transmission – réponse fausse :", options: ["Weber compare 2 oreilles", "Voix haute diminuée", "Voix chuchotée fortement diminuée", "Rinne positif", "Weber latéralisé côté atteint"], correct: [3], official: "D est fausse" },
+            { id: 38, cat: "semiologie", q: "Paralysie du III – réponse fausse :", options: ["Ptosis", "Strabisme divergent", "Mydriase réactive", "Abolition réflexe photomoteur", "Conservation accommodation‑convergence"], correct: [2, 4], official: "C, E est fausse" },
+            { id: 39, cat: "semiologie", q: "Douleur inflammatoire :", options: ["Diurne", "Nocturne", "Dérouillage matinal important", "Dérouillage absent", "Aggravée par mouvements"], correct: [1, 2], official: "B, C" },
+            { id: 40, cat: "semiologie", q: "Définition de la sciatique S1 :", options: ["Fesse, post cuisse, ext jambe, 1ers orteils", "Fesse, post cuisse, post jambe, talon, bord ext pied, derniers orteils", "Face ant cuisse, genou, int jambe", "Aucune"], correct: [1], official: "B" },
+            { id: 41, cat: "semiologie", q: "Définition du pied en varus :", options: ["Pied pointe vers bas", "Déviation en dedans", "Déviation en dehors", "Talon repose par partie distale", "Varus équin"], correct: [1], official: "B" },
+            { id: 42, cat: "semiologie", q: "Liquide inflammatoire genou :", options: ["100 cellules, < 50% PNN", "2000 cellules, > 50% PNN", "Aspect trouble", "Aspect citrin"], correct: [1, 2], official: "B, C (Note: Standard is >2000/mm3 for inflammatory)" },
+            { id: 43, cat: "semiologie", q: "Papules – réponse juste :", options: ["Visibles non palpables", "Non visibles palpables liquide", "Lésions secondaires", "Forme toujours ovalaire", "Œdémateuses dans l’urticaire"], correct: [4], official: "E" },
+            { id: 44, cat: "semiologie", q: "Ulcération – réponse juste :", options: ["Ulcère de jambe", "Psoriasis", "Acné", "Eczéma", "Urticaire"], correct: [0], official: "A" },
+            { id: 45, cat: "semiologie", q: "Examen principal en dermatologie en cas de doute :", options: ["Patch test", "Biopsie cutanée", "Échographie", "Radiographie", "Aucun"], correct: [1], official: "B" },
+            { id: 46, cat: "semiologie", q: "Nodules – réponse juste :", options: ["Lésions élémentaires primitives", "Lésions secondaires", "Contenu liquidien", "Toujours superficiels", "Toujours malins"], correct: [0], official: "A" },
+            { id: 47, cat: "semiologie", q: "Concernant la vitropression :", options: ["Verre de montre", "Différencie érythème/dyschromie", "Purpura disparaît", "Pigmentaire ne s'efface pas", "Curette"], correct: [0, 1, 3], official: "A, B, D" },
+            { id: 48, cat: "semiologie", q: "Les pustules :", options: ["Visibles non palpables", "Secondaires", "Acné", "Psoriasis pustuleux", "Surinfection vésicules"], correct: [2, 3, 4], official: "C, D, E" },
+            { id: 49, cat: "semiologie", q: "Tous ces éléments peuvent se voir en cas de syndrome vestibulaire central sauf un :", options: ["Vertiges discrets", "Signe de Romberg positif", "Nystagmus varié", "Démarche ébrieuse", "Mastoïdite comme cause"], correct: [4], official: "E est faux" },
+            { id: 50, cat: "semiologie", q: "La diplopie vers le bas est causée par l’atteinte du :", options: ["XI", "III", "IV", "VI", "VII"], correct: [2], official: "C (Nerf IV)" },
+            { id: 51, cat: "semiologie", q: "Parmi ces éléments, lequel ne se rencontre pas dans le syndrome de Claude Bernard‑Horner :", options: ["Enophtalmie", "Ptosis", "Exophtalmie", "Myosis", "Atteinte du thalamus"], correct: [2, 4], official: "C et E sont faux" },
+            { id: 52, cat: "semiologie", q: "Le signe de Romberg vestibulaire est caractérisé par :", options: ["Chute latéralisée", "Chute tous sens", "Fermeture yeux aggrave", "A et C justes", "Toutes justes"], correct: [3], official: "D (A et C)" },
+            { id: 53, cat: "semiologie", q: "L’épreuve des index :", options: ["Explore vestibulaire", "Dévient vers côté lésé yeux fermés", "Dévient vers côté sain", "A et B justes", "Explore motricité"], correct: [3], official: "D (A et B)" },
+            { id: 54, cat: "semiologie", q: "La démarche en étoile de Babinski‑Weill :", options: ["Syndrome vestibulaire", "Yeux ouverts", "Yeux fermés (avancer/reculer)", "A et C justes", "Explore sensibilité extéroceptive"], correct: [3], official: "D (A et C)" },
+            { id: 55, cat: "semiologie", q: "Le syndrome de Brown‑Séquard associe tous ces signes sauf un :", options: ["Pyramidal homolatéral", "Anesthésie thermoalgique homolatérale", "Anesthésie thermoalgique controlatérale", "Cordonal postérieur homolatéral", "Hyperesthésie homolatérale"], correct: [1, 4], official: "B et E sont faux" },
+            { id: 56, cat: "semiologie", q: "Les fourmillements :", options: ["Signes subjectifs", "Sensibilité objective", "Sensibilité extéroceptive", "Sensibilité profonde", "Toutes fausses"], correct: [0, 2], official: "A, C" },
+            { id: 57, cat: "semiologie", q: "Reconnaissance d’un objet à la palpation :", options: ["Non reconnaissance = astéréognosie", "Astéréognosie = atteinte profonde", "Astéréognosie = atteinte tactile", "A et B justes", "A et C justes"], correct: [3], official: "D (A et B)" },
+            { id: 58, cat: "semiologie", q: "Étude de la sensibilité extéroceptive :", options: ["Tactile", "Thermoalgésique", "Profonde", "A et B justes", "A et C justes"], correct: [3], official: "D (A et B)" },
+            { id: 59, cat: "semiologie", q: "Exploration sensibilité douloureuse : ressent eau chaude au lieu de douleur :", options: ["Hyperpathie", "Hypoesthésie tactile", "Anesthésie tactile", "Hyperesthésie", "Toutes justes"], correct: [0], official: "A" },
+            { id: 60, cat: "semiologie", q: "Signe de Romberg et hyperpathie :", options: ["Atteinte sensibilité profonde", "Atteinte tactile", "Examen normal", "A et B justes", "Toutes fausses"], correct: [0], official: "A" }
+        ];
+
+        const data2021_Full = [
+            { id: 1, cat: "semiologie", q: "La sensibilité de la région cranio‑faciale est assurée par les nerfs suivants :", options: ["V + VI + VII", "VI + VII + XI", "IX + V + X", "X + XI + XII", "I + II + V"], correct: [0, 4], official: "Réponse : V (nerf trijumeau). Correction : Les autres nerfs cités n’assurent pas la sensibilité principale de la face. (Note: Only V is strictly correct for sensation, but option E contains V)", aiNote: "Seul le V assure la sensibilité de la face. Le I et II sont sensoriels." },
+            { id: 2, cat: "semiologie", q: "Les structures sensibles endocrâniennes sont :", options: ["Vaisseaux méningés", "Dure‑mère", "Gros troncs artériels", "Sinus veineux", "Oreille moyenne"], correct: [0, 1, 2, 3], official: "A, B, C, D" },
+            { id: 3, cat: "semiologie", q: "Céphalées primaires – réponses fausses :", options: ["Migraine", "Céphalées de tension", "Algie vasculaire de la face", "Affection psychiatrique", "Névralgies crâniennes"], correct: [3], official: "D est fausse" },
+            { id: 4, cat: "semiologie", q: "Examens complémentaires indiqués dans l’exploration des algies cranio‑faciales sauf un :", options: ["Ponction lombaire", "TDM cérébrale", "IRM cérébrale", "Échographie abdominale", "Doppler des vaisseaux du cou"], correct: [3], official: "D (Échographie abdominale)" },
+            { id: 5, cat: "semiologie", q: "La migraine sans aura évolue en crises :", options: ["Totalement régressives", "Permanentes", "Paroxystiques", "Progressives", "Toutes fausses"], correct: [2], official: "C (Paroxystiques)" },
+            { id: 6, cat: "semiologie", q: "Caractéristiques de l’algie vasculaire de la face (réponse fausse) :", options: ["Douleur extrêmement sévère", "Sans prodromes", "Débute rapidement", "Max en quelques minutes, dure 15‑180 min", "Disparaît en quelques heures"], correct: [1], official: "B est fausse" },
+            { id: 7, cat: "semiologie", q: "Dans la surdité de transmission (réponse fausse) :", options: ["Weber compare perception des deux oreilles", "Voix haute diminuée", "Voix chuchotée fortement diminuée", "Rinne positif", "Weber latéralisé"], correct: [3], official: "D est fausse (Rinne négatif)" },
+            { id: 8, cat: "semiologie", q: "Dans la surdité de perception (réponse fausse) :", options: ["Voix haute diminuée", "Voix chuchotée augmentée", "Rinne positif", "Weber latéralisé côté sain", "Audiométrie utile"], correct: [1], official: "B est fausse" },
+            { id: 9, cat: "semiologie", q: "Nerf glossopharyngien (IX) – réponse fausse :", options: ["Motricité pharynx", "Motricité SCM", "Sensibilité amygdales", "Goût 1/3 postérieur langue", "Sécrétion parotide"], correct: [1], official: "B est fausse (SCM dépend du XI)" },
+            { id: 10, cat: "semiologie", q: "Paralysie du III – réponse fausse :", options: ["Ptosis", "Strabisme divergent", "Mydriase réactive", "Abolition réflexe photomoteur", "Conservation accommodation‑convergence"], correct: [2], official: "C est fausse (Mydriase aréactive)" },
+            { id: 11, cat: "semiologie", q: "Station debout mobilise plusieurs systèmes – réponse fausse :", options: ["Cortico‑spinal", "Cérébelleux", "Sensitif superficiel tactile", "Vestibulaire", "Sensitif profond"], correct: [0, 2], official: "A et C sont faux" },
+            { id: 12, cat: "semiologie", q: "Le coma est :", options: ["Perte partielle conscience", "Altération vigilance réversible", "Diminution état d’éveil", "Altération isolée fonctions cognitives", "Perte totale conscience non réversible par stimuli"], correct: [4], official: "E" },
+            { id: 13, cat: "physiopathologie", q: "Le système de l’éveil se situe :", options: ["Cervelet", "Cortex", "Tronc cérébral", "Substance réticulée du tronc et mésencéphale", "Thalamus"], correct: [3], official: "D" },
+            { id: 14, cat: "semiologie", q: "Évaluation de l’état de conscience :", options: ["Score FOUR", "Score Glasgow (GCS)", "Score Child‑Pugh", "Score MELD", "Score NIHSS"], correct: [1], official: "B" },
+            { id: 15, cat: "semiologie", q: "Composantes pour évaluer conscience :", options: ["Réflexe cornéen + réponse verbale + motrice", "Réflexe pupillaire + motrice + verbale", "Réponse verbale + motrice + ouverture yeux", "Réponse verbale + réflexe cornéen + pupillaire", "Ouverture yeux + réflexe cornéen + pupillaire"], correct: [2], official: "C" },
+            { id: 16, cat: "semiologie", q: "Une lésion de l’hémi‑moelle droite ou gauche réalise le syndrome de Brown‑Séquard :", options: ["Du côté de la lésion : troubles de la sensibilité profonde et paralysie ; du côté opposé : troubles thermo‑algésiques", "Syndrome de Claude Bernard‑Horner", "Syndrome vestibulaire", "Hémi‑syndrome cérébelleux", "Hémianesthésie thermo‑algésique de l’hémiface"], correct: [0], official: "A" },
+            { id: 17, cat: "semiologie", q: "Les céphalées primaires sont :", options: ["Migraine", "Céphalées de tension", "Névralgies crâniennes", "Évolution chronique", "Algie vasculaire de la face"], correct: [0, 1, 2, 4], official: "A, B, C, E" },
+            { id: 18, cat: "semiologie", q: "La céphalée de tension :", options: ["Douleur diffuse en casque", "Douleur de type serrement/pesanteur", "Évolution épisodique ou chronique", "Examen neurologique souvent anormal", "Forme fréquente de céphalées essentielles"], correct: [0, 1, 2, 4], official: "A, B, C, E" },
+            { id: 19, cat: "semiologie", q: "La migraine avec aura :", options: ["Aura régressive en moins de 60 min", "Mode d’installation lent", "Céphalée après disparition de l’aura", "Douleur unilatérale", "Nausées, vomissements, photophobie"], correct: [0, 2, 3, 4], official: "A, C, D, E" },
+            { id: 20, cat: "semiologie", q: "L’hypertension intracrânienne bénigne :", options: ["Fond d’œil toujours anormal", "Imagerie cérébrale anormale", "Examen neurologique normal sauf atteinte du III et VII", "Ponction lombaire de composition normale", "Troubles visuels toujours bénins"], correct: [3], official: "D" },
+            { id: 21, cat: "semiologie", q: "La névralgie du trijumeau se traduit par :", options: ["Douleurs frontales", "Douleurs temporales", "Douleurs pariétales", "Douleurs occipitales", "Pas d’anesthésie ni déficit moteur de l’hémiface"], correct: [4], official: "E" },
+            { id: 22, cat: "semiologie", q: "La force musculaire cotée à 3 témoigne :", options: ["Contraction sans mouvement", "Mouvement contre pesanteur", "Mouvement sans pesanteur", "Mouvement contre pesanteur et résistance", "Contraction réflexe uniquement"], correct: [1], official: "B" },
+            { id: 23, cat: "semiologie", q: "Une lésion ischémique hémisphérique entraîne un trouble du tonus de type :", options: ["Hypotonie", "Myoclonie", "Hypertonie plastique", "Dystonie", "Hypertonie spastique"], correct: [4], official: "E" },
+            { id: 24, cat: "semiologie", q: "La présence d’une adiadococinésie suggère une lésion au niveau du :", options: ["Thalamus", "Lobe occipital", "Tronc cérébral", "Cervelet", "Lobe temporal"], correct: [3], official: "D" },
+            { id: 25, cat: "semiologie", q: "Le syndrome cérébelleux s’accompagne de :", options: ["Trouble de la marche en ligne droite", "Dyschronométrie", "Hypotonie musculaire", "Parésie des extrémités", "Impossibilité mouvements rapides doigt‑nez"], correct: [0, 1, 2, 4], official: "A, B, C, E" },
+            { id: 26, cat: "semiologie", q: "Les fasciculations orientent vers une lésion de :", options: ["Hémisphère cérébral", "Corne postérieure moelle", "Corne antérieure moelle", "Thalamus", "Capsule interne"], correct: [2], official: "C" },
+            { id: 27, cat: "semiologie", q: "Les bulles :", options: ["Décollement intra‑épidermique dans pemphigus", "Décollement dermo‑épidermique dans pemphigus", "Contenu purulent possible", "Contenu clair/séreux/hémorragique", "Taille > 5 mm"], correct: [0, 2, 3, 4], official: "A, C, D, E" },
+            { id: 28, cat: "semiologie", q: "Le signe de Babinski est retrouvé en cas de lésion :", options: ["Thalamus", "Cervelet", "Corne antérieure moelle", "Hémisphérique", "Nerf périphérique"], correct: [3], official: "D" },
+            { id: 29, cat: "semiologie", q: "Une lésion bilatérale cervicale de la moelle entraîne :", options: ["Tétraplégie", "Hémiplégie", "Paraplégie", "Monoplégie", "Hémiparésie"], correct: [0], official: "A" },
+            { id: 30, cat: "semiologie", q: "Les mouvements involontaires sont :", options: ["Parésie", "Tic", "Chorée", "Tremblement", "Hémiballisme"], correct: [1, 2, 3, 4], official: "B, C, D, E" },
+            { id: 31, cat: "biochimie", q: "Quel(s) organe(s) est/sont lésé(s) si : transaminases élevées, PAL modérément élevées, CPK normales, lipase normale, LDH élevée ?", options: ["Pancréas", "Muscle", "Os", "Foie (syndrome de cytolyse)"], correct: [3], official: "D" },
+            { id: 32, cat: "biochimie", q: "Quels paramètres demander devant un bilan de cytolyse hépatique ?", options: ["Transaminases", "GOT", "Sérologie virale B et C", "Amylase", "CK‑MB"], correct: [0, 1, 2], official: "A, B, C" },
+            { id: 33, cat: "biochimie", q: "Les paramètres du Fibrotest – réponses fausses :", options: ["Alpha‑2 macroglobuline", "Gamma‑GT", "Bilirubine totale", "Haptoglobine", "ALAT"], correct: [4], official: "E est fausse" },
+            { id: 34, cat: "biochimie", q: "Les paramètres de l’Actitest – réponses fausses :", options: ["Apolipoprotéine A1", "Gamma‑GT", "Bilirubine totale", "Haptoglobine", "ASAT"], correct: [2, 3], official: "C et D sont fausses" },
+            { id: 35, cat: "biochimie", q: "À propos des transaminases – réponses fausses :", options: ["Localisation cytosolique ou mitochondriale", "Peuvent spécifier une étiologie", "Spécifiques de la cytolyse hépatique", "Doivent être complétées par bilan étiologique", "Pose du garrot fausse le résultat"], correct: [2], official: "C est fausse" },
+            { id: 36, cat: "biochimie", q: "Concernant le bilan de cholestase – réponses fausses :", options: ["GGT élevés", "PAL élevés", "Transaminases modérément élevées", "PAL élevés avec GGT normaux", "Augmentation rapide des GGT"], correct: [3], official: "D est fausse" },
+            { id: 37, cat: "biochimie", q: "Signes biologiques orientant vers une méningite virale (glycémie normale) :", options: ["Glycorachie = 0,25 g/l", "Aspect en eau de roche", "Hyperleucocytose lymphocytaire", "Hyperprotéinorachie", "Hypochlorrurachie"], correct: [1, 2, 3], official: "B, C, D" },
+            { id: 38, cat: "biochimie", q: "Signes biologiques d’une méningite bactérienne :", options: ["Albumine élevée", "Liquide trouble", "Lactate élevé", "Protéines basses", "Chlorures élevés"], correct: [1, 2], official: "B, C (Note: Albumine élevée possible aussi)" },
+            { id: 39, cat: "biochimie", q: "Indications de la ponction lombaire :", options: ["Mal de Pott", "Hémorragie méningée", "Comas fébriles", "Méningite tuberculeuse", "Hypertension intracrânienne"], correct: [1, 2, 3], official: "B, C, D" },
+            { id: 40, cat: "biochimie", q: "Situations avec hypoglycorachie :", options: ["Diabète type 2", "Méningite parasitaire", "Méningite virale", "Méningite tuberculeuse", "Tumeurs cérébrales"], correct: [1, 3], official: "B, D" },
+            { id: 41, cat: "physiopathologie", q: "La douleur – réponse fausse :", options: ["Phénomène multidimensionnel", "Phénomène plurifactoriel", "Phénomène nociceptif", "Toujours objective", "Peut être subjective"], correct: [3], official: "D est fausse" },
+            { id: 42, cat: "physiopathologie", q: "Composantes de la douleur – réponse fausse :", options: ["Sensorielle", "Motrice", "Cognitive", "Végétative", "Neuro‑dysleptique"], correct: [4], official: "E est fausse" },
+            { id: 43, cat: "physiopathologie", q: "Substances algogènes – réponse fausse :", options: ["Leucotriènes", "Endorphines", "Bradykinines", "Histamine", "Sérotonine"], correct: [1], official: "B est fausse" },
+            { id: 44, cat: "physiopathologie", q: "Substance P – réponse fausse :", options: ["Neuromédiateur inflammation", "Sécrétée par neurone", "Sécrétion antidromique", "Participe hyperalgésie", "Sécrétée à plusieurs niveaux du SNC"], correct: [0], official: "A est fausse" },
+            { id: 45, cat: "physiopathologie", q: "Mécanismes de contrôle de la douleur – réponse fausse :", options: ["Inhibition segmentaire corne postérieure", "Contrôles inhibiteurs descendants par stimulations nociceptives", "Contrôles inhibiteurs descendants cérébraux", "Gate control", "Sécrétion substance P antidromique"], correct: [4], official: "E est fausse" },
+            { id: 46, cat: "physiopathologie", q: "La PIC est directement liée – réponse fausse :", options: ["PPC", "Pression veineuse centrale", "Volume intracrânien", "Pression artérielle moyenne"], correct: [1], official: "B est fausse" },
+            { id: 47, cat: "physiopathologie", q: "Les secteurs de l’espace crânio‑rachidien :", options: ["Le parenchyme cérébral occupe 80 % du volume", "Les fluides intracellulaires ou interstitiels constituent 10 %", "Le secteur vasculaire occupe 30 % du volume endocrânien", "La barrière hémato‑encéphalique est le lieu d’échange avec le secteur liquidien extracellulaire et veineux", "Il existe un équilibre entre les différents secteurs"], correct: [0, 1, 3, 4], official: "A, B, D, E" },
+            { id: 48, cat: "physiopathologie", q: "Parmi les causes d’augmentation du volume cérébral, laquelle est fausse ?", options: ["Augmentation du volume sanguin cérébral", "Augmentation du volume du parenchyme cérébral", "Augmentation du drainage veineux", "Augmentation du volume du LCR", "Volume supplémentaire : hématome, abcès, tumeur"], correct: [2], official: "C est fausse" },
+            { id: 49, cat: "physiopathologie", q: "Les céphalées au cours de l’HIC :", options: ["Fréquentes mais inconstantes", "Surviennent surtout le matin ou la nuit", "Crises diffuses ou localisées", "Augmentent à l’effort (toux)", "Répondent favorablement aux antalgiques usuels"], correct: [0, 1, 2, 3], official: "A, B, C, D" },
+            { id: 50, cat: "physiopathologie", q: "Courbe pression/volume de Langfitt :", options: ["La PIC varie avec le volume intracérébral", "La relation n’est pas constante", "En phase compensée, augmentation des volumes → faible augmentation PIC", "En phase compensée, augmentation des volumes → forte augmentation PIC", "En phase décompensée, augmentation minime volume → forte augmentation PIC"], correct: [0, 1, 2, 4], official: "A, B, C, E" },
+            { id: 51, cat: "physiopathologie", q: "La régulation normale du pH sanguin s’effectue essentiellement par :", options: ["Poumon et foie", "Rein et pancréas", "Poumon et rein", "Poumon et pancréas", "Pancréas et foie"], correct: [2], official: "C" },
+            { id: 52, cat: "physiopathologie", q: "L’acidose métabolique – réponse fausse :", options: ["pH < 7,38", "HCO3‑ < 21 mmol/l", "PaCO2 < 38 mmHg (compensation respiratoire)", "PaO2 plutôt élevée si hyperventilation", "PaO2 plutôt basse si hypoventilation"], correct: [4], official: "E est fausse" },
+            { id: 53, cat: "physiopathologie", q: "Signes cliniques de l’acidose respiratoire – réponse fausse :", options: ["Dyspnée sans cause cardiaque ou pulmonaire", "Troubles neurologiques rares, obnubilation si pH < 7,15", "Syndrome polyurique et polydipsique", "Dépression myocardique", "Résistance aux drogues vasoactives"], correct: [2], official: "C est fausse" },
+            { id: 54, cat: "physiopathologie", q: "Parmi les causes d’alcalose métabolique, laquelle est fausse ?", options: ["Apports massifs d’alcalins (rare, iatrogène)", "Destruction massive osseuse", "Pertes digestives d’acides (vomissements, aspiration)", "Pertes rénales d’acides", "Défaut d’élimination des phosphates"], correct: [1], official: "B est fausse" },
+            { id: 55, cat: "radiologie", q: "Quel examen radiologique est indiqué en première intention dans les pathologies ostéo‑articulaires ?", options: ["Échographie", "IRM", "Scanner sans injection", "Radiographie standard", "A et D"], correct: [3], official: "D" },
+            { id: 56, cat: "radiologie", q: "Pourquoi réaliser des clichés radiologiques en position de contrainte ?", options: ["Meilleure visualisation corticale osseuse", "Montrer variantes anatomiques", "Visualiser fractures", "Meilleure visualisation pincements articulaires", "A et C"], correct: [3], official: "D" },
+            { id: 57, cat: "radiologie", q: "L’échographie visualise – réponse fausse :", options: ["Tendons", "Épanchement intra‑articulaire", "Cartilage de croissance chez l’enfant", "Muscles", "Ligaments"], correct: [2], official: "C est fausse" },
+            { id: 58, cat: "radiologie", q: "L’ostéopénie en radiologie – réponse fausse :", options: ["Radio‑transparence de l’os", "Visible après perte de 60 % calcium", "Peut être d’origine tumorale", "Secondaire à ostéoporose", "Localisée en cas d’algodystrophie"], correct: [1], official: "B est fausse (Visible après 30%)" },
+            { id: 59, cat: "radiologie", q: "Signes radiologiques de l’arthrose – réponse fausse :", options: ["Pincement interligne articulaire", "Ostéophytes", "Déminéralisation péri‑articulaire", "Géodes", "Condensation sous‑chondrale"], correct: [2], official: "C est fausse" },
+            { id: 60, cat: "radiologie", q: "Signes radiologiques de l’arthrite – réponse fausse :", options: ["Pincement interligne articulaire", "Ostéophytes", "Déminéralisation péri‑articulaire", "Géodes", "Condensation sous‑chondrale"], correct: [1, 4], official: "B et E sont fausses" }
+        ];
+
+        const data2022_Full = [
+            { id: 1, cat: "semiologie", q: "La première étape de la prise en charge d'un patient présentant des troubles de la conscience consiste en :", options: ["TDM cérébrale", "Évaluation profondeur coma", "Recherche étiologie", "Évaluation fonctions vitales", "Abord veineux"], correct: [3], official: "D" },
+            { id: 2, cat: "semiologie", q: "Patient troubles conscience, propos incohérents mais mots compréhensibles (réponse verbale) :", options: ["5", "4", "3", "2", "1"], correct: [1], official: "B (4)" },
+            { id: 3, cat: "semiologie", q: "Le syndrome vestibulaire central est caractérisé par :", options: ["Présence nystagmus", "Vertiges discrets/absents", "Signe de Romberg", "A+B+C sont justes", "A+B+C sont fausses"], correct: [3], official: "D" },
+            { id: 4, cat: "semiologie", q: "Dans la paralysie du III, quelle affirmation est FAUSSE ? (Le patient présente...)", options: ["Un ptosis", "Un strabisme divergent", "Une mydriase réactive", "Une abolition réflexe photomoteur", "Une abolition de l'accommodation"], correct: [2], official: "C est fausse (Mydriase aréactive)" },
+            { id: 5, cat: "semiologie", q: "Le glossopharyngien (IX), quelle affirmation est FAUSSE ?", options: ["Motrice pharynx", "Motrice sterno-cléido-mastoïdien", "Sensitive amygdales", "Gustative 1/3 post langue", "Sécrétoire parotide"], correct: [1], official: "B est fausse (SCM = XI)" },
+            { id: 6, cat: "semiologie", q: "Dans la surdité de transmission (FAUX) :", options: ["Weber compare 2 oreilles", "Voix haute diminuée", "Voix chuchotée diminuée", "Rinne positif", "Weber latéralisé"], correct: [3], official: "D est fausse (Rinne négatif)" },
+            { id: 7, cat: "semiologie", q: "L’atteinte du nerf optique se manifeste par (FAUX) :", options: ["Perte vision", "Scotome", "Diplopie", "Perte champ visuel", "Hémianopsie"], correct: [2], official: "C est fausse (Diplopie = III, IV, VI)" },
+            { id: 8, cat: "semiologie", q: "Toutes ces manifestations sont liées à une atteinte du nerf III sauf une :", options: ["Strabisme externe", "Mydriase aréactive", "Diplopie regard vers le bas", "Ptosis", "Déficit élévation/adduction"], correct: [2], official: "C (Atteinte du IV)" },
+            { id: 9, cat: "semiologie", q: "La névralgie essentielle du trijumeau se caractérise par (FAUX) :", options: ["Crises douloureuses", "Douleur brève", "Déclenchée par effleurement", "Amaurose", "Cause inconnue"], correct: [3], official: "D est fausse" },
+            { id: 10, cat: "semiologie", q: "Toutes ces manœuvres explorent le nerf facial sauf une :", options: ["Froncer sourcils", "Gonfler joues", "Baisser sourcils", "Siffler", "Froncer nez"], correct: [4], official: "E est fausse" },
+            { id: 11, cat: "semiologie", q: "L’atteinte sensitive du nerf facial se manifeste par (FAUX) :", options: ["Hypoesthésie pavillon", "Agueusie 1/3 post", "Agueusie 2/3 ant", "Hypersialorrhée", "Hypoesthésie conduit auditif"], correct: [1, 3], official: "B et D sont fausses" },
+            { id: 12, cat: "physiopathologie", q: "Sensibilité profonde véhiculée par :", options: ["Fibres alpha gros diamètre, myélinisées, rapide", "Fibres lambda, moyen, +/- myélinisées", "Fibres alpha gros, +/- myélinisées, faible", "Fibres lambda, gros, myélinisées, rapide", "Fibres alpha gros, amyélinisées, rapide"], correct: [0], official: "A" },
+            { id: 13, cat: "semiologie", q: "Les paresthésies sont des sensations anormales sauf une :", options: ["Fourmillements", "Picotements", "Ruissellement", "Courant chaud/froid", "Douleur causalgique"], correct: [4], official: "E est fausse" },
+            { id: 14, cat: "semiologie", q: "Les douleurs (expression variable), trouvez l'erreur :", options: ["Pongitive = pesanteur", "Lancinante = battement", "Picotement", "Térébrante = pénétrante", "Fulgurante = éclair"], correct: [2], official: "C est fausse" },
+            { id: 15, cat: "semiologie", q: "Techniques recherche sensibilité yeux fermés (Erreur) :", options: ["Tactile coton", "Douloureuse aiguille", "Thermique tubes", "Profonde diapason", "Graphestésie aiguille"], correct: [4], official: "E est fausse" },
+            { id: 16, cat: "semiologie", q: "Une lésion de l’hémi‑moelle réalise le syndrome de Brown‑Séquard :", options: ["Troubles profonde/motricité homolatérale, thermo‑algésique controlatérale", "Inverse", "Tout homolatéral", "Tout controlatéral", "Aucune"], correct: [0], official: "A" },
+            { id: 17, cat: "semiologie", q: "Les céphalées primaires sont (Faux) :", options: ["Migraine", "Céphalées tension", "Névralgies crâniennes", "Évolution chronique", "Algie vasculaire"], correct: [3], official: "D est fausse" },
+            { id: 18, cat: "semiologie", q: "La céphalée de tension (Faux) :", options: ["Douleur casque", "Serrement", "Épisodique/chronique", "Examen neuro anormal", "Fréquente"], correct: [3], official: "D est fausse" },
+            { id: 19, cat: "semiologie", q: "La migraine avec aura (Faux) :", options: ["Aura régressive < 60 min", "Installation lente", "Céphalée après aura", "Unilatérale", "Nausées"], correct: [2],official: "c est f" },
+            { id: 20, cat: "semiologie", q: "L’hypertension intracrânienne bénigne :", options: ["Fond d'œil anormal", "Imagerie anormale", "Examen neuro normal (sauf III/VII)", "Ponction lombaire normale", "Troubles visuels bénins"], correct: [3], official: "D" },
+            { id: 21, cat: "semiologie", q: "Névralgie trijumeau (rf):", options: ["Frontale", "Temporale", "Pariétale", "Occipitale", "Pas d'anesthésie/déficit moteur"], correct: [3],official: "D" },
+            { id: 22, cat: "semiologie", q: "Force musculaire cotée à 3 :", options: ["Contraction sans mvt", "Mvt contre pesanteur", "Mvt sans pesanteur", "Contre résistance", "Réflexe"], correct: [1], official: "B" },
+            { id: 23, cat: "semiologie", q: "Lésion ischémique hémisphérique (tonus) :", options: ["Hypotonie", "Myoclonie", "Hypertonie plastique", "Dystonie", "Hypertonie spastique"], correct: [4], official: "E" },
+            { id: 24, cat: "semiologie", q: "Adiadococinésie suggère lésion :", options: ["Thalamus", "Occipital", "Tronc cérébral", "Cervelet", "Temporal"], correct: [3], official: "D" },
+            { id: 25, cat: "semiologie", q: "Syndrome cérébelleux (Faux) :", options: ["Trouble marche", "Dyschronométrie", "Hypotonie", "Parésie", "Adiadococinésie"], correct: [3], official: "D est fausse" },
+            { id: 26, cat: "semiologie", q: "Fasciculations orientent vers :", options: ["Hémisphère", "Corne post", "Corne ant", "Thalamus", "Capsule int"], correct: [2], official: "C" },
+            { id: 27, cat: "semiologie", q: "Les bulles (Faux) :", options: ["Intra‑épidermique (pemphigus)", "Dermo‑épidermique (pemphigus)", "Purulent", "Clair/Séreux", "> 5 mm"], correct: [1], official: "B est fausse" },
+            { id: 28, cat: "semiologie", q: "Les macules (Faux) :", options: ["Sans infiltration", "Sans relief", "Visibles", "Rouges ou pigmentées", "Toujours rouges"], correct: [4], official: "E est fausse" },
+            { id: 29, cat: "semiologie", q: "Lésions vasculaires (Faux) :", options: ["Télangiectasies", "Angiomes plans", "Fièvres éruptives", "Éphélides", "Purpuras"], correct: [2, 3], official: "C et D sont fausses" },
+            { id: 30, cat: "semiologie", q: "Les papules (Faux) :", options: ["Relief", "Plaques bourgeonnantes", "Épidermiques", "Dermiques", "Œdémateuses"], correct: [1], official: "B est fausse" },
+            { id: 31, cat: "physiopathologie", q: "L’allodynie :", options: ["Douleur à distance", "Réponse exagérée", "Sensorielle", "Réponse à stimulations non douloureuses", "Objective"], correct: [3], official: "D" },
+            { id: 32, cat: "physiopathologie", q: "Douleur par excès de nociception (Faux) :", options: ["Excitation nocicepteurs", "Irritation anormale", "Lésion nerveuse", "Excès influx", "Substances algogènes"], correct: [2], official: "C est fausse" },
+            { id: 33, cat: "physiopathologie", q: "Douleur viscérale (Faux) :", options: ["Sensible coupures/brûlures", "Désordres internes", "Convergence viscéro-somatique", "Traction/distension", "Profonde"], correct: [0], official: "A est fausse" },
+            { id: 34, cat: "physiopathologie", q: "Contrôle supra‑spinal douleur (Faux) :", options: ["Tronc cérébral", "Module intensité", "Sérotonine/NA", "Rend difficile détection", "Voies inhibitrices"], correct: [3], official: "D est fausse" },
+            { id: 35, cat: "physiopathologie", q: "Contrôle spinal douleur :", options: ["Inhibition par fibres Aβ (Gate control)", "Stimulation par Aβ", "Petites fibres inhibent", "Grosses fibres stimulent", "Endorphines corne ventrale"], correct: [0], official: "A" },
+            { id: 36, cat: "physiopathologie", q: "Acidose métabolique gaz du sang :", options: ["pH↑, PaCO2↑, HCO3↓", "pH↑, HCO3↓, PaCO2↑", "pH↓, HCO3↓, PaCO2↓", "pH↓, PaCO2↑, HCO3↓", "pH↑, PaCO2↓, HCO3↓"], correct: [2], official: "C" },
+            { id: 37, cat: "physiopathologie", q: "Acidose respiratoire gaz du sang :", options: ["pH↓, PaCO2↓, HCO3↓", "pH↑, HCO3↑, PaCO2↓", "pH↓, HCO3↓, PaCO2↑", "pH↓, PaCO2↑, HCO3↑", "pH↑, HCO3↓, PaCO2↓"], correct: [3], official: "D" },
+            { id: 38, cat: "physiopathologie", q: "Laquelle n’entraîne pas acidose métabolique ?", options: ["Insuffisance rénale", "Choc cardiogénique", "Hyperventilation alvéolaire", "Choc hémorragique", "Choc septique"], correct: [2], official: "C (Alcalose respi)" },
+            { id: 39, cat: "physiopathologie", q: "Mécanisme acidose métabolique hyperchlorémique :", options: ["Diarrhée", "Vomissements", "Ingestion acides", "Acidocétose", "Aucun"], correct: [0], official: "A" },
+            { id: 40, cat: "physiopathologie", q: "Pression intracrânienne (Faux) :", options: ["Pression parenchyme", "Normale 10 mmHg", "Monroe‑Kellie", "PIC constante", "Liée à PPC"], correct: [3], official: "D est fausse" },
+            { id: 41, cat: "physiopathologie", q: "HIC (Faux) :", options: ["Dépassement compensation", "PIC > 10 mmHg", "Conflit espace", "4ème secteur", "Augmentation volumes"], correct: [1], official: "B est fausse (>20 mmHg)" },
+            { id: 42, cat: "physiopathologie", q: "Au cours d’une HIC (Faux) :", options: ["Toute augm vol = augm PIC", "Compensation: vol varie -> PIC varie bcp", "Décompensation: vol varie -> PIC varie", "Compensation: vol varie -> PIC stable", "Décompensation PIC > 20"], correct: [1], official: "B est fausse" },
+            { id: 43, cat: "physiopathologie", q: "HIC (Faux) :", options: ["HIC décompensée = PPC stable", "Ischémie conséquence", "Engagement", "Mydriase", "Troubles comportement"], correct: [0], official: "A est fausse" },
+            { id: 44, cat: "physiopathologie", q: "Thérapeutique HIC (Faux) :", options: ["Exérèse", "Volet", "Position ventrale", "Osmothérapie", "Sédation"], correct: [2], official: "C est fausse" },
+            { id: 45, cat: "radiologie", q: "Séquence diffusion IRM (Faux) :", options: ["Morphologique", "Sensible AVC", "Hyper-signal AVC", "Sensible fluides", "Hyper-signal tumeurs"], correct: [0, 4], official: "A et E fausses" },
+            { id: 46, cat: "radiologie", q: "Laquelle est fausse :", options: ["IRM > TDM contraste", "TDM > IRM fracture", "Grossesse 18s contre-indiquée", "Contraste TDM néphrotoxique", "Angio invasive"], correct: [2], official: "C est fausse" },
+            { id: 47, cat: "radiologie", q: "Plus haute densité scanner :", options: ["Parenchyme", "Sang frais", "LCR", "Graisse", "Cervelet"], correct: [1], official: "B" },
+            { id: 48, cat: "radiologie", q: "Séquence IRM HSA :", options: ["T2", "T2 FLAIR", "T2*", "Diffusion", "T1"], correct: [1], official: "B" },
+            { id: 49, cat: "radiologie", q: "Hématome extra-dural :", options: ["Intra-axial", "HTA", "Hypodense", "Biconvexe", "Fracture obligatoire"], correct: [3], official: "D" },
+            { id: 50, cat: "radiologie", q: "Hématome sous-dural(RF):", opsions: ["Arachnoïde/dure-mère", "HTA", "Croissant", "Bande", "TDM injecté"], correct: [4], official: "E" },
+            { id: 51, cat: "radiologie", q: "IRM repose sur :", options: ["Sodium", "Eau", "Hydrogène", "Calcium", "Oxygène"], correct: [2], official: "C" },
+            { id: 52, cat: "radiologie", q: "Unité densité scanner :", options: ["Honeywell", "Hounsfield", "Hootsuite", "Hounsflow", "Hansel"], correct: [1], official: "B" },
+            { id: 53, cat: "radiologie", q: "Hémorragies sous-arachnoïdiennes (Faux) :", options: ["Traumatisme fréquent", "Dissection", "Scanner urgence", "Hypo T2*", "Hyper Flair"], correct: [1], official: "B est fausse (Anévrisme)" },
+            { id: 54, cat: "biochimie", q: "Plus concentré dans LCR que plasma :", options: ["Glucose", "IgG", "Chlorures", "Albumine", "Protéines"], correct: [2], official: "C" },
+            { id: 55, cat: "biochimie", q: "Méningite bactérienne LCR :", options: ["Lymphocytes", "Albumine basse", "Clair", "Lactate élevé", "Chlorure élevé"], correct: [3], official: "D" },
+            { id: 56, cat: "biochimie", q: "Index IgG élevé oriente vers :", options: ["Barrière HM", "Synthèse intrathécale", "Kahler", "Bactérienne", "Virale"], correct: [1], official: "B" },
+            { id: 57, cat: "biochimie", q: "Organe lésé (Transa modérées, CPK/LDH élevées) :", options: ["Pancréas", "Muscle", "Os", "Foie cytolyse", "Foie cholestase"], correct: [1], official: "B" },
+            { id: 58, cat: "biochimie", q: "Déficit G6PD (Faux) :", options: ["Corps Heinz", "Bilirubine élevée", "LDH élevée", "Hb basse", "Haptoglobine élevée"], correct: [4], official: "E est fausse" },
+            { id: 59, cat: "biochimie", q: "Enzymes sériques (Faux) :", options: ["Amylase urine/sang", "CK-MB pondérale", "Transaminases spécifiques hépatite virale", "Urgence pancréas", "UI/L"], correct: [2], official: "C est fausse" },
+            { id: 60, cat: "biochimie", q: "Actitest (Faux) :", options: ["Apo A1", "GGT", "Bilirubine totale", "ALAT", "ASAT"], correct: [2], official: "C est fausse" }
+        ];
+
+        const data2023_Full = [
+            { id: 1, cat: "semiologie", q: "L'atteinte du nerf optique se manifeste par : (1RJ)", options: ["1-2-4", "1-2-3-5", "1-3-4-5", "1-2-4-5", "1-4-5"], correct: [3], official: "D" },
+            { id: 2, cat: "semiologie", q: "L'atteinte sensitive du nerf facial se manifeste par : (1RF)", options: ["Hypoesthésie pavillon oreille", "Agueusie 2/3 ant langue", "Hypersialorrhée", "Hypoesthésie conduit auditif externe", "Agueusie 1/3 post langue"], correct: [4], official: "E" },
+            { id: 3, cat: "semiologie", q: "L'épreuve de Mingazzini: (1RJ)", options: ["Maintenir bras tendus", "Membres inf en extension", "Membres inf en flexion à 90°", "Examiner le tonus", "Évaluer force bras"], correct: [2], official: "C" },
+            { id: 4, cat: "semiologie", q: "Déficit moteur coté à 3 au testing musculaire signifie : (1RJ)", options: ["Force normale", "Absence de contraction", "Mouvement possible contre pesanteur", "Mouvement contre résistance", "Impossible en apesanteur"], correct: [2], official: "C" },
+            { id: 5, cat: "semiologie", q: "L'examen de la coordination :", options: ["Doigt nez bras", "Mobilisation passive", "Talon genou jambes", "Mouvements alternatifs", "Station debout et marche ouverts/fermés"], correct: [0, 2, 3, 4], official: "." },
+            { id: 6, cat: "semiologie", q: "Cochez la réponse fausse: (1RF)", options: ["Nerf V = uniquement sensibilité face", "PFP = atteinte du VII", "Examen nécessite coopération", "Babinski = faisceau pyramidal", "Marche fait partie de l'examen neuro"], correct: [0], official: "A" },
+            { id: 7, cat: "semiologie", q: "Le syndrome de Weber: (1RJ)", options: ["Lésion protubérantielle", "Atteinte du III homolatérale", "Hémiplégie homolatérale", "Syndrome alterne sensitif", "Toutes fausses"], correct: [1], official: "B" },
+            { id: 8, cat: "semiologie", q: "Les polyneuropathies sont : (1RJ)", options: ["Motrices pures", "Sensitives pures", "Atteinte proximo-distale", "Atteinte distale", "Toutes fausses"], correct: [3], official: "D" },
+            { id: 9, cat: "semiologie", q: "Un syndrome myogène est caractérisé par : (1RJ)", options: ["Déficit moteur proximal", "Réflexes tendineux vifs", "IRM indispensable", "Signe de Babinski", "Toutes fausses"], correct: [0], official: "B (Mais A est juste)" },
+            { id: 10, cat: "semiologie", q: "Un syndrome de Wallenberg se caractérise par : (1RF)", options: ["Syndrome de Claude Bernar Horner", "Hémi syndrome cérébelleux", "Atteinte nerf V", "Hémianesthésie thermo-algique respectant face controlat", "Syndrome pyramidal aux 4 membres"], correct: [4], official: "E" },
+            { id: 11, cat: "semiologie", q: "Une myasthénie auto-immune peut être révélée par : (1RJ)", options: ["Ptosis fluctuant", "Hypertonie spastique", "Ptosis fixe", "ROT polycinétiques", "Toutes fausses"], correct: [0], official: "A" },
+            { id: 12, cat: "semiologie", q: "L'électroneuromyographie est indiquée dans : (1RJ)", options: ["Bilan épilepsie", "Diagnostic myopathies", "Confirmer mort cérébrale", "Encéphalites", "Troubles conscience post-épilepsie"], correct: [1], official: "B" },
+            { id: 13, cat: "semiologie", q: "La ponction lombaire est indiquée en cas de : (1RF)", options: ["Syndrome méningé fébrile", "Injection médicamenteuse", "HIC lié à un processus expansif", "Suspicion hémorragie", "Maladies inflammatoires SNC"], correct: [2], official: "C" },
+            { id: 14, cat: "semiologie", q: "Les signes sensitifs suivants sont subjectifs : (1RF)", options: ["Hypopallesthésie", "Douleurs", "Paresthésies", "Dysesthésies", "Causalgies"], correct: [0], official: "A" },
+            { id: 15, cat: "semiologie", q: "L'examen de la sensibilité proprioceptive comporte : (1RF)", options: ["Sensibilité vibratoire", "Sensibilité thermo-algésique", "Arthrokinésie", "Astéréognosie", "Graphesthésie"], correct: [1], official: "B" },
+            { id: 16, cat: "semiologie", q: "Le signe de Brudzinski : (1RJ)", options: ["Hyperextension tête", "Flexion involontaire membres inf", "Flexion volontaire nuque", "Résistance douloureuse extension jambe", "Assis sans fléchir genoux"], correct: [1], official: "B" },
+            { id: 17, cat: "semiologie", q: "L'accident vasculaire cérébral :", options: ["Peut être transitoire < 24h", "Déficit focal", "Apparition brutale", "Clinique confirmée par imagerie", "Respect PA dans infarctus"], correct: [0], official: "A" },
+            { id: 18, cat: "semiologie", q: "Coma stade 3 (Carus) :", options: ["Réaction incoordonnée douleur", "Abolition perceptivité/réactivité", "Troubles sphinctériens", "Anomalies réflexes mésencéphaliques", "Réflexe cornéen aboli"], correct: [1], official: "B,C,D,E" },
+            { id: 19, cat: "semiologie", q: "Dans le syndrome démentiel :", options: ["Perte fonctions intellectuelles", "Lésions structurelles", "Différencier du syndrome confusionnel", "Alzheimer = cortical", "Toutes justes"], correct: [4], official: "E" },
+            { id: 20, cat: "semiologie", q: "Phase tonique de la crise Grand Mal peut comporter : (1RF)", options: ["Vocalisation", "Hémiplégie", "Contraction axiale", "Apnée avec cyanose", "Secousses bilatérales synchrones"], correct: [4], official: "E" },
+            { id: 21, cat: "semiologie", q: "L'arthrite est : (1RF)", options: ["Inflammation", "Tuméfaction indolore", "Chaleur locale", "Étiologie infectieuse", "Douleur + Chaleur + Oedème"], correct: [1], official: "B" },
+            { id: 22, cat: "semiologie", q: "Le steppage est : (1RJ)", options: ["Neuro", "Articulaire", "Uni ou bilatéral", "Faux", "A+C"], correct: [4], official: "E" },
+            { id: 23, cat: "semiologie", q: "Déformation en valgus : (1RJ)", options: ["Vers ligne médiane", "Opposé ligne médiane", "Recurvatum", "A+B", "A+B+C"], correct: [1], official: "B" },
+            { id: 24, cat: "semiologie", q: "Courbures normales du rachis SAUF : (1RF)", options: ["Lordose cervicale", "Cyphose thoracique", "Lordose lombaire", "Cyphose lombaire", "Cyphose sacrée"], correct: [3], official: "D" },
+            { id: 25, cat: "semiologie", q: "Signe clé de la scoliose : (1RJ)", options: ["Inclinaison latérale", "Asymétrie thoracique", "Gibbosité", "Inégalité membres inf", "Hyperlordose"], correct: [2], official: "C" },
+            { id: 26, cat: "semiologie", q: "La vésicule : (1RF)", options: ["Visible et palpable", "En relief", "Taille > 5mm", "Hémisphérique", "Purulente si surinfection"], correct: [2], official: "C" },
+            { id: 27, cat: "semiologie", q: "La vitro-pression : (1RJ)", options: ["Différencier érythème/purpura", "Différencier érythème/dyschromie", "Purpura disparait", "Érythème ne s'efface pas", "Faite à la curette"], correct: [0], official: "A" },
+            { id: 28, cat: "semiologie", q: "La crise migraineuse simple : (1RJ)", options: ["Constructives", "Pulsations", "Brûlures", "Décharge électrique", "Casque"], correct: [1], official: "B" },
+            { id: 29, cat: "semiologie", q: "Accroupissement du cérébelleux : (1RJ)", options: ["Garde yeux ouverts", "Ne décolle pas les talons", "Ne plie pas genoux", "Décolle la pointe", "Élargit polygone"], correct: [1], official: "B" },
+            { id: 30, cat: "semiologie", q: "Syndromes parkinsoniens : (1RF)", options: ["Locus Niger", "Tremblement", "Hyper-kinésie", "Hypertonie extrapyramidale", "ROT conservés"], correct: [2], official: "C" },
+            { id: 31, cat: "semiologie", q: "La SLA est : (1RJ)", options: ["Nerfs crâniens uniquement", "Motoneurone central + périph", "Bon pronostic", "Huntingtin", "Hypertonie plastique"], correct: [1], official: "B" },
+            { id: 32, cat: "semiologie", q: "Fil à plomb C7 doit suivre : (1RJ)", options: ["Ligne des épineuses", "Passe par fesse", "Crête iliaque", "Acromion", "Toutes justes"], correct: [0], official: "A" },
+            { id: 33, cat: "semiologie", q: "Facteurs favorisant crises épilepsie : (RF)", options: ["Écrans", "Hypersomnie", "Cannabis", "Alcool", "Bêtabloquants"], correct: [1, 4], official: "B, E" },
+            { id: 34, cat: "semiologie", q: "Critères gravité syndrome méningé : (1RF)", options: ["Sepsis", "Purpura extensif", "Choc", "Troubles conscience", "Fièvre > 39"], correct: [4], official: "E" },
+            { id: 35, cat: "semiologie", q: "La douleur est considérée comme : (1RJ)", options: ["Signal d'alarme", "Source de stress", "Toujours objective", "Lien expérience patient", "Stimulus physique"], correct: [2], official: "C" },
+            { id: 36, cat: "radiologie", q: "Concernant la Diffusion en IRM : (1RF)", options: ["Séquence morphologique", "Sensible AVC", "Hyper signal lors AVC", "Sensible fluides", "Hyper signal tumeurs"], correct: [0], official: "A" },
+            { id: 37, cat: "radiologie", q: "Plus haute densité au scanner : (1RJ)", options: ["Parenchyme", "Sang frais", "LCR", "Graisse", "Cervelet"], correct: [1], official: "B" },
+            { id: 38, cat: "radiologie", q: "Séquence IRM la plus performante pour l'HSA : (1RJ)", options: ["T2", "T2 FLAIR", "C (non précisé)", "Diffusion", "T1"], correct: [1], official: "B" },
+            { id: 39, cat: "radiologie", q: "L'hématome extra-dural : (1RJ)", options: ["Intra axial", "Cause = HTA", "TDM = Hypodense", "TDM = Biconvexe", "Sans fracture"], correct: [3], official: "D" },
+            { id: 40, cat: "radiologie", q: "L'hématome sous dural : (1RF)", options: ["Arachnoïde/Dure-mère", "Cause = HTA", "TDM = Croissant", "TDM = Bande", "Scanner avec injection"], correct: [4], official: "E" },
+            { id: 41, cat: "radiologie", q: "Echo-doppler TSA(RF) :", options: ["Non invasif", "Vitesse GR", "Doppler pulsé = sens flux", "Sténose", "Thrombose artérielle"], correct: [2], official: "C" },
+            { id: 42, cat: "radiologie", q: "Séquence T2 FLAIR : (RJ)", options: ["LCR hypo", "LCR hyper", "Oedème hypo", "Oedème hyper", "Oedème iso"], correct: [0, 3], official: "B" },
+            { id: 43, cat: "radiologie", q: "L'IRM repose sur les propriétés de : (1RJ)", options: ["Na+", "H+", "Ca+", "Oxygène", "H2O"], correct: [1], official: "B" },
+            { id: 44, cat: "biochimie", q: "Méningite virale, quel signe ne correspond pas ? (RF)", options: ["1000 leucocytes (85% lympho)", "Clair eau de roche", "Glycémie 2 - Glyco 0.5", "Hypoprotéinorachie", "Chlorurorachie effondrée"], correct: [2, 3, 4], official: "D" },
+            { id: 45, cat: "biochimie", q: "Index IgG élevé oriente vers : (1RJ)", options: ["Barrière HM", "Synthèse intrathécale IgG", "Maladie Kahler", "Méningite bactérienne", "Faux"], correct: [1], official: "B" },
+            { id: 46, cat: "biochimie", q: "Patient diabétique (Glycémie 2.5). Oriente méningite bactérienne :", options: ["Glycorachie 0.7", "Eau de roche", "Lymphocytaire", "Hyperprotéino", "Hypochloro"], correct: [0, 3, 4], official: "A D E" },
+            { id: 47, cat: "biochimie", q: "Déficit en G6PD : (1RF)", options: ["Crises hémolytiques", "Plus fréquente", "LDH élevée", "Gonosomale", "Diagnostic dosage sérique"], correct: [4], official: "D" },
+            { id: 48, cat: "biochimie", q: "Enzymes sériques : (1RF)", options: ["Amylase urines/sang", "CKmb pondérale", "Transaminases spécifiques hépatique", "Pancréatique = urgence", "Résultats UI/L"], correct: [2], official: "C" },
+            { id: 49, cat: "biochimie", q: "Bilan musculaire sauf :", options: ["CK", "CPK", "ASAT", "LDH", "Gamma GT"], correct: [4], official: "E" },
+            { id: 50, cat: "biochimie", q: "Transaminases : (1RF)", options: ["TGP = ALAT", "Hépatite chronique = modérée", "Foie : ALAT > ASAT", "Hép. alcoolique : ASAT/ALAT < 1", "Cirrhose : ASAT/ALAT > 1"], correct: [3], official: "D" },
+            { id: 51, cat: "biochimie", q: "Hépatite virale aigue : (1RF)", options: ["Cytolyse", "TGP augmente avant ictère", "TGO/TGP faible", "PAL/GGT très augmentées", "Paramètres non spécifiques"], correct: [3], official: "D" },
+            { id: 52, cat: "biochimie", q: "Enzymes sériques : (1RF)", options: ["Concentration pondérale", "UI/L", "Pathologie = augmentation", "Hémolyse garrot", "Pas toutes urgentes"], correct: [0], official: "A" },
+            { id: 53, cat: "physiopathologie", q: "HIC, hyperconsommation d'oxygène ? (1RF)", options: ["Fièvre", "Douleur", "Sédation", "Anxiété", "Agitation"], correct: [2], official: "C" },
+            { id: 54, cat: "physiopathologie", q: "Mécanismes HIC : (1RF)", options: ["Vol. sanguin", "Vol. parenchyme", "Vol. LCR", "Diminution production LCR", "Abcès/Tumeur"], correct: [3], official: "D" },
+            { id: 55, cat: "physiopathologie", q: "Signes cliniques HIC : (1RF)", options: ["Céphalées", "Vomissements jet", "Oedème papillaire", "Troubles psychiques", "Troubles conscience"], correct: [3], official: "D" },
+            { id: 56, cat: "physiopathologie", q: "Signe de Kernig :", options: ["A: Douleur lombaire flexion nuque", "B: Douleur flexion membres inf", "C: Flexion membres inf flexion nuque", "D: Toutes fausses"], correct: [1], official: "B" },
+            { id: 57, cat: "physiopathologie", q: "Quel organe lésé : Transa modérées, PAL normales, CPK élevées, LDH élevée ?", options: ["Pancréas", "Muscle", "Os", "Foie (cytolyse)", "Foie (cholestase)"], correct: [1], official: "D" },
+            { id: 58, cat: "physiopathologie", q: "Paresthésies sont :", options: ["Fourmillements", "Dysesthésies", "Allodynies", "Faux", "Toutes justes"], correct: [0], official: "A" },
+            { id: 59, cat: "physiopathologie", q: "Oedème hémodynamique : (1RF)", options: ["Pauvre protéines", "Pression hydrostatique", "Généralisé", "Inflammation locale", "Pression oncotique"], correct: [3], official: "D" },
+            { id: 60, cat: "physiopathologie", q: "Oedème vasogénique : (1RF)", options: ["Eau extra-vasculaire", "Rouge et chaud", "Mou/Pâle", "Parties déclives", "Signe du Godet"], correct: [1], official: "B" }
+        ];
+
+        const data2024_Full = [
+            { id: 1, cat: "semiologie", q: "Le syndrome de Weber :", options: ["Lésion protubérantielle", "Atteinte du III homolatérale", "Hémiplégie homolatérale", "Syndrome alterne sensitif", "Toutes fausses"], correct: [1], official: "B" },
+            { id: 2, cat: "semiologie", q: "Myasthénie auto-immune :", options: ["Ptosis fluctuant", "Hypertonie spastique", "Atteinte du trijumeau", "Réflexes polycinétiques", "Toutes fausses"], correct: [0], official: "A" },
+            { id: 3, cat: "semiologie", q: "Sensibilité superficielle (fausse) :", options: ["Tactile", "Douloureuse", "Vibratoire", "Thermique", "Adiadococinésie"], correct: [2, 4], official: "C et E" },
+            { id: 4, cat: "semiologie", q: "Brown-Séquard :", options: ["Syndrome cordonal postérieur homolatéral", "Troubles tactiles homolatéraux", "Troubles thermo-algiques controlatéraux", "Syndrome cérébelleux controlatéral", "Syndrome pyramidal controlatéral"], correct: [0, 1, 2], official: "A + B + C" },
+            { id: 5, cat: "semiologie", q: "Réflexe bicipital :", options: ["C4-C5", "C5-C6", "Flexion avant-bras", "B + C", "A + C"], correct: [3], official: "D (B + C)" },
+            { id: 6, cat: "semiologie", q: "Réflexe cutanéo-plantaire (fausse) :", options: ["Réflexe ostéo-tendineux", "Effleurement plante pied", "Flexion plantaire", "Peut être indifférent", "Babinski pathologique"], correct: [0], official: "A" },
+            { id: 7, cat: "semiologie", q: "Syringomyélie :", options: ["Lésion centrale moelle", "SNC", "Déficit sensitif dissocié", "Suspendue à quelques métamères", "Toutes justes"], correct: [4], official: "E" },
+            { id: 8, cat: "semiologie", q: "Coordination (fausse) :", options: ["Doigt-nez", "Mobilisation passive", "Talon-genou", "Mouvements alternatifs rapides", "Station debout/marche yeux ouverts/fermés"], correct: [1], official: "B" },
+            { id: 9, cat: "semiologie", q: "Crise épileptique grand mal :", options: ["Prodromes", "3 phases", "Morsure langue + perte urines", "Amnésie post-critique", "Toutes justes"], correct: [1, 2, 3], official: "B + C + D" },
+            { id: 10, cat: "semiologie", q: "Syndrome démentiel (fausse) :", options: ["Lésions cérébrales", "Brutal", "Alzheimer, fronto-temporales", "Différencier de débilité/confusion", "Toutes justes"], correct: [1], official: "B" },
+            { id: 11, cat: "semiologie", q: "Système pyramidal :", options: ["Motricité volontaire + mouvements fins", "Motricité involontaire", "Motricité automatique", "Régulation réflexes posturaux", "Volontaire + involontaire"], correct: [0], official: "A" },
+            { id: 12, cat: "semiologie", q: "Ataxie proprioceptive (fausse) :", options: ["Trouble coordination", "Instabilité yeux fermés", "Démarche talonnante", "Pas de dysmétrie doigt-nez/talon-genou", "Atteinte sensibilité profonde"], correct: [0], official: "A" },
+            { id: 13, cat: "semiologie", q: "Mono-neuropathie :", options: ["Paresthésies sans douleur", "Hypo/anesthésie territoire tronc", "Douleurs déclenchées pression tronc", "Troubles en chaussettes/gants", "Limité aux MI"], correct: [1, 2], official: "B + C" },
+            { id: 14, cat: "semiologie", q: "La confusion suit…", options: ["Somnolence", "Obnubilation", "Stupeur", "Normal", "Coma"], correct: [1], official: "B" },
+            { id: 15, cat: "semiologie", q: "Coma métabolique :", options: ["Fièvre", "Déficit moteur", "Raideur méningée", "Aréactivité pupillaire unilatérale", "Coma sans fièvre/ni signes méningés/localisation"], correct: [4], official: "E" },
+            { id: 16, cat: "semiologie", q: "Lésion pyramidal au-dessus décussation :", options: ["Déficit ipsilatéral", "Déficit controlatéral", "Paraplégie flasque", "Diplégie faciale", "Tétraplégie"], correct: [1], official: "B" },
+            { id: 17, cat: "semiologie", q: "Parkinson :", options: ["Triade classique", "Tremblement repos", "↑ émotions/fatigue, ↓ sommeil/mvt", "4 phases", "Toutes justes"], correct: [4], official: "E" },
+            { id: 18, cat: "semiologie", q: "Mobilisation articulation (fausse) :", options: ["Indolence", "Mensurations angle", "Porte d’entrée", "Raideur", "Fonction musculaire"], correct: [2], official: "C" },
+            { id: 19, cat: "semiologie", q: "Vitro-pression :", options: ["Différencie érythème/purpura", "Différencie érythème/dyschromie", "Purpura disparaît ", "Érythème ne s’efface pas ", "Curette "], correct: [0], official: "A" },
+            { id: 20, cat: "semiologie", q: "Bulles (fausse) :", options: ["Pemphigus intra-épidermique", "Pemphigus dermo-épidermique ", "Purulent possible", "Clair/séreux/hémorragique", "> 5 mm"], correct: [1], official: "B" },
+            { id: 21, cat: "semiologie", q: "Lésions vasculaires (fausse) :", options: ["Télangiectasies", "Angiomes plans", "Fièvres éruptives enfant ", "Éphélides ", "Purpuras"], correct: [2, 3], official: "C + D" },
+            { id: 22, cat: "semiologie", q: "Macules (fausse) :", options: ["Sans infiltration", "Sans relief", "Visibles", "Rouges ou pigmentées", "Toujours rouges"], correct: [4], official: "E" },
+            { id: 23, cat: "semiologie", q: "Pustules (fausse) :", options: ["Afflux PNN", "Origine bactérienne ou non", "Psoriasis pustuleux aseptique", "Toujours centrées par poil", "Acné"], correct: [3], official: "D" },
+            { id: 24, cat: "semiologie", q: "Vésicule (fausse) :", options: ["Visible/palpable", "Relief", "> 5 mm ", "Hémisphérique", "Contenu purulent possible"], correct: [2], official: "C" },
+            { id: 25, cat: "semiologie", q: "Douleur inflammatoire :", options: ["Fin journée", "Réveille 2h matin", "Dérouillage 15 min", "Améliorée effort", "Aggravée repos"], correct: [1, 3, 4], official: "B + D + E" },
+            { id: 26, cat: "semiologie", q: "Pathologies douleur inflammatoire :", options: ["Arthrose", "PR", "Entorse", "Infection ostéo-articulaire", "Tumeur osseuse"], correct: [1, 3, 4], official: "B + D + E" },
+            { id: 27, cat: "semiologie", q: "Liquide genou (épanchement) :", options: ["Grinding", "Schöber", "Choc rotulien", "Lasègue", "McMurray"], correct: [2], official: "C" },
+            { id: 28, cat: "semiologie", q: "Liquide mécanique (fausse) :", options: ["Jaune citrin", "Riche en cellules ", "Visqueux", "Protides < 40 g/l", "Pauvre en cellules"], correct: [1], official: "B" },
+            { id: 37, cat: "physiopathologie", q: "Signes cliniques syndrome malin neuroleptiques :", options: ["Patient confus", "FC 78/min", "ROT diminués", "Trouble du rythme", "Hypotonie musculaire"], correct: [0, 3], official: "A + D" },
+            { id: 38, cat: "physiopathologie", q: "Signes biologiques syndrome malin neuroleptiques :", options: ["Myoglobinurie", "Rhabdomyolyse", "Acidose respiratoire", "Acidose métabolique", "Hypercapnie"], correct: [0, 1, 3], official: "A + B + D" },
+            { id: 39, cat: "physiopathologie", q: "Patient âgé, fièvre 41°C sans foyer infectieux évident :", options: ["Fièvre", "Coup de chaleur", "Syndrome malin des neuroleptiques", "Hypothyroïdie", "Toutes justes"], correct: [1], official: "B" },
+            { id: 40, cat: "physiopathologie", q: "Patient confus, froid, sans frissons après chute dans puits :", options: ["37°C", "34°C", "30°C", "23°C", "Aucune"], correct: [1], official: "B" },
+            { id: 41, cat: "physiopathologie", q: "Température centrale 34°C correspond à :", options: ["Normale", "Hypothermie modérée", "Hypothermie sévère", "Hypothermie profonde", "Aucune"], correct: [1], official: "B" },
+            { id: 42, cat: "physiopathologie", q: "Hypothermie entraîne :", options: ["Hypotension artérielle", "Baisse fonction ventriculaire", "Augmentation débit cardiaque", "Baisse métabolisme cellulaire", "Vasodilatation périphérique"], correct: [0, 1, 3], official: "A + B + D" },
+            { id: 43, cat: "physiopathologie", q: "ECG en hypothermie :", options: ["Bradycardie", "Allongement QT/PR", "Onde delta", "Onde J", "Fibrillation ventriculaire"], correct: [0, 1, 3, 4], official: "A + B + D + E" },
+            { id: 44, cat: "physiopathologie", q: "Étiologies HIC :", options: ["Hématome cérébral", "Méningite", "Tumeur cérébrale", "Abcès cérébral", "Traumatisme"], correct: [0, 1, 2, 3, 4], official: "A + B + C + D + E" },
+            { id: 45, cat: "physiopathologie", q: "Risques HIC :", options: ["Engagement sous-falcique", "Engagement temporal", "Engagement diencéphalique", "Engagement amygdales cérébelleuses", "Engagement protubérance"], correct: [0, 1, 3], official: "A + B + D" },
+            { id: 46, cat: "physiopathologie", q: "Signes cliniques HIC :", options: ["Diplopie", "Coma", "Céphalées", "Vomissements", "Mydriase unilatérale"], correct: [1, 2, 3, 4], official: "B + C + D + E" },
+            { id: 47, cat: "physiopathologie", q: "Traitement HIC :", options: ["Décubitus horizontal strict", "Corticothérapie", "Osmothérapie", "Volet décompressif", "Toutes"], correct: [2, 3], official: "C + D" },
+            { id: 48, cat: "physiopathologie", q: "Acidose métabolique :", options: ["pH 7.26", "Bicarbonates 15 mmol/l", "Respiration ample et profonde", "Nausées/vomissements", "Coma"], correct: [0, 1, 2, 3, 4], official: "A + B + C + D + E" },
+            { id: 49, cat: "physiopathologie", q: "Bilan : pH 7.30 ; HCO3- 15 ; Na+ 140 ; K+ 5 ; PaO2 80 ; PaCO2 30", options: ["Acidose métabolique trou anionique élevé", "Acidose métabolique trou normal", "Alcalose respiratoire trou élevé", "Alcalose respiratoire trou normal", "Aucune"], correct: [0], official: "A" },
+            { id: 50, cat: "physiopathologie", q: "Bilan : pH bas, PaCO2 élevée, HCO3- augmentés, hyperkaliémie, hypochlorémie", options: ["Alcalose métabolique compensée", "Acidose respiratoire décompensée", "Acidose métabolique décompensée", "Alcalose métabolique surcompensée", "Aucune"], correct: [1], official: "B" },
+            { id: 56, cat: "biochimie", q: "Cinétique enzymes hépatiques :", options: ["Cholestase", "Hépatite médicamenteuse", "Hépatite alcoolique aiguë", "Hépatite virale", "Cytolyse hépatique"], correct: [0, 3, 4], official: "E (a + d + e)" },
+            { id: 57, cat: "biochimie", q: "Dosage CPK indiqué pour dépistage effets indésirables :", options: ["Diurétiques", "Metformine", "Statines", "Antidiabétiques oraux", "Corticoïdes"], correct: [2], official: "C" },
+            { id: 58, cat: "biochimie", q: "Méningite tuberculeuse (LCR) :", options: ["Hyperglycorachie", "Eau de roche", "Hyperleucocytose lymphocytaire", "Hyperprotéinorachie", "Hyperchlorrurorachie"], correct: [1, 2, 3], official: "B + C + D" },
+            { id: 59, cat: "biochimie", q: "Méningite bactérienne (LCR) :", options: ["Lymphocytose", "Albumine bas", "Liquide clair", "Lactate élevé", "Chlorure élevé"], correct: [3], official: "D" },
+            { id: 60, cat: "biochimie", q: "Méningite virale (LCR) – signes qui ne correspondent pas :", options: ["1000 leucocytes, 85% lymphocytes", "Eau de roche", "Glycorachie basse (0.5 g/l)", "Hypoprotéinorachie", "Chlorurorachie effondrée"], correct: [2, 3, 4], official: "C + D + E" }
+        ];
+
+        const dataConstantine21 = [
+            { id: 1, cat: "semiologie", q: "L'adiadococinésie est :", options: ["Difficulté d'exécuter les mouvements alternatifs rapides", "Impossibilité d'exécuter les mouvements lents", "Impossibilité d'exécuter les mouvements finalisés", "Impossibilité de reconnaitre les objets familiers", "Difficulté de maintenir l'attitude"], correct: [0], official: "A", details: "L’adiadococinésie = difficulté à réaliser des mouvements alternatifs rapides (comme pronation/supination)." },
+            { id: 2, cat: "semiologie", q: "Toutes les assertions suivantes caractérisent l'hypertonie spastique sauf une :", options: ["Prédomine sur fléchisseurs-pronateurs aux membres supérieurs", "Prédomine sur extenseurs-adducteurs aux membres inférieurs", "Prédomine sur extenseurs-abducteurs aux membres inférieurs", "Elective", "Elastique"], correct: [2], official: "C", details: "Hypertonie spastique prédomine sur fléchisseurs-pronateurs (MS) et extenseurs-adducteurs (MI)." },
+            { id: 3, cat: "semiologie", q: "Concernant le réflexe tricipital, le niveau de l'arc réflexe est :", options: ["C5 - nerf musculo-cutané", "C7 - nerf tricipital", "C6 - nerf radial", "C7 - nerf radial", "C8 - nerf ulnaire"], correct: [3], official: "D", details: "Réflexe tricipital = C7, nerf radial." },
+            { id: 4, cat: "semiologie", q: "Concernant le réflexe bicipital, le niveau de l'arc réflexe est :", options: ["C5 - nerf musculo-cutané", "C7 - nerf radial", "C7 - nerf tricipital", "C6 - nerf radial", "C8 - nerf ulnaire"], correct: [0], official: "A", details: "Réflexe bicipital = C5, nerf musculo-cutané." },
+            { id: 5, cat: "semiologie", q: "L'amnésie antérograde est :", options: ["Oubli portant sur les événements qui précèdent l'épisode pathologique", "Amnésie focale dans les souvenirs du patient", "Impossibilité de fixation des souvenirs anciens", "Impossibilité de fixation des souvenirs nouveaux", "Impossibilité de fixation des souvenirs anciens et nouveaux"], correct: [3], official: "D", details: "Antérograde = incapacité à fixer de nouveaux souvenirs." },
+            { id: 6, cat: "semiologie", q: "L'ataxie cérébelleuse est caractérisée par :", options: ["Elle est aggravée par l'occlusion des yeux", "Tremblement de repos", "Désorientation spatio-temporelle", "Associée à une hypertonie musculaire", "Désorganisation spatio-temporelle du mouvement"], correct: [4], official: "E", details: "Ataxie cérébelleuse = désorganisation spatio-temporelle du mouvement." },
+            { id: 7, cat: "semiologie", q: "Toutes les assertions suivantes caractérisent l'aphasie de Wernicke sauf une :", options: ["Sensorielle", "Le langage spontané est abondant", "Lésion siège au niveau pariétal", "Paraphrasies sémantiques nombreuses", "La compréhension est totalement perturbée"], correct: [2], official: "C", details: "Wernicke = aphasie sensorielle, langage abondant, paraphrasies, compréhension perturbée. Siège temporal, pas pariétal." },
+            { id: 8, cat: "semiologie", q: "Toutes les assertions suivantes caractérisent l'aphasie de Broca sauf une :", options: ["Aphasie motrice", "Aphasie expressive", "Siège dans le lobe temporal", "S'accompagne de dysgraphie", "S'accompagne de dyslexie"], correct: [2], official: "C", details: "Broca = aphasie motrice/expressive, siège frontal, souvent avec dysgraphie/dyslexie." },
+            { id: 9, cat: "semiologie", q: "Le délire est défini par :", options: ["Confusion mentale avec torpeur intellectuelle", "Confusion mentale avec abolition du réflexe oculo-encéphalique", "Etat d'ébriété", "Confusion mentale avec excitation et hallucinations", "Etat amnésique"], correct: [3], official: "D", details: "Délire = confusion mentale avec agitation, hallucinations." },
+            { id: 10, cat: "semiologie", q: "La crise type petit mal est :", options: ["Crise tonico-clonique partielle", "Absence des réflexes mésencéphaliques", "Absence", "Suspension longue de la conscience", "Syncope"], correct: [2], official: "C", details: "Petit mal = crise d’absence (brève suspension de la conscience)." },
+            { id: 11, cat: "semiologie", q: "Dans la maladie de Parkinson, le tremblement est :", options: ["De repos", "D'attitude", "Intentionnel", "Cérébelleux", "Athétosique"], correct: [0], official: "A", details: "Tremblement parkinsonien = de repos." },
+            { id: 12, cat: "semiologie", q: "Toutes les propositions caractérisent le réflexe de Babinski sauf une :", options: ["Réflexe cutané plantaire en flexion des orteils", "Réflexe cutané plantaire en extension du gros orteil", "Témoin d'une atteinte pyramidale", "Présent chez le nourrisson avant 2 ans", "Signe de l'éventail des autres orteils"], correct: [0], official: "A", details: "Babinski = extension du gros orteil + éventail. Flexion = réflexe normal." },
+            { id: 13, cat: "semiologie", q: "Syndrome vestibulaire périphérique comporte tous ces signes sauf un :", options: ["Vertige", "Signe de Romberg latéralisé", "Démarche étoilée de Babinski-Weill", "Signe de Babinski", "Nystagmus"], correct: [3], official: "D", details: "Vertige, Romberg latéralisé, démarche étoilée, nystagmus = vestibulaire périphérique. Babinski = atteinte pyramidale." },
+            { id: 14, cat: "semiologie", q: "Toutes les propositions caractérisent le réflexe nauséeux sauf une :", options: ["Nerf IX afférent", "Nerf X efférent", "Centre bulbaire", "S'examine avec un marteau à réflexe", "S'examine avec un abaisse-langue"], correct: [3], official: "D", details: "Réflexe nauséeux = IX afférent, X efférent, centre bulbaire, examen avec abaisse-langue." },
+            { id: 15, cat: "semiologie", q: "Au sujet de la névralgie du IX (glosso-pharyngien), cochez la proposition juste :", options: ["Douleur de la face", "Déclenchée par le réflexe nauséeux", "Réflexe nauséeux présent", "Irradie le long du cou", "Douleur chronique"], correct: [3], official: "D", details: "Douleur irradiant le long du cou = névralgie du IX." },
+            { id: 16, cat: "semiologie", q: "En cas d'atteinte du XII (nerf hypoglosse), tous les signes sont présents sauf un :", options: ["Langue amincie", "Langue déviée du côté sain", "Langue déviée du côté paralysé", "Fasciculations linguales", "Dysarthrie si bilatérale"], correct: [1], official: "B", details: "Déviation vers le côté paralysé." },
+            { id: 17, cat: "semiologie", q: "Diagnostics différentiels d'une migraine avec aura :", options: ["Crise d'épilepsie partielle", "Arthrose cervicale", "Hypoglycémie", "Tumeur cérébrale", "Accident vasculaire ischémique transitoire"], correct: [0, 4], official: "A et E", details: "Aura peut mimer épilepsie partielle ou AIT." },
+            { id: 18, cat: "semiologie", q: "Aura migraineuse typique :", options: ["Troubles visuels : scotome", "Troubles auditifs : phosphènes", "Paresthésies progressant vers la face", "Troubles moteurs : déficit distal", "Troubles du langage : dysarthrie"], correct: [0, 2, 4], official: "A, C, E", details: "Visuels, sensitifs, langage." },
+            { id: 19, cat: "semiologie", q: "Ataxie frontale :", options: ["Marche impossible", "Démarche ébrieuse", "Marche déviant toujours du même côté", "Signe de Romberg", "Rétropulsion du tronc avant marche"], correct: [0, 4], official: "A et E", details: "Ataxie frontale = marche impossible + rétropulsion." },
+            { id: 20, cat: "semiologie", q: "Signe de Chvostek :", options: ["Trouble sensitif paroxystique", "Percussion du sciatique poplité externe", "Contraction orbiculaire des paupières", "Survient lors d’un accès de tétanie", "Percussion de l’angle externe de l’œil"], correct: [2, 3], official: "C et D", details: "Chvostek = contraction faciale (orbiculaire) lors percussion masséter, signe de tétanie." },
+            { id: 21, cat: "semiologie", q: "Comment examine-t-on la sensibilité profonde ?", options: ["Toucher le patient avec un morceau de coton", "Reconnaissance des objets au toucher, yeux fermés", "Application d’un tube de glace sur les téguments", "Application du diapason sur les saillies osseuses", "Piqûre des téguments avec une aiguille"], correct: [1, 3], official: "B et D", details: "Sensibilité profonde = stéréognosie (B) et vibration (D)." },
+            { id: 22, cat: "semiologie", q: "Signe de Romberg cérébelleux :", options: ["Oscillations de tout le corps", "Non aggravation à la fermeture des yeux", "Troubles de la sensibilité superficielle", "Chute sans latéralisation", "Écartement des pieds"], correct: [0, 1, 3, 4], official: "A, B, D, E", details: "Romberg cérébelleux = oscillations, non aggravé yeux fermés, chute possible sans latéralisation, pieds écartés." },
+            { id: 23, cat: "semiologie", q: "EMG au cours du syndrome neurogène périphérique :", options: ["Activité anormale de fibrillation", "Tracé simple", "Vitesses de conduction diminuées", "Tracé trop riche", "Bloc neuromusculaire"], correct: [0, 1, 2], official: "A, B, C", details: "Fibrillations, tracé pauvre/simple, vitesses diminuées." },
+            { id: 24, cat: "semiologie", q: "Surdité de transmission :", options: ["Atteinte oreille interne", "Voix haute peu diminuée", "Voix chuchotée fortement diminuée", "Rinne négatif", "Weber latéralisé et positif"], correct: [1, 2, 3, 4], official: "B, C, D, E", details: "Surdité de transmission = voix haute conservée, voix chuchotée diminuée, Rinne négatif, Weber latéralisé." },
+            { id: 25, cat: "semiologie", q: "Syndrome de Claude Bernard-Horner :", options: ["Rétrécissement fente palpébrale", "Énophtalmie", "Myosis", "Paralysie sympathique cervical supérieur", "Strabisme divergent"], correct: [0, 1, 2, 3], official: "A, B, C, D", details: "Triade : myosis, ptosis, énophtalmie + atteinte sympathique." },
+            { id: 26, cat: "semiologie", q: "Symptomatologie commune d’une mono-arthrite :", options: ["Impotence fonctionnelle, déformation, craquement", "Douleur inflammatoire, volume articulaire ↑, fièvre, chaleur locale", "Douleur mécanique, craquement, limitation", "Douleur mécanique, déformations, craquement", "Conservation état général, craquement, déformation"], correct: [1], official: "B", details: "Mono-arthrite = douleur inflammatoire, tuméfaction, chaleur, fièvre." },
+            { id: 27, cat: "semiologie", q: "Mono-arthrite chronique :", options: ["< 3 semaines", "< 1 mois", "> 6 semaines", "> 3 semaines", "< 6 semaines"], correct: [2], official: "C", details: "Chronique = > 6 semaines." },
+            { id: 28, cat: "semiologie", q: "Arthrose secondaire :", options: ["Tardive, sans cause précise", "Précoce, origine traumatique", "> 50 ans, F, obésité, génétique", "< 50 ans, M, diabète, génétique", "Précoce, surmenage"], correct: [1, 4], official: "B et E", details: "Arthrose secondaire = précoce, cause traumatique ou surmenage." },
+            { id: 29, cat: "semiologie", q: "Impétiginisation :", options: ["Perte de substance", "Exsudat jaunâtre", "Apparence chocolat", "Croûtes millimétriques", "Coagulation en surface"], correct: [1, 3], official: "B et D", details: "Impétiginisation = croûtes jaunâtres, millimétriques." },
+            { id: 30, cat: "semiologie", q: "Étiologies des ulcérations cutanées :", options: ["Origine artérielle", "Origine veineuse", "Origine néoplasique", "Psoriasis", "Traumatisme"], correct: [0, 1, 2, 4], official: "A, B, C, E", details: "Ulcères = artériels, veineux, néoplasiques, traumatiques." },
+            { id: 31, cat: "biochimie", q: "Isoenzymes spécifiques au muscle squelettique :", options: ["LDH4, LDH5", "LDH4, LDH1", "Aldolase C", "Aldolase A", "CPK-MM"], correct: [0, 3, 4], official: "A, D, E", details: "Muscle squelettique = LDH4-5, Aldolase A, CPK-MM." },
+            { id: 32, cat: "biochimie", q: "Créatine phosphokinase plasmatique :", options: ["Nécessite Mg²⁺ pour activité", "Diminue au 2ᵉ trimestre grossesse", "Augmente ×100-500 dans dystrophie Duchenne", "Diminue après effort musculaire", "Surestimée en cas de macroCPK"], correct: [0, 1, 4], official: "A, B, E", details: "Mg²⁺ nécessaire, baisse grossesse, macroCPK surestime." },
+            { id: 33, cat: "biochimie", q: "Enzymes tissulaires :", options: ["Mitochondriaux les plus sensibles", "Cytosoliques libérées précocement", "Synthèse élevée par cellules tumorales", "Augmentation plasmatique = renouvellement cellulaire", "Libération subcellulaire reflète gravité"], correct: [1, 2, 4], official: "B, C, E", details: "Cytosoliques précoces, cellules tumorales produisent, libération reflète gravité." },
+            { id: 34, cat: "biochimie", q: "Enzymes augmentées en myopathie :", options: ["ASAT", "ALAT", "LDH", "Lipase", "Phosphatase alcaline"], correct: [0, 2], official: "A et C", details: "ASAT et LDH augmentent." },
+            { id: 35, cat: "biochimie", q: "Taux plasmatique de la transaminase GOT (ASAT) :", options: ["Augmente grossesse", "Sous-estimé si hémolyse in vitro", "Diminué carence B12", "Augmente obésité", "Augmente ×5-15 en atteinte musculaire"], correct: [3, 4], official: "D et E", details: "Obésité et atteinte musculaire → hausse." },
+            { id: 36, cat: "biochimie", q: "Isoenzymes CPK :", options: ["CPK-MM ↑ dans affections neurologiques", "5 isoenzymes", "Enzymes dimériques", "CPK-BB ↑ dans affections neurologiques", "CPK-MB ↑ dans affections neurologiques"], correct: [0, 2, 3], official: "A, C, D", details: "CPK-MM parfois ↑, ce sont des dimères, CPK-BB ↑ neurologique." },
+            { id: 37, cat: "biochimie", q: "Ponction lombaire complications :", options: ["Troubles majeurs hémostase", "Hématome extra/sous-dural", "Thromboses veineuses cérébrales septiques", "HTIC avec œdème papillaire", "Abcès et méningites"], correct: [1, 2, 4], official: "B, C, E", details: "Hématome, TVC septiques, infections." },
+            { id: 38, cat: "biochimie", q: "Pathologies avec profil oligoclonal LCR sauf une :", options: ["Sclérose en plaques", "Guillain-Barré", "Encéphalite VIH", "Parkinson", "Creutzfeldt-Jakob"], correct: [3], official: "D", details: "Parkinson n'a pas de profil oligoclonal typique." },
+            { id: 39, cat: "biochimie", q: "L'isoélectrofocalisation (IEF) repose sur :", options: ["Utilisation d’antisérum anti-IgG", "Révélation immuno-enzymatique des Ig séparées par électrophorèse", "Séparation des protéines selon leur point isoélectrique", "Migration dans un gradient de pH linéaire créé par des ampholytes", "Analyse du sérum et du LCR en parallèle après ajustement en IgG"], correct: [2, 3, 4], official: "C, D, E", details: "IEF = séparation selon point isoélectrique, gradient pH, comparaison sérum/LCR." },
+            { id: 40, cat: "radiologie", q: "Principale indication du scanner cérébral en urgence :", options: ["Pathologie traumatique", "Pathologie infectieuse", "Pathologie rhumatismale", "Pathologie vasculaire", "Pathologie inflammatoire"], correct: [0], official: "A", details: "Scanner en urgence = traumatisme crânien." },
+            { id: 41, cat: "radiologie", q: "Avantages du scanner en urgences neurologiques :", options: ["Examen non irradiant", "Acquisition rapide", "Bonne résolution en contraste", "Disponibilité", "Exploration atteinte osseuse"], correct: [1, 3, 4], official: "B, D, E", details: "Scanner = rapide, disponible, exploration osseuse." },
+            { id: 42, cat: "radiologie", q: "Hématome extra-dural :", options: ["Collection sang entre dure-mère et arachnoïde", "Lésion extra-axiale", "Urgence neurochirurgicale", "Sang entre voûte et dure-mère", "Lésion intra-axiale"], correct: [1, 2, 3], official: "B, C, D", details: "Extra-axial, urgence, sang entre voûte et dure-mère." },
+            { id: 43, cat: "radiologie", q: "Traumatisme crânio-encéphalique :", options: ["TDM = principale modalité", "Lésions primaires = compression-rétraction", "Lésions secondaires = complications des primaires", "Radiographie standard = prise en charge majeure", "IRM = meilleur examen pour lésions osseuses"], correct: [0, 2], official: "A, C", details: "TDM = examen clé, lésions secondaires = complications." },
+            { id: 44, cat: "radiologie", q: "Devant une lésion osseuse, examen de 1ʳᵉ intention :", options: ["Échographie", "Radiographie standard", "Scintigraphie", "TDM", "IRM"], correct: [1], official: "B", details: "Radiographie standard = premier examen." },
+            { id: 45, cat: "radiologie", q: "Structures radio-opaques :", options: ["Cartilage", "Os cortical", "Périoste", "Os spongieux", "Parties molles"], correct: [1, 3], official: "B et D", details: "Os cortical et spongieux = radio-opaques." },
+            { id: 46, cat: "radiologie", q: "Infiltration tumorale de la moelle osseuse :", options: ["Échographie", "Radiographie standard", "Scintigraphie", "TDM", "IRM"], correct: [4], official: "E", details: "IRM = meilleure exploration moelle osseuse." },
+            { id: 47, cat: "radiologie", q: "Détection anomalies musculosquelettiques par échographie :", options: ["Pincement articulaire", "Épanchement intra-articulaire", "Hématome musculaire", "Ostéopénie", "Œdème osseux"], correct: [1, 2], official: "B et C", details: "Échographie = épanchement, hématome." },
+            { id: 48, cat: "radiologie", q: "Signes radiologiques d’un tassement vertébral bénin :", options: ["Tassement multiple", "Siège lombaire", "Corticale respectée", "Atteinte arc postérieur", "Tuméfaction parties molles"], correct: [0, 1, 2], official: "A, B, C", details: "Tassement bénin = multiple, lombaire, corticale respectée." },
+            { id: 49, cat: "physiopathologie", q: "Œdème cérébral vasogénique :", options: ["Œdème intracellulaire", "Altération membrane cellulaire", "Altération barrière hémato-encéphalique", "Hypo-osmolalité plasmatique aiguë", "Complication tumeurs cérébrales"], correct: [2, 4], official: "C et E", details: "Vasogénique = barrière hémato-encéphalique altérée, souvent tumeurs." },
+            { id: 50, cat: "physiopathologie", q: "Débit sanguin cérébral :", options: ["Dépend uniquement de la PAM", "Dépend uniquement de la PIC", "Autorégulé pour PAM 60-150 mmHg", "Proportionnel aux résistances vasculaires cérébrales", "Proportionnel à la PPC et inverse aux résistances"], correct: [2, 4], official: "C et E", details: "Autorégulation PAM 60-150, dépend PPC et résistances." },
+            { id: 51, cat: "physiopathologie", q: "L’œdème traduit séquestration d’eau :", options: ["Secteur interstitiel intracellulaire", "Secteur interstitiel extracellulaire", "Avec sel dans secteur extracellulaire", "Avec sel extracapillaire", "Secteur vasculaire"], correct: [1], official: "B (corrigé type : B ou C)", details: "Classiquement = interstitiel extracellulaire." },
+            { id: 52, cat: "physiopathologie", q: "Équation de Starling :", options: ["p.S [(Pc-Pi) - K (πc-πi)] - Q lymph", "F.S [(Pc-Pi) - K (nc-πi)] - Q lymph", "p.S [(πc-πi) - K(Pc-Pi)] - Q lymph", "F.S [(Pc-Pi) - (Tc-Ti)] - Q lymph", "p.S [(Pc-Pi) - Q lymph] - (πc-πi)"], correct: [0], official: "A", details: "Équation correcte = A." },
+            { id: 53, cat: "physiopathologie", q: "Développement d’œdème observé en cas de :", options: ["↑ pression hydrostatique capillaire", "↓ pression oncotique plasmatique", "↑ perméabilité capillaire", "Dysfonction lymphatique", "Déshydratation extracellulaire"], correct: [0, 1, 2, 3], official: "A, B, C, D", details: "Tous ces mécanismes causent œdème." },
+            { id: 54, cat: "physiopathologie", q: "Rétention Na⁺ et eau par reins → expansion volume extracellulaire :", options: ["↑ pression hydrostatique capillaire", "↓ pression oncotique plasmatique", "Insuffisance cardiaque et maladies rénales", "↑ perméabilité capillaire", "Dysfonction lymphatique"], correct: [0, 1, 2, 3, 4], official: "A, B, C, D, E", details: "Tous ces mécanismes impliquent rétention et expansion." },
+            { id: 55, cat: "physiopathologie", q: "Œdème cérébral cytotoxique :", options: ["Intracellulaire", "Obstacle circulation LCR", "Altération membrane cellulaire", "Altération barrière hémato-encéphalique", "Hypo-osmolalité plasmatique aiguë"], correct: [0, 2, 4], official: "A, C, E", details: "Cytotoxique = intracellulaire, membrane cellulaire altérée, hypo-osmolalité." },
+            { id: 56, cat: "physiopathologie", q: "Pression intracrânienne (PIC) :", options: ["Loi de Monro-Kellie : somme volumes constante", "Normale adulte = 5-15 mmHg", "Normale adulte = 25-30 mmHg", "Normale nourrisson = 5-15 mmHg", "Normale nourrisson = 2,4-4,2 mmHg"], correct: [0, 1, 4], official: "A, B, E", details: "Loi Monro-Kellie, adulte 5-15, nourrisson 2,4-4" },
+            { id: 57, cat: "physiopathologie", q: "L'œdème périphérique est un signe clinique qui peut être :", options: ["Localisé à un membre", "Localisé à un segment de membre", "Localisé à une séreuse", "Généralisé", "Toutes les réponses sont justes"], correct: [4], official: "E", details: "L’œdème périphérique peut être localisé (membre, segment, séreuse) ou généralisé." },
+            { id: 58, cat: "physiopathologie", q: "L'espace extracellulaire contient :", options: ["90 % du sodium corporel", "15 % du sodium corporel", "60 % du sodium corporel", "85 % du sodium corporel", "5 % du sodium corporel"], correct: [0], official: "A", details: "La majorité du sodium corporel est extracellulaire (~90 %)." },
+            { id: 59, cat: "physiopathologie", q: "Concernant l'œdème cérébral :", options: ["Peut se compliquer d’hypertension intracrânienne", "Est synonyme d’hypertension intracrânienne", "Est toujours intracellulaire", "Est toujours extracellulaire", "Peut être localisé ou diffus"], correct: [0, 4], official: "A et E", details: "L’œdème cérébral peut entraîner une hypertension intracrânienne et peut être localisé ou diffus." },
+            { id: 60, cat: "physiopathologie", q: "Concernant l’engagement cérébral :", options: ["Conséquence mécanique secondaire à une augmentation de la PIC", "Conséquence hémodynamique secondaire à une augmentation de la PIC", "Secondaire à une augmentation très importante du volume intracrânien", "Diagnostiqué devant céphalées et vomissements", "N’est pas une conséquence mécanique secondaire à une augmentation de la PIC"], correct: [0, 2], official: "A et C", details: "L’engagement est une conséquence mécanique d’une augmentation importante de la PIC (volume intracrânien ↑)." }
+        ];
+
+        const dataConstantine22 = [
+            { id: 1, cat: "biochimie", q: "Résultats du LCR lors d’une méningite tuberculeuse :", options: ["Glycorachie diminuée", "Chlorurorachie augmentée", "Prédominance de lymphocytes", "Prédominance d’érythrocytes", "Protéinorachie > 0,4 g/L"], correct: [0, 2, 4], official: "A, C, E", details: "Glycorachie basse, lymphocytose, hyperprotéinorachie sont typiques. Chlorures diminués (pas augmentés)." },
+            { id: 2, cat: "biochimie", q: "Méningite à liquide clair :", options: ["Méningite virale", "Méningite purulente", "Hémorragie méningée", "Méningite non infectieuse", "Méningite bactérienne décapitée"], correct: [0, 3, 4], official: "A, D, E", details: "Les méningites virales, non infectieuses ou bactériennes décapitées donnent un liquide clair." },
+            { id: 3, cat: "biochimie", q: "Composition biochimique du LCR :", options: ["Proche du plasma", "Bicarbonate = principal tampon", "Glucose, K+, Cl⁻ plus bas que plasma", "Passage Na⁺/K⁺ par simple diffusion", "Diffusion eau nécessite énergie"], correct: [0, 1], official: "A, B", details: "Composition proche du plasma, bicarbonate tampon. Passage ionique régulé." },
+            { id: 4, cat: "biochimie", q: "Profil transsudatif non inflammatoire :", options: ["Albumine très élevée", "IgG très élevées", "Aspect oligoclonal/polyclonal gamma", "IgG augmentent par synthèse locale", "Passage anormal protéines du sérum vers LCR"], correct: [0, 4], official: "A, E", details: "Protéines élevées par passage anormal (transsudat). Pas de synthèse locale." },
+            { id: 5, cat: "biochimie", q: "Enzymes augmentées en cas de myopathies :", options: ["Gamma‑GT", "CPK", "PAL", "Aldolase", "ASAT"], correct: [1, 3, 4], official: "D (2,4,5)", details: "CPK, Aldolase, ASAT augmentent. Gamma-GT et PAL sont hépatiques/osseuses." },
+            { id: 6, cat: "biochimie", q: "Enzymes du métabolisme cellulaire en cas de dommage :", options: ["Taux reste faible", "Enzymes membranaires augmentent tardivement", "Enzymes mitochondriaux augmentent précocement", "Enzymes cytosoliques sensibles", "Enzymes mitochondriaux = lésion grave"], correct: [3, 4], official: "D, E", details: "Cytosoliques précoces, mitochondriaux tardifs (lésion grave)." },
+            { id: 7, cat: "biochimie", q: "Créatine phosphokinase (CPK) :", options: ["CPK‑MB ↑ infarctus", "CPK‑MB ↑ myopathies", "CPK total ↑ effort physique", "CPK total ↑ grossesse", "CPK total ↑ 10‑50× dans Duchenne"], correct: [0, 2, 4], official: "A, C, E", details: "CPK-MB spécifique infarctus. Myopathies = CPK total élevé. Pas d'augmentation grossesse." },
+            { id: 8, cat: "biochimie", q: "Aspartate aminotransférase (ASAT) :", options: ["Prédominance hépatique", "↑ infarctus du myocarde", "Isoenzymes cytosolique et mitochondriale", "Action nécessite phosphate de pyridoxal", "↑ en cas de carence B6"], correct: [1, 2, 3], official: "B, C, D", details: "Présente aussi dans muscle/cœur. Carence B6 diminue l'activité." },
+            { id: 9, cat: "biochimie", q: "Aldolase :", options: ["Taux varie avec âge", "Agit sur fructose‑6‑phosphate", "↓ en intolérance héréditaire au fructose", "↓ au cours des myopathies", "Trois isoenzymes"], correct: [0, 2, 4], official: "A, C, E", details: "Substrat = fructose-1,6-bisphosphate. Augmente dans myopathies." },
+            { id: 10, cat: "biochimie", q: "Isoenzymes spécifiques muscle squelettique :", options: ["LDH4", "LDH5", "LDH1", "Aldolase C", "Aldolase A"], correct: [0, 1, 4], official: "A, B, E", details: "LDH4-5 et Aldolase A sont musculaires." },
+            { id: 11, cat: "biochimie", q: "Macroenzymes :", options: ["Sous‑estimation enzymes plasmatiques", "Faible poids moléculaire", "Association enzymes‑Ig", "Fréquemment avec CPK", "Fréquemment avec aldolase"], correct: [2, 3], official: "C, D", details: "Complexes Enzymes-Ig de haut poids moléculaire." },
+            { id: 12, cat: "biochimie", q: "Enzymes sensibles à l’hémolyse in vitro :", options: ["CPK", "LDH", "ASAT", "ALAT", "Aldolase"], correct: [1, 2], official: "B, C", details: "LDH et ASAT très sensibles à l'hémolyse." },
+            { id: 13, cat: "radiologie", q: "Principale indication du scanner en urgences cérébrales :", options: ["Traumatique", "Infectieuse", "Vasculaire", "Inflammatoire", "HIC"], correct: [0], official: "A", details: "Scanner est l'examen de choix en trauma." },
+            { id: 14, cat: "radiologie", q: "Avantages du scanner vs IRM en urgences cérébrales :", options: ["Disponibilité", "Exploration osseuse", "Rapidité", "Multimodalité", "Haute résolution contraste"], correct: [0, 1, 2], official: "A, B, C", details: "Rapide, disponible, voit bien l'os." },
+            { id: 15, cat: "radiologie", q: "Avantages IRM vs scanner :", options: ["Non irradiant", "Rapide", "Très haute résolution contraste", "Multimodalité", "Exploration osseuse"], correct: [0, 2, 3], official: "A, C, D", details: "Non irradiant, meilleur contraste, multimodal." },
+            { id: 16, cat: "radiologie", q: "Hématome extra‑dural post‑traumatique :", options: ["Lésion intra‑axiale", "Origine veineuse", "Sang entre arachnoïde et dure‑mère", "Lésion extra‑axiale", "Scanner : lentille biconvexe hypo dense"], correct: [3], official: "D", details: "Extra-axial. Scanner: Hyperdense biconvexe." },
+            { id: 17, cat: "radiologie", q: "AVC ischémique :", options: ["Lésion intra‑axiale", "Origine veineuse", "Signes < 24 h", "Première cause invalidité durable", "Scanner phase intermédiaire : hyperdensité parenchymateuse"], correct: [0, 3], official: "A, D", details: "Intra-axial, origine artérielle, signes >24h. Scanner: Hypodensité." },
+            { id: 18, cat: "radiologie", q: "Pathologie neurologique non traumatique :", options: ["Dominée par les AVC hémorragiques", "Meilleur examen radiologique = IRM", "La TDM fait un bilan complet des AVC ischémiques", "Rôle majeur de l’imagerie en HIC = rechercher une pathologie chirurgicale urgente", "Scanner = examen de choix pour méningite bactérienne"], correct: [1, 3], official: "B, D", details: "AVC ischémiques mieux vus en IRM. TDM incomplète." },
+            { id: 19, cat: "radiologie", q: "Radiographies standards :", options: ["Analysent la corticale osseuse", "Recherchent anomalies de forme", "Toujours demandées en première intention chez polytraumatisé", "Permettent de voir rupture ligamentaire", "Visualisent la synoviale"], correct: [0, 1], official: "A, B", details: "Voit os/forme, pas synoviale/ligaments." },
+            { id: 20, cat: "radiologie", q: "Éléments radiotransparents :", options: ["Os cortical", "Os spongieux", "Cartilage articulaire", "Graisse", "Calcifications"], correct: [2, 3], official: "C, D", details: "Os et calcifications sont opaques." },
+            { id: 21, cat: "radiologie", q: "Échographie performante pour anomalies musculo‑squelettiques :", options: ["Pincement articulaire", "Épanchement intra‑articulaire", "Hématome musculaire", "Ostéocondensation", "Œdème osseux"], correct: [1, 2], official: "B, C", details: "Voit tissus mous et liquides, pas l'os." },
+            { id: 22, cat: "radiologie", q: "Indications TDM en pathologie musculo‑squelettique :", options: ["Lésions infra‑radiologiques", "Traumatismes", "Infiltration tumorale moelle osseuse", "Bilan extension tumeurs", "Doute diagnostic"], correct: [0, 1, 3, 4], official: "A, B, D, E", details: "Infiltration moelle mieux vue en IRM." },
+            { id: 23, cat: "radiologie", q: "Signes de discarthrose en radiographie du rachis :", options: ["Pincement discal", "Abcès paravertébral", "Ostéophytose marginale", "Condensation sous‑chondrale", "Syndesmophytes"], correct: [0, 2, 3], official: "A, C, D", details: "Abcès = infectieux. Syndesmophytes = SPA." },
+            { id: 24, cat: "radiologie", q: "Signes d’une lacune osseuse maligne :", options: ["Limites floues", "Limites nettes", "Extension parties molles", "Réaction périostée", "Rupture corticale"], correct: [0, 2, 3, 4], official: "A, C, D, E", details: "Limites nettes = bénin." },
+            { id: 25, cat: "physiopathologie", q: "Œdème cérébral cytotoxique :", options: ["Œdème intracellulaire", "Œdème extracellulaire", "Causé par obstacle LCR", "Altération membrane cellulaire", "Altération barrière hémato‑encéphalique"], correct: [0, 3], official: "A, D", details: "Intracellulaire par altération membranaire. Vasogénique = Barrière HE." },
+            { id: 26, cat: "physiopathologie", q: "Pression intracrânienne (PIC) :", options: ["Loi de Monro‑Kellie = somme volumes constante", "Boîte crânienne inextensible adulte", "HIC = PIC ≥ 5 mmHg", "Valeur normale adulte = 25‑30 mmHg", "Valeur normale nourrisson = 10‑15 mmHg"], correct: [0, 1], official: "A, B", details: "HIC > 20 mmHg. Normale adulte 5-15." },
+            { id: 27, cat: "physiopathologie", q: "Débit sanguin cérébral :", options: ["Dépend PAM et PIC", "Dépend seulement PAM", "Dépend seulement PIC", "Proportionnel à PPC", "Inversement proportionnel à PPC"], correct: [0, 3], official: "A, D", details: "Dépend de la PPC (PAM-PIC)." },
+            { id: 28, cat: "physiopathologie", q: "Hypertension intracrânienne :", options: ["Engagement cérébral = complication mécanique", "Engagement cérébral = complication hémodynamique", "Toujours secondaire à un 4e secteur compressif", "Courbe Langfitt : phase décompensation = grandes variations volume → petites variations PIC", "Courbe Langfitt : phase décompensation = petites variations volume → grandes variations PIC"], correct: [0, 4], official: "A, E", details: "Engagement mécanique. Décompensation: petit volume -> grande PIC." },
+            { id: 29, cat: "physiopathologie", q: "Mécanismes œdème cirrhose hépatique :", options: ["Augmentation pression veineuse porte = facteur principal", "Diminution pression veineuse porte = facteur principal", "Obstruction veineuse le plus souvent", "Hyperalbuminémie", "Augmentation pression intra‑abdominale"], correct: [0, 4], official: "A, E", details: "HTP majeure. Hypoalbuminémie (pas hyper)." },
+            { id: 30, cat: "physiopathologie", q: "Œdème syndrome néphrotique :", options: ["Excrétion d’albumine dans urines", "Diminution pression oncotique interstitielle", "Hypoalbuminurie", "Diminution volume circulant efficace", "Rétention rénale de sodium"], correct: [0, 3, 4], official: "A, D, E", details: "Baisse pression oncotique plasmatique." },
+            { id: 31, cat: "physiopathologie", q: "Facteurs œdème insuffisance cardiaque :", options: ["Augmentation pression veineuse", "Excrétion sodée et hydrique", "Sécrétion accrue d’aldostérone", "Diminution catabolisme aldostérone", "Diminution pression hydrostatique interstitielle"], correct: [0, 2, 3], official: "A, C, D", details: "Rétention hydrosodée (excrétion diminuée)." },
+            { id: 32, cat: "physiopathologie", q: "Mécanisme physiopathologique migraine sans aura :", options: ["Dépression corticale envahissante", "Inflammation neurogène", "Sensibilisation périphérique", "Dépression corticale + inflammation neurogène", "Atteinte petites fibres"], correct: [1], official: "B", details: "Sans aura = inflammation neurogène. Aura = dépression corticale." },
+            { id: 33, cat: "physiopathologie", q: "Insensibilité congénitale à la douleur :", options: ["Excès de nociception", "Atteinte système somato‑sensoriel", "Polyneuropathie héréditaire sensitive et autonome", "Neuroplasticité", "Sensibilisation centrale"], correct: [2], official: "C", details: "Neuropathie héréditaire." },
+            { id: 34, cat: "physiopathologie", q: "Classification des douleurs :", options: ["Neuropathiques, mixtes, nociplastiques, dysfonctionnelles", "Psychogènes, nociceptives, neuropathiques, mixtes", "Aiguës, chroniques, subaiguës", "Nociceptives, neuropathiques, mixtes, nociplastiques", "Aucune"], correct: [3], official: "D", details: "Classification actuelle." },
+            { id: 35, cat: "physiopathologie", q: "Allodynie :", options: ["Analgésie périphérique/centrale", "Douleur à stimulation non douloureuse", "Réponse exagérée à stimulation douloureuse", "Symptôme insensibilité congénitale", "Aucune"], correct: [1], official: "B", details: "Douleur par stimulus indolore." },
+            { id: 36, cat: "physiopathologie", q: "Gazométrie : pH 7,20, PaCO₂ 16, HCO₃⁻ 6 :", options: ["Alcalose métabolique", "Acidose métabolique", "Alcalose respiratoire", "Acidose respiratoire", "Normale"], correct: [1], official: "B", details: "pH bas, HCO3 bas = Acidose métabolique." },
+            { id: 37, cat: "physiopathologie", q: "Gazométrie : pH 7,22, PaCO₂ 80, HCO₃⁻ 28 :", options: ["Alcalose métabolique", "Acidose métabolique", "Alcalose respiratoire", "Acidose respiratoire", "Normale"], correct: [3], official: "D", details: "pH bas, PaCO2 élevée = Acidose respiratoire." },
+            { id: 38, cat: "physiopathologie", q: "Gazométrie : pH 7,28, PaCO₂ 24, HCO₃⁻ 10 :", options: ["Alcalose métabolique", "Acidose métabolique", "Alcalose respiratoire", "Acidose respiratoire", "Normale"], correct: [1], official: "B", details: "pH bas, HCO3 bas = Acidose métabolique." },
+            { id: 39, cat: "physiopathologie", q: "Gazométrie : pH 7,56, PaCO₂ 45, HCO₃⁻ 40 :", options: ["Alcalose métabolique", "Acidose métabolique", "Alcalose respiratoire", "Acidose respiratoire", "Normale"], correct: [0], official: "A", details: "pH élevé, HCO3 élevé = Alcalose métabolique." },
+            { id: 40, cat: "physiopathologie", q: "pH sanguin dépend de :", options: ["PaCO₂", "PaO₂", "HCO₃⁻", "Natrémie", "Kaliémie"], correct: [0, 2], official: "A, C", details: "Dépend équilibre PaCO2/HCO3." },
+            { id: 41, cat: "semiologie", q: "Signes communs d’une mono‑arthrite :", options: ["Impotence fonctionnelle, déformation, craquement", "Douleur inflammatoire, augmentation volume, fièvre, chaleur", "Craquement, fièvre, frissons", "Fébricule, déformations, craquement", "Conservation état général, craquement, déformation"], correct: [1], official: "B", details: "Signes inflammatoires (Tuméfaction, Chaleur, Fièvre)." },
+            { id: 42, cat: "semiologie", q: "Mono‑arthrite chronique évolue depuis :", options: ["< 3 semaines", "< 1 mois", "> 6 semaines", "> 3 semaines", "< 6 semaines"], correct: [2], official: "C", details: "Chronique > 6 semaines." },
+            { id: 43, cat: "radiologie", q: "Signes radiologiques d’arthrose :", options: ["Pincement électif, asymétrique", "Tuméfaction parties molles", "Ostéophytes", "Condensation sous‑chondrale", "Géodes sous‑chondrales"], correct: [0, 2, 3, 4], official: "A, C, D, E", details: "Tuméfaction parties molles = arthrite." },
+            { id: 44, cat: "semiologie", q: "Hypertonie spastique :", options: ["Prédomine sur fléchisseurs‑pronateurs MS", "Prédomine sur extenseurs‑adducteurs MI", "Prédomine sur extenseurs‑abducteurs MI", "Élective", "Peut être plastique"], correct: [0, 1, 3], official: "A, B, D", details: "Elective. Spasticité = fléchisseurs MS, extenseurs MI." },
+            { id: 45, cat: "semiologie", q: "Paralysie centrale – caractères communs :", options: ["Prédomine fléchisseurs‑pronateurs MS", "Prédomine extenseurs‑abducteurs MI", "Prédomine extenseurs‑adducteurs MI", "Prédomine extenseurs‑supinateurs MS", "Prédomine raccourcisseurs‑abducteurs MI"], correct: [0, 2], official: "A, C", details: "Touche extenseurs MS et abducteurs MI." },
+            { id: 46, cat: "semiologie", q: "Syndromes extrapyramidaux :", options: ["Parkinsonien", "Hémiballisme", "Myoclonies", "Dystonie", "Athétose"], correct: [0, 1, 3, 4], official: "A, B, D, E", details: "Myoclonies sont corticales." },
+            { id: 47, cat: "semiologie", q: "Réflexe tricipital – arc réflexe :", options: ["C5 – musculo‑cutané", "C6 – radial", "C7 – tricipital", "C7 – radial", "C8 – ulnaire"], correct: [3], official: "D", details: "C7 - Nerf Radial." },
+            { id: 48, cat: "semiologie", q: "Amnésie antérograde :", options: ["Impossibilité fixation souvenirs antérieurs", "Amnésie focale souvenirs", "Impossibilité fixation souvenirs anciens", "Impossibilité fixation souvenirs nouveaux", "Impossibilité fixation anciens et nouveaux"], correct: [3], official: "D", details: "Incapacité à former nouveaux souvenirs." },
+            { id: 49, cat: "semiologie", q: "Ataxie cérébelleuse :", options: ["Non aggravée par occlusion yeux", "Tremblement de repos", "Désorientation spatio‑temporelle", "Désorganisation spatio‑temporelle du mouvement", "Associée à hypotonie musculaire"], correct: [0, 3, 4], official: "A, D, E", details: "Pas de tremblement repos (Parkinson). Pas désorientation mentale." },
+            { id: 50, cat: "semiologie", q: "Aphasie de Wernicke :", options: ["Sensorielle", "Lésion temporale", "Langage spontané abondant", "Paraphrasies sémantiques nombreuses", "Compréhension totalement perturbée"], correct: [0, 1, 2, 3, 4], official: "A, B, C, D, E", details: "Toutes les propositions sont justes." },
+            { id: 51, cat: "semiologie", q: "Aphasie de Broca :", options: ["Aphasie motrice", "Aphasie expressive", "Lésion temporale", "Dysgraphie associée", "Dystonie associée"], correct: [0, 1, 3], official: "A, B, D", details: "Lésion frontale." },
+            { id: 52, cat: "semiologie", q: "Crise type petit mal :", options: ["Absence", "Crise tonico‑clonique partielle", "Crise convulsive", "Syncope", "Suspension brève conscience"], correct: [0, 4], official: "A, E", details: "Absences brèves sans convulsions." },
+            { id: 53, cat: "semiologie", q: "Tremblement Parkinson :", options: ["De repos", "D’attitude", "Intentionnel", "Disparaît au mouvement et sommeil", "Calmé par repos"], correct: [0, 3], official: "A, D", details: "Repos, disparaît mouvement/sommeil." },
+            { id: 54, cat: "semiologie", q: "Réflexe de Babinski :", options: ["Flexion orteils", "Extension gros orteil", "Témoin atteinte pyramidale", "Absent nourrisson < 2 ans", "Éventail autres orteils"], correct: [1, 2, 4], official: "B, C, E", details: "Physiologique chez nourrisson < 2 ans (pas absent)." },
+            { id: 55, cat: "semiologie", q: "Syndrome vestibulaire périphérique :", options: ["Vertige", "Romberg proprioceptif", "Démarche étoilée Babinski‑Weill", "Nystagmus", "Syncope"], correct: [0, 2, 3], official: "A, C, D", details: "Vertige, Nystagmus, Babinski-Weill." },
+            { id: 56, cat: "semiologie", q: "Névralgie du IX :", options: ["Névralgie face", "Irradie le long du cou", "Déclenchée par mastication", "Réflexe nauséeux aboli", "Douleur chronique"], correct: [1, 3], official: "B, D", details: "Douleur pharyngée, abolition nauséeux." },
+            { id: 57, cat: "semiologie", q: "Atteinte du XI (spinal) :", options: ["Déficit rotation tête côté opposé", "Absence contraction SCM, tête en antéflexion", "Hypertrophie SCM", "Omoplate déjetée en dehors", "Clavicule décollée"], correct: [0, 1], official: "A, B", details: "Déficit SCM/Trapèze. Pas hypertrophie." },
+            { id: 58, cat: "semiologie", q: "Paralysie du III :", options: ["Ptosis", "Strabisme divergent", "Mydriase aréactive", "Énophtalmie", "Myosis"], correct: [0, 1, 2], official: "A, B, C", details: "Ptosis, Mydriase aréactive, Strabisme divergent." },
+            { id: 59, cat: "semiologie", q: "Paralysie faciale centrale :", options: ["Prédomine muscles inférieurs", "Signe de Charles Bell", "Respect muscles supérieurs", "Effacement rides front", "Élargissement fente palpébrale"], correct: [0, 2], official: "A, C", details: "Respect du front. Pas de signe de Bell." },
+            { id: 60, cat: "semiologie", q: "Scotome :", options: ["Lacune champ visuel œil", "Symptôme névrite optique", "Déficit bilatéral champs visuels", "Baisse acuité visuelle", "Lésion chiasmatique"], correct: [0, 1], official: "A, B", details: "Lacune visuelle, névrite." },
+            { id: 61, cat: "semiologie", q: "Surdité de transmission caractérisée par :", options: ["Obstruction externe/moyenne", "Lésion nerf auditif", "Voix chuchotée fortement diminuée", "Rinne négatif", "Weber latéralisé et négatif"], correct: [0, 2, 3], official: "A, C, D", details: "Rinne négatif, Weber latéralisé lésion." },
+            { id: 62, cat: "biochimie", q: "Exploration du LCR en méningite bactérienne :", options: ["Liquide clair eau de roche", "Aspect trouble", "Cellularité > 20, > 50 % PNN", "Protéinorachie > 0,4 g/L", "Rapport glycorachie/glycémie < 40 %"], correct: [1, 2, 3, 4], official: "B, C, D, E", details: "Trouble, PNN, Hypoglycorachie, Hyperprotéinorachie." },
+            { id: 63, cat: "semiologie", q: "Exploration EMG du syndrome myasthénique :", options: ["Tracé bloc neuromusculaire", "Tracé neurogène", "Vitesses conduction nerveuse diminuées", "Tracé myogène", "Vitesses conduction nerveuse normales"], correct: [0, 4], official: "A, E", details: "Bloc NM, Vitesses normales." },
+            { id: 64, cat: "biochimie", q: "Ponction lombaire méningite virale :", options: ["Liquide lymphocytaire", "Aspect sanglant", "Cellularité > 20, > 50 % lymphocytes", "Protéinorachie > 0,4 g/L", "Rapport glycorachie/glycémie > 60 %"], correct: [0, 2, 4], official: "A, C, E", details: "Clair, Lympho, Normoglycorachie." },
+            { id: 65, cat: "semiologie", q: "Signe d’Argyll‑Robertson :", options: ["Abolition photomoteur, conservation accommodation", "Mydriase", "Myosis bilatéral", "Contraction peaucier cou absente", "Inégalité pupillaire"], correct: [0], official: "A", details: "Dissociation lumière-proximité." },
+            { id: 66, cat: "semiologie", q: "Hémianopsie latérale hétéronyme :", options: ["Bitemporale souvent", "Signe lésion chiasmatique", "Frontière horizontale", "Valeur pour lésions hypophysaires", "Signe lésion rétro‑chiasmatique"], correct: [0, 1, 3], official: "A, B, D", details: "Bitemporale, Chiasmatique. Frontière verticale." },
+            { id: 67, cat: "semiologie", q: "Fond d’œil – stase papillaire :", options: ["Flou bords papillaires", "Tubercules de Bouchut", "Saillie papille + flou + dilatation veineuse", "Papille régulière, net, blanc rosé", "Névrite optique rétrobulbaire"], correct: [0, 2], official: "A, C", details: "Flou, Saillie, Dilatation." },
+            { id: 68, cat: "semiologie", q: "Épreuve des Rinne :", options: ["Compare temps conduction chaque oreille", "Diapason sur ligne médiane crâne", "Permet connaître type surdité", "Voix chuchotée ou montre", "Sujet normal = Rinne positif"], correct: [2, 4], official: "C, E", details: "Conduction osseuse vs aérienne." },
+            { id: 69, cat: "semiologie", q: "Algies vasculaires de la face :", options: ["Plus fréquente des algies", "Siège unilatéral", "Précédées par aura", "Douleur arrachement/broiement", "Non modifiées par effort"], correct: [1, 3, 4], official: "B, D, E", details: "Unilatérale, pas d'aura, très intense." },
+            { id: 70, cat: "semiologie", q: "Trouble marche cérébelleux :", options: ["Dû à trouble sensibilité profonde", "Marche sur pointe des pieds", "Marche irrégulière pseudo‑ébrieuse", "Augmentation polygone sustentation", "Aggravés par effort"], correct: [2, 3], official: "C, D", details: "Ebrieuse, polygone élargi." },
+            { id: 71, cat: "semiologie", q: "Déviation corps avec chute après fermeture yeux (Vrai Romberg) :", options: ["Romberg cérébelleux", "Vrai Romberg", "Ataxie frontale", "Romberg vestibulaire", "Aucune"], correct: [1], official: "B", details: "Atteinte sensibilité profonde." },
+            { id: 72, cat: "semiologie", q: "Sensibilité superficielle testée par :", options: ["Vibratoire", "Tactile", "Positionnelle", "Chaud/froid", "Stéréognosie"], correct: [1, 3], official: "B, D", details: "Tactile et Thermoalgique." },
+            { id: 73, cat: "semiologie", q: "Syndrome méningé :", options: ["Céphalées", "Raideur méningée", "Signe Lasègue positif", "Signe Kerning négatif", "Hypotonie nuque"], correct: [0, 1], official: "A, B", details: "Céphalées + Raideur." },
+            { id: 74, cat: "semiologie", q: "Polyradiculonévrite :", options: ["Atteinte symétrique bilatérale racines", "Atteinte sensitive bilatérale asymétrique distale", "Atteinte motrice symétrique", "Topographie en gant/chaussette", "Aucune"], correct: [0, 2], official: "A, C", details: "Symétrique, motrice." },
+            { id: 75, cat: "physiopathologie", q: "Causes crises de tétanie :", options: ["Hypoglycémie", "Hypokaliémie", "Hypocalcémie", "Alcalose", "Idiopathique"], correct: [2, 3], official: "C, D", details: "Hypocalcémie et Alcalose." },
+            { id: 76, cat: "semiologie", q: "Ulcération cutanée/muqueuse :", options: ["Perte substance profonde", "Nodule inflammatoire centré par poil", "Candidose possible", "Cancer peau possible", "Infiltrat cutané inflammatoire"], correct: [0, 2, 3], official: "A, C, D", details: "Perte de substance." },
+            { id: 77, cat: "semiologie", q: "Lésions des phanères :", options: ["Alopécie = papule centrée", "Leuconychie = coloration blanche ongle", "Chéilite = fissure commissures", "Ongle en dé à coudre", "Hirsutisme = hyperpilosité"], correct: [1, 2, 3, 4], official: "B, C, D, E", details: "Alopécie = chute de cheveux." },
+            { id: 78, cat: "semiologie", q: "Examen dermatologique :", options: ["Inspection peau totale", "Lumière Wood exclue", "Friction met en évidence lésions", "Toujours complété par paraclinique", "Vitropression montre congestion"], correct: [0, 1, 2], official: "A, B, C", details: "Inspection minutieuse." },
+            { id: 79, cat: "semiologie", q: "Lésions cutanées primaires :", options: ["Nævus plan = macule pigmentée", "Pétéchies = macules érythémateuses s'effaçant", "Bulle = cavité liquide derme/hypoderme", "Nodule = lésion solide hypoderme infracentimétrique", "Pustule = élevure sérosité"], correct: [0, 2], official: "A, C", details: "Pétéchies ne s'effacent pas." }
+        ];
+
+
+        // --- 2. APPLICATION LOGIC ---
+
+        let currentQuestions = [];
+        let selections = {};
+        let score = 0;
+
+        // --- Dark Mode ---
+        function toggleDarkMode() {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+                document.getElementById('dark-icon').className = 'fas fa-moon';
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+                document.getElementById('dark-icon').className = 'fas fa-sun';
+            }
+        }
+
+        // Initialize Dark Mode based on preference
+        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+            document.getElementById('dark-icon').className = 'fas fa-sun';
+        } else {
+            document.documentElement.classList.remove('dark');
+            document.getElementById('dark-icon').className = 'fas fa-moon';
+        }
+
+        // --- Navigation ---
+        function switchView(viewName) {
+            const dashboard = document.getElementById('view-dashboard');
+            const exams = document.getElementById('view-exams');
+            const quiz = document.getElementById('view-quiz');
+            const navDashboard = document.getElementById('nav-dashboard');
+            const navExams = document.getElementById('nav-exams');
+            const title = document.getElementById('header-title');
+            const subtitle = document.getElementById('header-subtitle');
+
+            // Reset Views
+            dashboard.classList.add('hidden');
+            exams.classList.add('hidden');
+            quiz.classList.add('hidden');
+            
+            // Reset Nav Styles
+            const activeClass = "bg-primary/10 text-primary dark:text-secondary";
+            const inactiveClass = "text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-primary dark:hover:text-secondary";
+
+            navDashboard.className = `w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-all duration-200 ${inactiveClass}`;
+            navExams.className = `w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-all duration-200 ${inactiveClass}`;
+
+            if (viewName === 'dashboard') {
+                dashboard.classList.remove('hidden');
+                navDashboard.className = `w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-all duration-200 ${activeClass}`;
+                title.textContent = "Good Morning, Tahsan";
+                subtitle.textContent = "Here is your learning progress today.";
+            } 
+            else if (viewName === 'exams') {
+                exams.classList.remove('hidden');
+                navExams.className = `w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-all duration-200 ${activeClass}`;
+                title.textContent = "Exams Repository";
+                subtitle.textContent = "Select a university and session to practice.";
+            }
+        }
+
+        // --- Accordion Logic ---
+        function toggleAccordion(listId, arrowId) {
+            const list = document.getElementById(listId);
+            const arrow = document.getElementById(arrowId);
+            
+            if (list.classList.contains('hidden')) {
+                list.classList.remove('hidden');
+                arrow.style.transform = 'rotate(180deg)';
+            } else {
+                list.classList.add('hidden');
+                arrow.style.transform = 'rotate(0deg)';
+            }
+        }
+
+        // --- Quiz Engine ---
+        function startExam(yearKey) {
+            const dashboard = document.getElementById('view-dashboard');
+            const exams = document.getElementById('view-exams');
+            const quiz = document.getElementById('view-quiz');
+            const quizTitle = document.getElementById('quiz-title-display');
+
+            // Switch to Quiz View
+            dashboard.classList.add('hidden');
+            exams.classList.add('hidden');
+            quiz.classList.remove('hidden');
+
+            // Reset Quiz State
+            selections = {};
+            score = 0;
+            updateScoreDisplay();
+
+            // Load Specific Dataset
+            if (yearKey === '2020') { currentQuestions = data2020; quizTitle.innerText = "Blida - Session 2020/2021"; }
+            else if (yearKey === '2021') { currentQuestions = data2021_Full; quizTitle.innerText = "Blida - Session 2021/2022"; }
+            else if (yearKey === '2022') { currentQuestions = data2022_Full; quizTitle.innerText = "Blida - Session 2022/2023"; }
+            else if (yearKey === '2023') { currentQuestions = data2023_Full; quizTitle.innerText = "Blida - Janvier 2024"; }
+            else if (yearKey === '2024') { currentQuestions = data2024_Full; quizTitle.innerText = "Blida - Janvier 2025"; }
+            else if (yearKey === 'constantine21') { currentQuestions = dataConstantine21; quizTitle.innerText = "Constantine - 2021/2022"; }
+            else if (yearKey === 'constantine22') { currentQuestions = dataConstantine22; quizTitle.innerText = "Constantine - 2022/2023"; }
+
+            renderQuiz('all');
+            document.getElementById('main-scroll-area').scrollTop = 0;
+        }
+
+        function closeQuiz() {
+            switchView('exams');
+        }
+
+        function filterQuiz(category) {
+            renderQuiz(category);
+        }
+
+        function renderQuiz(filter = 'all') {
+            const container = document.getElementById('quiz-questions-container');
+            container.innerHTML = '';
+            
+            const filtered = currentQuestions.filter(item => filter === 'all' || item.cat === filter);
+            
+            document.getElementById('total-display').innerText = filtered.length;
+
+            if (filtered.length === 0) {
+                container.innerHTML = `<div class="text-center text-gray-400 py-10">No questions found for this category.</div>`;
+                return;
+            }
+
+            filtered.forEach((item) => {
+                const card = document.createElement('div');
+                card.className = "bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 fade-in transition-colors";
+                
+                // Color coding
+                let borderColor = '#9CA3AF';
+                if (item.cat === 'semiologie') borderColor = '#3498db'; 
+                else if (item.cat === 'radiologie') borderColor = '#9b59b6'; 
+                else if (item.cat === 'biochimie') borderColor = '#f1c40f'; 
+                else if (item.cat === 'physiopathologie') borderColor = '#2ecc71'; 
+                card.style.borderLeft = `5px solid ${borderColor}`;
+
+                card.innerHTML = `
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="text-xs font-bold text-gray-400 uppercase tracking-widest">${item.cat} • Q${item.id}</span>
+                        <button onclick="askAI(${item.id})" class="text-primary dark:text-secondary hover:text-purple-700 text-xs font-bold bg-purple-50 dark:bg-gray-700 px-2 py-1 rounded-md border border-purple-100 dark:border-gray-600 transition flex items-center gap-1">
+                            <i class="fas fa-copy"></i> Copy Question
+                        </button>
+                    </div>
+
+                    <h2 class="text-lg font-bold text-gray-800 dark:text-gray-100 mb-6 leading-relaxed">${item.q}</h2>
+                    
+                    <div class="space-y-3" id="options-${item.id}">
+                        ${item.options.map((opt, i) => `
+                            <button onclick="toggleOption(${item.id}, ${i}, this)" class="option-btn w-full text-left p-4 rounded-xl border border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-all text-sm">
+                                ${opt}
+                            </button>
+                        `).join('')}
+                    </div>
+
+                    <div class="mt-6 flex justify-end">
+                        <button onclick="validateAnswer(${item.id})" id="btn-valid-${item.id}" class="bg-primary text-white px-6 py-2 rounded-lg text-sm font-bold shadow-md hover:bg-purple-700 transition transform hover:scale-105">
+                            Check Answer
+                        </button>
+                    </div>
+
+                    <div id="feedback-${item.id}" class="hidden mt-6 pt-4 border-t border-gray-100 dark:border-gray-700">
+                        <div class="bg-gray-50 dark:bg-gray-700/50 p-4 rounded-xl text-sm text-gray-700 dark:text-gray-200 shadow-inner">
+                            <strong><i class="fas fa-info-circle text-primary dark:text-secondary"></i> Correction:</strong> ${item.official}
+                        </div>
+                        ${(item.details || item.aiNote) ? `<div class="mt-2 text-xs text-gray-500 dark:text-gray-400 italic p-2 border-l-2 border-primary pl-3"><strong>Detail:</strong> ${item.details || item.aiNote}</div>` : ''}
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function toggleOption(id, index, btn) {
+            if (document.getElementById(`btn-valid-${id}`).disabled) return;
+
+            if (!selections[id]) selections[id] = [];
+            const idxPos = selections[id].indexOf(index);
+            
+            if (idxPos > -1) {
+                selections[id].splice(idxPos, 1);
+                btn.classList.remove('selected');
+            } else {
+                selections[id].push(index);
+                btn.classList.add('selected');
+            }
+        }
+
+        function validateAnswer(id) {
+            const item = currentQuestions.find(q => q.id === id);
+            const userSelections = selections[id] || [];
+            const correctAnswers = item.correct;
+            
+            const btnContainer = document.getElementById(`options-${id}`);
+            const buttons = btnContainer.querySelectorAll('button');
+            const feedback = document.getElementById(`feedback-${id}`);
+            const validBtn = document.getElementById(`btn-valid-${id}`);
+
+            validBtn.disabled = true;
+            validBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            validBtn.innerText = "Checked";
+            buttons.forEach(b => b.classList.add('cursor-default'));
+
+            // Sort specifically for comparison
+            const sortedUser = [...userSelections].sort().toString();
+            const sortedCorrect = [...correctAnswers].sort().toString();
+            const isPerfect = sortedUser === sortedCorrect;
+
+            buttons.forEach((btn, idx) => {
+                const isSelected = userSelections.includes(idx);
+                const isActuallyCorrect = correctAnswers.includes(idx);
+
+                btn.classList.remove('selected'); 
+
+                if (isActuallyCorrect) {
+                    btn.classList.add('correct');
+                    if(isSelected) btn.innerHTML += ' <i class="fas fa-check float-right"></i>';
+                }
+                
+                if (isSelected && !isActuallyCorrect) {
+                    btn.classList.add('wrong'); 
+                    btn.innerHTML += ' <i class="fas fa-times float-right"></i>';
+                }
+
+                if (!isSelected && isActuallyCorrect) {
+                    btn.classList.add('missed'); 
+                }
+            });
+
+            if (isPerfect) {
+                score++;
+                updateScoreDisplay();
+            }
+
+            feedback.classList.remove('hidden');
+            feedback.classList.add('fade-in');
+        }
+
+        function updateScoreDisplay() {
+            document.getElementById('score-display').innerText = score;
+        }
+
+        // --- AI Prompt Feature ---
+        function askAI(id) {
+            const q = currentQuestions.find(i => i.id === id);
+            const prompt = `Question: ${q.q}\n\nOptions:\n${q.options.map((o,i)=>(i+1)+'. '+o).join('\n')}`;
+            
+            navigator.clipboard.writeText(prompt).then(() => {
+                alert("Question and options copied to clipboard!");
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+            });
+        }
+
+    </script>
+<elevenlabs-convai agent-id="agent_9501kgqmj36nexca5kpcqv5ffgtr"></elevenlabs-convai>
+    <script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
+</body>
+</html>
+```
