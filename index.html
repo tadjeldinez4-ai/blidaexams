@@ -154,70 +154,215 @@
                         <p class="text-white/80 mt-2 relative z-10">Select your university to access official sessions and QCM banks.</p>
                     </div>
 
-                    <div class="max-w-4xl mx-auto space-y-4">
+                    <div class="max-w-4xl mx-auto space-y-6">
                         
-                        <!-- BLIDA ACCORDION -->
-                        <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 overflow-hidden shadow-sm transition-colors">
-                            <button onclick="toggleAccordion('list-blida', 'arrow-blida')" class="w-full flex justify-between items-center p-6 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
-                                <div class="flex items-center gap-4">
-                                    <div class="w-12 h-12 rounded-xl bg-indigo-100 dark:bg-indigo-900 flex items-center justify-center text-xl text-indigo-600 dark:text-indigo-300"><i class="fas fa-university"></i></div>
-                                    <div class="text-left">
-                                        <h3 class="text-xl font-bold text-gray-800 dark:text-white">Université de Blida</h3>
-                                        <p class="text-sm text-gray-400">5 Sessions Available</p>
-                                    </div>
+                        <!-- NEUROLOGIE SECTION -->
+                        <div class="space-y-4">
+                            <button onclick="toggleAccordion('list-neurologie', 'arrow-neurologie')" class="w-full flex items-center gap-3 p-4 bg-purple-100 dark:bg-purple-900 rounded-xl hover:bg-purple-200 dark:hover:bg-purple-800 transition-colors">
+                                <div class="w-10 h-10 rounded-lg bg-purple-200 dark:bg-purple-800 flex items-center justify-center">
+                                    <i class="fas fa-brain text-purple-600 dark:text-purple-300"></i>
                                 </div>
-                                <i id="arrow-blida" class="fas fa-chevron-down text-gray-400 transition-transform duration-300"></i>
+                                <h2 class="text-xl font-bold text-gray-800 dark:text-white">Neurologie</h2>
+                                <i id="arrow-neurologie" class="fas fa-chevron-down text-gray-400 ml-auto transition-transform duration-300"></i>
                             </button>
                             
-                            <div id="list-blida" class="hidden border-t border-gray-100 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-900/50 p-4 space-y-3">
-                                <button onclick="startExam('2024')" class="w-full flex items-center justify-between p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary dark:hover:border-primary hover:shadow-md transition-all group">
-                                    <div class="flex items-center gap-3">
-                                        <span class="bg-emerald-100 text-emerald-700 text-xs font-bold px-2 py-1 rounded">New</span>
-                                        <span class="font-semibold text-gray-700 dark:text-gray-200 group-hover:text-primary">Janvier 2025</span>
+                            <div id="list-neurologie" class="hidden space-y-4 pl-4">
+                                <!-- BLIDA ACCORDION -->
+                                <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 overflow-hidden shadow-sm transition-colors">
+                                    <button onclick="toggleAccordion('list-blida', 'arrow-blida')" class="w-full flex justify-between items-center p-6 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                        <div class="flex items-center gap-4">
+                                            <div class="w-12 h-12 rounded-xl bg-indigo-100 dark:bg-indigo-900 flex items-center justify-center text-xl text-indigo-600 dark:text-indigo-300"><i class="fas fa-university"></i></div>
+                                            <div class="text-left">
+                                                <h3 class="text-xl font-bold text-gray-800 dark:text-white">Université de Blida</h3>
+                                                <p class="text-sm text-gray-400">5 Sessions Available</p>
+                                            </div>
+                                        </div>
+                                        <i id="arrow-blida" class="fas fa-chevron-down text-gray-400 transition-transform duration-300"></i>
+                                    </button>
+                                    
+                                    <div id="list-blida" class="hidden border-t border-gray-100 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-900/50 p-4 space-y-3">
+                                        <button onclick="startExam('2024')" class="w-full flex items-center justify-between p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary dark:hover:border-primary hover:shadow-md transition-all group">
+                                            <div class="flex items-center gap-3">
+                                                <span class="bg-emerald-100 text-emerald-700 text-xs font-bold px-2 py-1 rounded">New</span>
+                                                <span class="font-semibold text-gray-700 dark:text-gray-200 group-hover:text-primary">Janvier 2025</span>
+                                            </div>
+                                            <i class="fas fa-play text-gray-300 dark:text-gray-600 group-hover:text-primary"></i>
+                                        </button>
+                                        <button onclick="startExam('2023')" class="w-full flex items-center justify-between p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary dark:hover:border-primary hover:shadow-md transition-all group">
+                                            <div class="flex items-center gap-3"><i class="fas fa-history text-indigo-400"></i><span class="font-semibold text-gray-700 dark:text-gray-200 group-hover:text-primary">Janvier 2024</span></div>
+                                            <i class="fas fa-play text-gray-300 dark:text-gray-600 group-hover:text-primary"></i>
+                                        </button>
+                                        <button onclick="startExam('2022')" class="w-full flex items-center justify-between p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary dark:hover:border-primary hover:shadow-md transition-all group">
+                                            <div class="flex items-center gap-3"><i class="fas fa-book-medical text-orange-400"></i><span class="font-semibold text-gray-700 dark:text-gray-200 group-hover:text-primary">Session 2022/2023</span></div>
+                                            <i class="fas fa-play text-gray-300 dark:text-gray-600 group-hover:text-primary"></i>
+                                        </button>
+                                        <button onclick="startExam('2021')" class="w-full flex items-center justify-between p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary dark:hover:border-primary hover:shadow-md transition-all group">
+                                            <div class="flex items-center gap-3"><i class="fas fa-file-signature text-cyan-400"></i><span class="font-semibold text-gray-700 dark:text-gray-200 group-hover:text-primary">Session 2021/2022</span></div>
+                                            <i class="fas fa-play text-gray-300 dark:text-gray-600 group-hover:text-primary"></i>
+                                        </button>
+                                        <button onclick="startExam('2020')" class="w-full flex items-center justify-between p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary dark:hover:border-primary hover:shadow-md transition-all group">
+                                            <div class="flex items-center gap-3"><i class="fas fa-microscope text-pink-400"></i><span class="font-semibold text-gray-700 dark:text-gray-200 group-hover:text-primary">Session 2020/2021</span></div>
+                                            <i class="fas fa-play text-gray-300 dark:text-gray-600 group-hover:text-primary"></i>
+                                        </button>
                                     </div>
-                                    <i class="fas fa-play text-gray-300 dark:text-gray-600 group-hover:text-primary"></i>
-                                </button>
-                                <button onclick="startExam('2023')" class="w-full flex items-center justify-between p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary dark:hover:border-primary hover:shadow-md transition-all group">
-                                    <div class="flex items-center gap-3"><i class="fas fa-history text-indigo-400"></i><span class="font-semibold text-gray-700 dark:text-gray-200 group-hover:text-primary">Janvier 2024</span></div>
-                                    <i class="fas fa-play text-gray-300 dark:text-gray-600 group-hover:text-primary"></i>
-                                </button>
-                                <button onclick="startExam('2022')" class="w-full flex items-center justify-between p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary dark:hover:border-primary hover:shadow-md transition-all group">
-                                    <div class="flex items-center gap-3"><i class="fas fa-book-medical text-orange-400"></i><span class="font-semibold text-gray-700 dark:text-gray-200 group-hover:text-primary">Session 2022/2023</span></div>
-                                    <i class="fas fa-play text-gray-300 dark:text-gray-600 group-hover:text-primary"></i>
-                                </button>
-                                <button onclick="startExam('2021')" class="w-full flex items-center justify-between p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary dark:hover:border-primary hover:shadow-md transition-all group">
-                                    <div class="flex items-center gap-3"><i class="fas fa-file-signature text-cyan-400"></i><span class="font-semibold text-gray-700 dark:text-gray-200 group-hover:text-primary">Session 2021/2022</span></div>
-                                    <i class="fas fa-play text-gray-300 dark:text-gray-600 group-hover:text-primary"></i>
-                                </button>
-                                <button onclick="startExam('2020')" class="w-full flex items-center justify-between p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary dark:hover:border-primary hover:shadow-md transition-all group">
-                                    <div class="flex items-center gap-3"><i class="fas fa-microscope text-pink-400"></i><span class="font-semibold text-gray-700 dark:text-gray-200 group-hover:text-primary">Session 2020/2021</span></div>
-                                    <i class="fas fa-play text-gray-300 dark:text-gray-600 group-hover:text-primary"></i>
-                                </button>
+                                </div>
+
+                                <!-- CONSTANTINE ACCORDION -->
+                                <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 overflow-hidden shadow-sm transition-colors">
+                                    <button onclick="toggleAccordion('list-const', 'arrow-const')" class="w-full flex justify-between items-center p-6 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                        <div class="flex items-center gap-4">
+                                            <div class="w-12 h-12 rounded-xl bg-red-100 dark:bg-red-900 flex items-center justify-center text-xl text-red-600 dark:text-red-300"><i class="fas fa-bridge-water"></i></div>
+                                            <div class="text-left">
+                                                <h3 class="text-xl font-bold text-gray-800 dark:text-white">U. Constantine</h3>
+                                                <p class="text-sm text-gray-400">2 Sessions Available</p>
+                                            </div>
+                                        </div>
+                                        <i id="arrow-const" class="fas fa-chevron-down text-gray-400 transition-transform duration-300"></i>
+                                    </button>
+                                    
+                                    <div id="list-const" class="hidden border-t border-gray-100 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-900/50 p-4 space-y-3">
+                                        <button onclick="startExam('constantine22')" class="w-full flex items-center justify-between p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-red-500 dark:hover:border-red-500 hover:shadow-md transition-all group">
+                                            <div class="flex items-center gap-3"><span class="bg-red-100 text-red-700 text-xs font-bold px-2 py-1 rounded">Officiel</span><span class="font-semibold text-gray-700 dark:text-gray-200 group-hover:text-red-600 dark:group-hover:text-red-400">Session 2022/2023</span></div>
+                                            <i class="fas fa-play text-gray-300 dark:text-gray-600 group-hover:text-red-500"></i>
+                                        </button>
+                                        <button onclick="startExam('constantine21')" class="w-full flex items-center justify-between p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-red-500 dark:hover:border-red-500 hover:shadow-md transition-all group">
+                                            <div class="flex items-center gap-3"><i class="fas fa-notes-medical text-red-400"></i><span class="font-semibold text-gray-700 dark:text-gray-200 group-hover:text-red-600 dark:group-hover:text-red-400">Session 2021/2022</span></div>
+                                            <i class="fas fa-play text-gray-300 dark:text-gray-600 group-hover:text-red-500"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- BEL ABBES ACCORDION -->
+                                <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 overflow-hidden shadow-sm transition-colors">
+                                    <button onclick="toggleAccordion('list-belabbes', 'arrow-belabbes')" class="w-full flex justify-between items-center p-6 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                        <div class="flex items-center gap-4">
+                                            <div class="w-12 h-12 rounded-xl bg-emerald-100 dark:bg-emerald-900 flex items-center justify-center text-xl text-emerald-600 dark:text-emerald-300">
+                                                <i class="fas fa-hospital"></i>
+                                            </div>
+                                            <div class="text-left">
+                                                <h3 class="text-xl font-bold text-gray-800 dark:text-white">U. Bel Abbès</h3>
+                                                <p class="text-sm text-gray-400">1 Session Available</p>
+                                            </div>
+                                        </div>
+                                        <i id="arrow-belabbes" class="fas fa-chevron-down text-gray-400 transition-transform duration-300"></i>
+                                    </button>
+                                    
+                                    <div id="list-belabbes" class="hidden border-t border-gray-100 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-900/50 p-4 space-y-3">
+                                        <button onclick="startExam('belabbes')" class="w-full flex items-center justify-between p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-emerald-500 dark:hover:border-emerald-500 hover:shadow-md transition-all group">
+                                            <div class="flex items-center gap-3">
+                                                <span class="bg-emerald-100 text-emerald-700 text-xs font-bold px-2 py-1 rounded">Nouveau</span>
+                                                <span class="font-semibold text-gray-700 dark:text-gray-200 group-hover:text-emerald-600 dark:group-hover:text-emerald-400">Pack 60 QCM (Neurologie & Biochimie)</span>
+                                            </div>
+                                            <i class="fas fa-play text-gray-300 dark:text-gray-600 group-hover:text-emerald-500"></i>
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
-                        <!-- CONSTANTINE ACCORDION -->
-                        <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 overflow-hidden shadow-sm transition-colors">
-                            <button onclick="toggleAccordion('list-const', 'arrow-const')" class="w-full flex justify-between items-center p-6 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
-                                <div class="flex items-center gap-4">
-                                    <div class="w-12 h-12 rounded-xl bg-red-100 dark:bg-red-900 flex items-center justify-center text-xl text-red-600 dark:text-red-300"><i class="fas fa-bridge-water"></i></div>
-                                    <div class="text-left">
-                                        <h3 class="text-xl font-bold text-gray-800 dark:text-white">U. Constantine</h3>
-                                        <p class="text-sm text-gray-400">2 Sessions Available</p>
-                                    </div>
+                        <!-- ANAPATH SECTION -->
+                        <div class="space-y-4">
+                            <button onclick="toggleAccordion('list-anapath', 'arrow-anapath')" class="w-full flex items-center gap-3 p-4 bg-pink-100 dark:bg-pink-900 rounded-xl hover:bg-pink-200 dark:hover:bg-pink-800 transition-colors">
+                                <div class="w-10 h-10 rounded-lg bg-pink-200 dark:bg-pink-800 flex items-center justify-center">
+                                    <i class="fas fa-microscope text-pink-600 dark:text-pink-300"></i>
                                 </div>
-                                <i id="arrow-const" class="fas fa-chevron-down text-gray-400 transition-transform duration-300"></i>
+                                <h2 class="text-xl font-bold text-gray-800 dark:text-white">Anapath</h2>
+                                <i id="arrow-anapath" class="fas fa-chevron-down text-gray-400 ml-auto transition-transform duration-300"></i>
                             </button>
                             
-                            <div id="list-const" class="hidden border-t border-gray-100 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-900/50 p-4 space-y-3">
-                                <button onclick="startExam('constantine22')" class="w-full flex items-center justify-between p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-red-500 dark:hover:border-red-500 hover:shadow-md transition-all group">
-                                    <div class="flex items-center gap-3"><span class="bg-red-100 text-red-700 text-xs font-bold px-2 py-1 rounded">Officiel</span><span class="font-semibold text-gray-700 dark:text-gray-200 group-hover:text-red-600 dark:group-hover:text-red-400">Session 2022/2023</span></div>
-                                    <i class="fas fa-play text-gray-300 dark:text-gray-600 group-hover:text-red-500"></i>
-                                </button>
-                                <button onclick="startExam('constantine21')" class="w-full flex items-center justify-between p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-red-500 dark:hover:border-red-500 hover:shadow-md transition-all group">
-                                    <div class="flex items-center gap-3"><i class="fas fa-notes-medical text-red-400"></i><span class="font-semibold text-gray-700 dark:text-gray-200 group-hover:text-red-600 dark:group-hover:text-red-400">Session 2021/2022</span></div>
-                                    <i class="fas fa-play text-gray-300 dark:text-gray-600 group-hover:text-red-500"></i>
-                                </button>
+                            <div id="list-anapath" class="hidden space-y-4 pl-4">
+                                <!-- BLIDA ACCORDION FOR ANAPATH -->
+                                <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 overflow-hidden shadow-sm transition-colors">
+                                    <button onclick="toggleAccordion('list-anapath-blida', 'arrow-anapath-blida')" class="w-full flex justify-between items-center p-6 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                        <div class="flex items-center gap-4">
+                                            <div class="w-12 h-12 rounded-xl bg-indigo-100 dark:bg-indigo-900 flex items-center justify-center text-xl text-indigo-600 dark:text-indigo-300"><i class="fas fa-university"></i></div>
+                                            <div class="text-left">
+                                                <h3 class="text-xl font-bold text-gray-800 dark:text-white">Université de Blida</h3>
+                                                <p class="text-sm text-gray-400">2 Sessions Available</p>
+                                            </div>
+                                        </div>
+                                        <i id="arrow-anapath-blida" class="fas fa-chevron-down text-gray-400 transition-transform duration-300"></i>
+                                    </button>
+                                    
+                                    <div id="list-anapath-blida" class="hidden border-t border-gray-100 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-900/50 p-4 space-y-3">
+                                        <button onclick="startExam('anapath2024')" class="w-full flex items-center justify-between p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary dark:hover:border-primary hover:shadow-md transition-all group">
+                                            <div class="flex items-center gap-3">
+                                                <span class="bg-emerald-100 text-emerald-700 text-xs font-bold px-2 py-1 rounded">New</span>
+                                                <span class="font-semibold text-gray-700 dark:text-gray-200 group-hover:text-primary">Session 2024/2025</span>
+                                            </div>
+                                            <i class="fas fa-play text-gray-300 dark:text-gray-600 group-hover:text-primary"></i>
+                                        </button>
+                                        <button onclick="startExam('anapath2021')" class="w-full flex items-center justify-between p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary dark:hover:border-primary hover:shadow-md transition-all group">
+                                            <div class="flex items-center gap-3"><i class="fas fa-book-medical text-pink-400"></i><span class="font-semibold text-gray-700 dark:text-gray-200 group-hover:text-primary">Session 2021/2022</span></div>
+                                            <i class="fas fa-play text-gray-300 dark:text-gray-600 group-hover:text-primary"></i>
+                                        </button>
+                                        <button onclick="startExam('anapath2022')" class="w-full flex items-center justify-between p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary dark:hover:border-primary hover:shadow-md transition-all group">
+                                            <div class="flex items-center gap-3"><i class="fas fa-book-medical text-orange-400"></i><span class="font-semibold text-gray-700 dark:text-gray-200 group-hover:text-primary">Session 2022/2023</span></div>
+                                            <i class="fas fa-play text-gray-300 dark:text-gray-600 group-hover:text-primary"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- CONSTANTINE ACCORDION FOR ANAPATH -->
+                                <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 overflow-hidden shadow-sm transition-colors">
+                                    <button onclick="toggleAccordion('list-anapath-constantine', 'arrow-anapath-constantine')" class="w-full flex justify-between items-center p-6 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                        <div class="flex items-center gap-4">
+                                            <div class="w-12 h-12 rounded-xl bg-red-100 dark:bg-red-900 flex items-center justify-center text-xl text-red-600 dark:text-red-300"><i class="fas fa-university"></i></div>
+                                            <div class="text-left">
+                                                <h3 class="text-xl font-bold text-gray-800 dark:text-white">Université de Constantine</h3>
+                                                <p class="text-sm text-gray-400">2 Sessions Available</p>
+                                            </div>
+                                        </div>
+                                        <i id="arrow-anapath-constantine" class="fas fa-chevron-down text-gray-400 transition-transform duration-300"></i>
+                                    </button>
+
+                                    <div id="list-anapath-constantine" class="hidden border-t border-gray-100 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-900/50 p-4 space-y-3">
+                                        <button onclick="startExam('constantineAnapath2122')" class="w-full flex items-center justify-between p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-red-500 dark:hover:border-red-500 hover:shadow-md transition-all group">
+                                            <div class="flex items-center gap-3"><span class="bg-red-100 text-red-700 text-xs font-bold px-2 py-1 rounded">NEW</span><span class="font-semibold text-gray-700 dark:text-gray-200 group-hover:text-red-600 dark:group-hover:text-red-400">Session 2021/2022</span></div>
+                                            <i class="fas fa-play text-gray-300 dark:text-gray-600 group-hover:text-red-500"></i>
+                                        </button>
+                                        <button onclick="startExam('constantineAnapath2223')" class="w-full flex items-center justify-between p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-red-500 dark:hover:border-red-500 hover:shadow-md transition-all group">
+                                            <div class="flex items-center gap-3"><span class="bg-red-100 text-red-700 text-xs font-bold px-2 py-1 rounded">NEW</span><span class="font-semibold text-gray-700 dark:text-gray-200 group-hover:text-red-600 dark:group-hover:text-red-400">Session 2022/2023</span></div>
+                                            <i class="fas fa-play text-gray-300 dark:text-gray-600 group-hover:text-red-500"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ENDO SECTION -->
+                        <div class="space-y-4">
+                            <button onclick="toggleAccordion('list-endo', 'arrow-endo')" class="w-full flex items-center gap-3 p-4 bg-green-100 dark:bg-green-900 rounded-xl hover:bg-green-200 dark:hover:bg-green-800 transition-colors">
+                                <div class="w-10 h-10 rounded-lg bg-green-200 dark:bg-green-800 flex items-center justify-center">
+                                    <i class="fas fa-heartbeat text-green-600 dark:text-green-300"></i>
+                                </div>
+                                <h2 class="text-xl font-bold text-gray-800 dark:text-white">Endo</h2>
+                                <i id="arrow-endo" class="fas fa-chevron-down text-gray-400 ml-auto transition-transform duration-300"></i>
+                            </button>
+                            
+                            <div id="list-endo" class="hidden space-y-4 pl-4">
+                                <!-- ENDO ACCORDION -->
+                                <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 overflow-hidden shadow-sm transition-colors">
+                                    <button onclick="toggleAccordion('list-endo-detail', 'arrow-endo-detail')" class="w-full flex justify-between items-center p-6 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                        <div class="flex items-center gap-4">
+                                            <div class="w-12 h-12 rounded-xl bg-green-100 dark:bg-green-900 flex items-center justify-center text-xl text-green-600 dark:text-green-300">
+                                                <i class="fas fa-chart-line"></i>
+                                            </div>
+                                            <div class="text-left">
+                                                <h3 class="text-xl font-bold text-gray-800 dark:text-white">Endocrinologie</h3>
+                                                <p class="text-sm text-gray-400">Coming Soon</p>
+                                            </div>
+                                        </div>
+                                        <i id="arrow-endo-detail" class="fas fa-chevron-down text-gray-400 transition-transform duration-300"></i>
+                                    </button>
+                                    
+                                    <div id="list-endo-detail" class="hidden border-t border-gray-100 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-900/50 p-4 space-y-3">
+                                        <div class="text-center py-8 text-gray-500 dark:text-gray-400">
+                                            <i class="fas fa-flask text-3xl mb-2"></i>
+                                            <p>Exams coming soon</p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -264,7 +409,7 @@
         const data2020 = [
             { id: 1, cat: "biochimie", q: "Méningite virale chez un enfant : quels signes biologiques NE correspondent PAS ?", options: ["1000 leucocytes dont 85 % lymphocytes", "Liquide clair en eau de roche", "Glycémie 2 g/l et glycorachie 0,5 g/l", "Hypoprotéinorachie", "Chlorurorachie effondrée"], correct: [2, 3, 4], official: "D (3+4+5)", aiNote: "Glycorachie basse et chlorurorachie effondrée = bactérien/TB. Protéine basse est rare en méningite." },
             { id: 2, cat: "biochimie", q: "Index IgG élevé dans le LCR :", options: ["Altération barrière hémato‑méningée", "Synthèse intrathécale d’IgG", "Maladie de Kahler", "Méningite bactérienne", "Méningite virale"], correct: [1], official: "B" },
-            { id: 3, cat: "biochimie", q: "Contre‑indications de la ponction lombaire :", options: ["Suspicion mal de Pott", "Suspicion hémorragie méningée", "Trouble hémostase", "Suspicion méningite tuberculeuse", "Suspicion maladie neuro‑dégénérative"], correct: [1, 2], official: "C (2+3)" },
+            { id: 3, cat: "biochimie", q: "Contre‑indications de la ponction lombaire :", options: ["Suspicion mal de Pott", "Suspicion hémorragie méningée", "Trouble hémostase", "Suspicion méningite tuberculeuse", "Suspicion maladie neuro‑dégénérative"], correct: [0, 1, 2], official: "C (2+3)" },
             { id: 4, cat: "biochimie", q: "Paramètre ne faisant pas partie du Fibrotest :", options: ["Alpha‑2 macroglobuline", "Bilirubine totale", "ALAT", "Gamma‑GT", "Haptoglobine"], correct: [2], official: "C" },
             { id: 5, cat: "biochimie", q: "Bilan musculaire comprend les enzymes suivants sauf une :", options: ["CK", "LDH", "ASAT", "Aldolase", "Gamma‑GT"], correct: [4], official: "E" },
             { id: 6, cat: "biochimie", q: "Bilan pancréatique – réponse fausse :", options: ["Lipase plus spécifique que l’amylase", "Pancréatite aiguë → augmentation importante lipase", "Augmentation modérée lipase dans affections extra‑pancréatiques", "Trois isoformes d’amylase chez l’homme", "Amylasémie augmentée dans oreillons"], correct: [3], official: "D est fausse" },
@@ -292,7 +437,7 @@
             { id: 28, cat: "semiologie", q: "Examens systématiques devant céphalée :", options: ["Température", "Tonus oculaire", "Pression artérielle", "Pouls", "Œdème papillaire"], correct: [0, 2, 4], official: "A, C, E" },
             { id: 29, cat: "semiologie", q: "Céphalées primaires – réponse fausse :", options: ["Liées à dysfonction SNC", "Absence lésion causale", "Très fréquentes", "Crises paroxystiques", "Jamais besoin examens complémentaires"], correct: [4], official: "E est fausse" },
             { id: 30, cat: "semiologie", q: "Algies crânio‑faciales primaires – réponse fausse :", options: ["Migraine", "Cluster headache", "Névralgie symptomatique du trijumeau", "Tic douloureux de Trousseau", "Algies psychogènes"], correct: [2], official: "C est fausse" },
-            { id: 31, cat: "semiologie", q: "Migraines – propositions justes :", options: ["Accès répétitifs hémicrânie", "Vasodilatation cérébrale parfois précédée vasoconstriction", "Les plus fréquentes", "Touchent surtout femme après 40 ans", "Diagnostic clinique stéréotypé"], correct: [0, 1, 4], official: "A, B, E" },
+            { id: 31, cat: "semiologie", q: "Migraines – propositions justes :", options: ["Accès répétitifs hémicrânie", "Vasodilatation cérébrale parfois précédée vasoconstriction", "Les plus fréquentes", "Touchent surtout femme après 40 ans", "Diagnostic clinique stéréotypé"], correct: [0, 1, 2, 4], official: "A, B, E" },
             { id: 32, cat: "semiologie", q: "Hypertonie pyramidale :", options: ["Succède à lésion chronique faisceau pyramidal", "Spastique", "Plastique", "Diffuse", "ROT vifs"], correct: [0, 1, 4], official: "A, B, E" },
             { id: 33, cat: "semiologie", q: "Syndrome pyramidal – réponse fausse :", options: ["Paralysie", "Hypertonie spastique", "Hyperréflexie", "Troubles sphinctériens", "Babinski positif"], correct: [3], official: "D est fausse" },
             { id: 34, cat: "semiologie", q: "L’hémiplégie : quelles propositions sont justes ?", options: ["Abolition ou diminution motricité hémicorps", "Due à atteinte faisceau pyramidal", "Flasque au début", "Spastique secondaire", "Toutes justes"], correct: [4], official: "E" },
@@ -325,7 +470,7 @@
         ];
 
         const data2021_Full = [
-            { id: 1, cat: "semiologie", q: "La sensibilité de la région cranio‑faciale est assurée par les nerfs suivants :", options: ["V + VI + VII", "VI + VII + XI", "IX + V + X", "X + XI + XII", "I + II + V"], correct: [0, 4], official: "Réponse : V (nerf trijumeau). Correction : Les autres nerfs cités n’assurent pas la sensibilité principale de la face. (Note: Only V is strictly correct for sensation, but option E contains V)", aiNote: "Seul le V assure la sensibilité de la face. Le I et II sont sensoriels." },
+            { id: 1, cat: "semiologie", q: "La sensibilité de la région cranio‑faciale est assurée par les nerfs suivants :", options: ["V + VI + VII", "VI + VII + XI", "IX + V + X", "X + XI + XII", "I + II + V"], correct: [2], official: "Réponse : V (nerf trijumeau). Correction : Les autres nerfs cités n’assurent pas la sensibilité principale de la face. (Note: Only V is strictly correct for sensation, but option E contains V)", aiNote: "Seul le V assure la sensibilité de la face. Le I et II sont sensoriels." },
             { id: 2, cat: "semiologie", q: "Les structures sensibles endocrâniennes sont :", options: ["Vaisseaux méningés", "Dure‑mère", "Gros troncs artériels", "Sinus veineux", "Oreille moyenne"], correct: [0, 1, 2, 3], official: "A, B, C, D" },
             { id: 3, cat: "semiologie", q: "Céphalées primaires – réponses fausses :", options: ["Migraine", "Céphalées de tension", "Algie vasculaire de la face", "Affection psychiatrique", "Névralgies crâniennes"], correct: [3], official: "D est fausse" },
             { id: 4, cat: "semiologie", q: "Examens complémentaires indiqués dans l’exploration des algies cranio‑faciales sauf un :", options: ["Ponction lombaire", "TDM cérébrale", "IRM cérébrale", "Échographie abdominale", "Doppler des vaisseaux du cou"], correct: [3], official: "D (Échographie abdominale)" },
@@ -334,8 +479,8 @@
             { id: 7, cat: "semiologie", q: "Dans la surdité de transmission (réponse fausse) :", options: ["Weber compare perception des deux oreilles", "Voix haute diminuée", "Voix chuchotée fortement diminuée", "Rinne positif", "Weber latéralisé"], correct: [3], official: "D est fausse (Rinne négatif)" },
             { id: 8, cat: "semiologie", q: "Dans la surdité de perception (réponse fausse) :", options: ["Voix haute diminuée", "Voix chuchotée augmentée", "Rinne positif", "Weber latéralisé côté sain", "Audiométrie utile"], correct: [1], official: "B est fausse" },
             { id: 9, cat: "semiologie", q: "Nerf glossopharyngien (IX) – réponse fausse :", options: ["Motricité pharynx", "Motricité SCM", "Sensibilité amygdales", "Goût 1/3 postérieur langue", "Sécrétion parotide"], correct: [1], official: "B est fausse (SCM dépend du XI)" },
-            { id: 10, cat: "semiologie", q: "Paralysie du III – réponse fausse :", options: ["Ptosis", "Strabisme divergent", "Mydriase réactive", "Abolition réflexe photomoteur", "Conservation accommodation‑convergence"], correct: [2], official: "C est fausse (Mydriase aréactive)" },
-            { id: 11, cat: "semiologie", q: "Station debout mobilise plusieurs systèmes – réponse fausse :", options: ["Cortico‑spinal", "Cérébelleux", "Sensitif superficiel tactile", "Vestibulaire", "Sensitif profond"], correct: [0, 2], official: "A et C sont faux" },
+            { id: 10, cat: "semiologie", q: "Paralysie du III – réponse fausse :", options: ["Ptosis", "Strabisme divergent", "Mydriase réactive", "Abolition réflexe photomoteur", "Conservation accommodation‑convergence"], correct: [2, 4], official: "C est fausse (Mydriase aréactive)" },
+            { id: 11, cat: "semiologie", q: "Station debout mobilise plusieurs systèmes – réponse fausse :", options: ["Cortico‑spinal", "Cérébelleux", "Sensitif superficiel tactile", "Vestibulaire", "Sensitif profond"], correct: [2], official: "A et C sont faux" },
             { id: 12, cat: "semiologie", q: "Le coma est :", options: ["Perte partielle conscience", "Altération vigilance réversible", "Diminution état d’éveil", "Altération isolée fonctions cognitives", "Perte totale conscience non réversible par stimuli"], correct: [4], official: "E" },
             { id: 13, cat: "physiopathologie", q: "Le système de l’éveil se situe :", options: ["Cervelet", "Cortex", "Tronc cérébral", "Substance réticulée du tronc et mésencéphale", "Thalamus"], correct: [3], official: "D" },
             { id: 14, cat: "semiologie", q: "Évaluation de l’état de conscience :", options: ["Score FOUR", "Score Glasgow (GCS)", "Score Child‑Pugh", "Score MELD", "Score NIHSS"], correct: [1], official: "B" },
@@ -344,14 +489,14 @@
             { id: 17, cat: "semiologie", q: "Les céphalées primaires sont :", options: ["Migraine", "Céphalées de tension", "Névralgies crâniennes", "Évolution chronique", "Algie vasculaire de la face"], correct: [0, 1, 2, 4], official: "A, B, C, E" },
             { id: 18, cat: "semiologie", q: "La céphalée de tension :", options: ["Douleur diffuse en casque", "Douleur de type serrement/pesanteur", "Évolution épisodique ou chronique", "Examen neurologique souvent anormal", "Forme fréquente de céphalées essentielles"], correct: [0, 1, 2, 4], official: "A, B, C, E" },
             { id: 19, cat: "semiologie", q: "La migraine avec aura :", options: ["Aura régressive en moins de 60 min", "Mode d’installation lent", "Céphalée après disparition de l’aura", "Douleur unilatérale", "Nausées, vomissements, photophobie"], correct: [0, 2, 3, 4], official: "A, C, D, E" },
-            { id: 20, cat: "semiologie", q: "L’hypertension intracrânienne bénigne :", options: ["Fond d’œil toujours anormal", "Imagerie cérébrale anormale", "Examen neurologique normal sauf atteinte du III et VII", "Ponction lombaire de composition normale", "Troubles visuels toujours bénins"], correct: [3], official: "D" },
-            { id: 21, cat: "semiologie", q: "La névralgie du trijumeau se traduit par :", options: ["Douleurs frontales", "Douleurs temporales", "Douleurs pariétales", "Douleurs occipitales", "Pas d’anesthésie ni déficit moteur de l’hémiface"], correct: [4], official: "E" },
+            { id: 20, cat: "semiologie", q: "L’hypertension intracrânienne bénigne :", options: ["Fond d’œil toujours anormal", "Imagerie cérébrale anormale", "Examen neurologique normal sauf atteinte du III et VII", "Ponction lombaire de composition normale", "Troubles visuels toujours bénins"], correct: [1, 3, 4], official: "D" },
+            { id: 21, cat: "semiologie", q: "La névralgie du trijumeau se traduit par :", options: ["Douleurs frontales", "Douleurs temporales", "Douleurs pariétales", "Douleurs occipitales", "Pas d’anesthésie ni déficit moteur de l’hémiface"], correct: [0, 1, 4], official: "E" },
             { id: 22, cat: "semiologie", q: "La force musculaire cotée à 3 témoigne :", options: ["Contraction sans mouvement", "Mouvement contre pesanteur", "Mouvement sans pesanteur", "Mouvement contre pesanteur et résistance", "Contraction réflexe uniquement"], correct: [1], official: "B" },
             { id: 23, cat: "semiologie", q: "Une lésion ischémique hémisphérique entraîne un trouble du tonus de type :", options: ["Hypotonie", "Myoclonie", "Hypertonie plastique", "Dystonie", "Hypertonie spastique"], correct: [4], official: "E" },
             { id: 24, cat: "semiologie", q: "La présence d’une adiadococinésie suggère une lésion au niveau du :", options: ["Thalamus", "Lobe occipital", "Tronc cérébral", "Cervelet", "Lobe temporal"], correct: [3], official: "D" },
             { id: 25, cat: "semiologie", q: "Le syndrome cérébelleux s’accompagne de :", options: ["Trouble de la marche en ligne droite", "Dyschronométrie", "Hypotonie musculaire", "Parésie des extrémités", "Impossibilité mouvements rapides doigt‑nez"], correct: [0, 1, 2, 4], official: "A, B, C, E" },
             { id: 26, cat: "semiologie", q: "Les fasciculations orientent vers une lésion de :", options: ["Hémisphère cérébral", "Corne postérieure moelle", "Corne antérieure moelle", "Thalamus", "Capsule interne"], correct: [2], official: "C" },
-            { id: 27, cat: "semiologie", q: "Les bulles :", options: ["Décollement intra‑épidermique dans pemphigus", "Décollement dermo‑épidermique dans pemphigus", "Contenu purulent possible", "Contenu clair/séreux/hémorragique", "Taille > 5 mm"], correct: [0, 2, 3, 4], official: "A, C, D, E" },
+            { id: 27, cat: "semiologie", q: "Les bulles :", options: ["Décollement intra‑épidermique dans pemphigus", "Décollement dermo‑épidermique dans pemphigus", "Contenu purulent possible", "Contenu clair/séreux/hémorragique", "Taille > 5 mm"], correct: [1], official: "A, C, D, E" },
             { id: 28, cat: "semiologie", q: "Le signe de Babinski est retrouvé en cas de lésion :", options: ["Thalamus", "Cervelet", "Corne antérieure moelle", "Hémisphérique", "Nerf périphérique"], correct: [3], official: "D" },
             { id: 29, cat: "semiologie", q: "Une lésion bilatérale cervicale de la moelle entraîne :", options: ["Tétraplégie", "Hémiplégie", "Paraplégie", "Monoplégie", "Hémiparésie"], correct: [0], official: "A" },
             { id: 30, cat: "semiologie", q: "Les mouvements involontaires sont :", options: ["Parésie", "Tic", "Chorée", "Tremblement", "Hémiballisme"], correct: [1, 2, 3, 4], official: "B, C, D, E" },
@@ -362,9 +507,9 @@
             { id: 35, cat: "biochimie", q: "À propos des transaminases – réponses fausses :", options: ["Localisation cytosolique ou mitochondriale", "Peuvent spécifier une étiologie", "Spécifiques de la cytolyse hépatique", "Doivent être complétées par bilan étiologique", "Pose du garrot fausse le résultat"], correct: [2], official: "C est fausse" },
             { id: 36, cat: "biochimie", q: "Concernant le bilan de cholestase – réponses fausses :", options: ["GGT élevés", "PAL élevés", "Transaminases modérément élevées", "PAL élevés avec GGT normaux", "Augmentation rapide des GGT"], correct: [3], official: "D est fausse" },
             { id: 37, cat: "biochimie", q: "Signes biologiques orientant vers une méningite virale (glycémie normale) :", options: ["Glycorachie = 0,25 g/l", "Aspect en eau de roche", "Hyperleucocytose lymphocytaire", "Hyperprotéinorachie", "Hypochlorrurachie"], correct: [1, 2, 3], official: "B, C, D" },
-            { id: 38, cat: "biochimie", q: "Signes biologiques d’une méningite bactérienne :", options: ["Albumine élevée", "Liquide trouble", "Lactate élevé", "Protéines basses", "Chlorures élevés"], correct: [1, 2], official: "B, C (Note: Albumine élevée possible aussi)" },
+            { id: 38, cat: "biochimie", q: "Signes biologiques d’une méningite bactérienne :", options: ["Albumine élevée", "Liquide trouble", "Lactate élevé", "Protéines basses", "Chlorures élevés"], correct: [0, 1, 2], official: "B, C (Note: Albumine élevée possible aussi)" },
             { id: 39, cat: "biochimie", q: "Indications de la ponction lombaire :", options: ["Mal de Pott", "Hémorragie méningée", "Comas fébriles", "Méningite tuberculeuse", "Hypertension intracrânienne"], correct: [1, 2, 3], official: "B, C, D" },
-            { id: 40, cat: "biochimie", q: "Situations avec hypoglycorachie :", options: ["Diabète type 2", "Méningite parasitaire", "Méningite virale", "Méningite tuberculeuse", "Tumeurs cérébrales"], correct: [1, 3], official: "B, D" },
+            { id: 40, cat: "biochimie", q: "Situations avec hypoglycorachie :", options: ["Diabète type 2", "Méningite parasitaire", "Méningite virale", "Méningite tuberculeuse", "Tumeurs cérébrales"], correct: [3, 4], official: "B, D" },
             { id: 41, cat: "physiopathologie", q: "La douleur – réponse fausse :", options: ["Phénomène multidimensionnel", "Phénomène plurifactoriel", "Phénomène nociceptif", "Toujours objective", "Peut être subjective"], correct: [3], official: "D est fausse" },
             { id: 42, cat: "physiopathologie", q: "Composantes de la douleur – réponse fausse :", options: ["Sensorielle", "Motrice", "Cognitive", "Végétative", "Neuro‑dysleptique"], correct: [4], official: "E est fausse" },
             { id: 43, cat: "physiopathologie", q: "Substances algogènes – réponse fausse :", options: ["Leucotriènes", "Endorphines", "Bradykinines", "Histamine", "Sérotonine"], correct: [1], official: "B est fausse" },
@@ -563,6 +708,849 @@
             { id: 60, cat: "biochimie", q: "Méningite virale (LCR) – signes qui ne correspondent pas :", options: ["1000 leucocytes, 85% lymphocytes", "Eau de roche", "Glycorachie basse (0.5 g/l)", "Hypoprotéinorachie", "Chlorurorachie effondrée"], correct: [2, 3, 4], official: "C + D + E" }
         ];
 
+        const dataBelAbbes = [
+            {
+                id: 1,
+                cat: "semiologie",
+                q: "Monsieur M.B, 25 ans, victime d'un accident de la voie publique, est admis en urgence. Au terme de l'examen clinique décrit (absence de pâleur, TA 120/70, FC 110, FR 42/min, agitation, ne répond à aucune question verbale, n'ouvre pas les yeux à l'appel de son nom, réaction motrice incoordonnée à la douleur, pas de trouble du tonus), scorez ce patient en fonction des réflexes mésencéphaliques :",
+                options: [
+                    "Réflexes mésencéphaliques présents, score 8/15",
+                    "Réflexes mésencéphaliques présents, score 10/15",
+                    "Réflexes mésencéphaliques absents, score 10/15",
+                    "Réflexes mésencéphaliques présents, score 9/15",
+                    "Réflexes mésencéphaliques présents, score 7/15"
+                ],
+                correct: [1],
+                official: "B"
+            },
+            {
+                id: 2,
+                cat: "semiologie",
+                q: "72 heures après, le patient répond de manière inappropriée aux questions, respiration régulière, température centrale 37 °C, mais on retrouve un ptosis unilatéral droit, un strabisme divergent, une mydriase aréactive avec abolition du réflexe photomoteur. Ce patient présente :",
+                options: [
+                    "Une paralysie faciale",
+                    "Une paralysie du trijumeau",
+                    "Une paralysie du nerf oculomoteur commun (III)",
+                    "Une paralysie du nerf pathétique (IV)",
+                    "Une paralysie du nerf moteur oculaire externe (VI)"
+                ],
+                correct: [2],
+                official: "C"
+            },
+            {
+                id: 3,
+                cat: "semiologie",
+                q: "Une patiente est ramenée à l'urgence après un accident de la voie publique avec troubles de la conscience. L'examen neurologique retrouve : ouverture des yeux à la stimulation douloureuse, réponses verbales inappropriées, réponse motrice du membre supérieur gauche en flexion rapide se dirigeant vers le siège de la douleur, réflexes mésencéphaliques normaux. Le score de Glasgow est :",
+                options: [
+                    "10/15",
+                    "8/15",
+                    "9/15",
+                    "11/15",
+                    "5/15"
+                ],
+                correct: [1],
+                official: "B"
+            },
+            {
+                id: 4,
+                cat: "semiologie",
+                q: "24 heures après, la patiente présente une respiration de type ataxique. Il s'agit de :",
+                options: [
+                    "Une inspiration profonde et expiration superficielle",
+                    "Une respiration normale entrecoupée de pauses respiratoires",
+                    "Une respiration superficielle anarchique traduisant une lésion de la moelle",
+                    "Une respiration superficielle anarchique traduisant une lésion du bulbe",
+                    "Une respiration superficielle anarchique traduisant une lésion de l'hémisphère cérébral"
+                ],
+                correct: [3],
+                official: "D"
+            },
+            {
+                id: 5,
+                cat: "semiologie",
+                q: "L'examen oculaire retrouve un myosis bilatéral réactif. Cela traduit que la patiente présente :",
+                options: [
+                    "Un coma profond",
+                    "Un début d'engagement central",
+                    "Un état pré-comateux",
+                    "Un coma léger",
+                    "Un engagement cérébral dépassé"
+                ],
+                correct: [0, 1],
+                official: "A, B"
+            },
+            {
+                id: 6,
+                cat: "semiologie",
+                q: "Ces signes neurologiques (troubles de conscience, respiration ataxique, myosis bilatéral réactif) traduisent une atteinte du :",
+                options: [
+                    "Tronc cérébral au niveau protubérantiel",
+                    "Diencéphale",
+                    "Lésion étendue du système nerveux",
+                    "Mésencéphale",
+                    "Bulbe"
+                ],
+                correct: [1],
+                official: "B"
+            },
+            {
+                id: 7,
+                cat: "semiologie",
+                q: "La céphalée d'une hémorragie méningée est caractérisée principalement par :",
+                options: [
+                    "Toujours occipitale",
+                    "Installation brutale",
+                    "Répétitive",
+                    "Accompagnée du signe de Kernig",
+                    "Toujours accompagnée du signe de Babinski"
+                ],
+                correct: [1, 3],
+                official: "B, D"
+            },
+            {
+                id: 8,
+                cat: "semiologie",
+                q: "La céphalée de l'hypertension intracrânienne se caractérise par :",
+                options: [
+                    "Céphalée chronique unilatérale",
+                    "Accompagnée rarement d'un œdème papillaire",
+                    "Céphalée unilatérale à bascule",
+                    "Exagérée par la mobilisation de la tête",
+                    "Aggravée par les vomissements"
+                ],
+                correct: [3],
+                official: "D"
+            },
+            {
+                id: 9,
+                cat: "semiologie",
+                q: "L'aphasie de Broca est une aphasie : (cocher la réponse juste)",
+                options: [
+                    "Mixte",
+                    "Motrice (d'expression)",
+                    "Sensitive",
+                    "Avec un langage abondant et facile",
+                    "Où la compréhension n'est pas préservée"
+                ],
+                correct: [1],
+                official: "B"
+            },
+            {
+                id: 10,
+                cat: "semiologie",
+                q: "L'examen neurologique permet d'apprécier : (cocher les réponses justes)",
+                options: [
+                    "La posture",
+                    "La marche",
+                    "Les différentes paires crâniennes",
+                    "Les réflexes",
+                    "La sensibilité"
+                ],
+                correct: [0, 1, 2, 3, 4],
+                official: "A, B, C, D, E"
+            },
+            {
+                id: 11,
+                cat: "semiologie",
+                q: "Le tonus lors des paralysies centrales est de type : (cocher les réponses fausses)",
+                options: [
+                    "Hypotonie dans les atteintes aiguës",
+                    "Hypertonie dans les atteintes aiguës",
+                    "Hypotonie dans les atteintes chroniques",
+                    "Hypertonie dans les atteintes chroniques",
+                    "Tonus normal"
+                ],
+                correct: [1, 2, 4],
+                official: "B, C, E"
+            },
+            {
+                id: 12,
+                cat: "semiologie",
+                q: "L'hémiplégie flasque : (cocher les réponses justes)",
+                options: [
+                    "Se voit en phase initiale d'une lésion aiguë du faisceau pyramidal",
+                    "Se voit après quelques semaines d'une lésion aiguë du faisceau pyramidal",
+                    "Est caractérisée par une hypotonie",
+                    "Est caractérisée par une hypertonie spastique",
+                    "Est une paralysie totale qui touche un hémicorps"
+                ],
+                correct: [0, 2, 4],
+                official: "A,B , E"
+            },
+            {
+                id: 13,
+                cat: "physiopathologie",
+                q: "Le réflexe myotatique : cocher la réponse juste",
+                options: [
+                    "Fait intervenir l'encéphale",
+                    "Ne fait pas intervenir la moelle épinière",
+                    "Est constitué de deux neurones sensitifs",
+                    "Est constitué de deux neurones moteurs",
+                    "Est constitué d'un neurone sensitif et d'un neurone moteur"
+                ],
+                correct: [4],
+                official: "E"
+            },
+            {
+                id: 14,
+                cat: "semiologie",
+                q: "Dans les troubles de la sensibilité, une lésion pariétale se caractérise par : (cocher la ou les réponses justes)",
+                options: [
+                    "Les troubles sensitifs portent essentiellement sur la sensibilité profonde",
+                    "Les crises d'épilepsie sensitives sont fréquentes",
+                    "Les troubles sensitifs sont directs et non proportionnels",
+                    "Les troubles prédominent à la face et à l'extrémité distale des membres",
+                    "Toutes les réponses sont justes"
+                ],
+                correct: [0, 1, 3],
+                official: "A, B, D"
+            },
+            {
+                id: 15,
+                cat: "physiopathologie",
+                q: "Dans l'atteinte de la sensibilité profonde, on observe : (cocher la ou les réponses fausses)",
+                options: [
+                    "Une akinesthésie et une apallesthésie",
+                    "Une hypertonie",
+                    "Des réflexes ostéo-tendineux normaux ou vifs",
+                    "Une dysmétrie doigt-nez aux yeux ouverts",
+                    "Une marche talonnante"
+                ],
+                correct: [1, 2, 3],
+                official: "B, C, D"
+            },
+            {
+                id: 16,
+                cat: "semiologie",
+                q: "Parmi les signes cliniques du syndrome méningé, cocher la ou les réponses fausses :",
+                options: [
+                    "Céphalée",
+                    "Vomissements",
+                    "Signe de Brudzinski",
+                    "Signe de Kernig",
+                    "Toutes les réponses sont fausses"
+                ],
+                correct: [4],
+                official: "E"
+            },
+            {
+                id: 17,
+                cat: "semiologie",
+                q: "En cas de syndrome méningé, une ponction lombaire :",
+                options: [
+                    "Est formellement contre-indiquée",
+                    "Est réalisée systématiquement",
+                    "N'a pas d'intérêt pour le diagnostic",
+                    "Peut être indiquée mais après réalisation d'un fond d'œil et d'un scanner cérébral",
+                    "Peut montrer un liquide céphalo-rachidien normal"
+                ],
+                correct: [3, 4],
+                official: "D, E"
+            },
+            {
+                id: 18,
+                cat: "semiologie",
+                q: "En faveur d'un syndrome vestibulaire central (cocher la ou les réponses justes) :",
+                options: [
+                    "Un vertige intense, rotatoire avec nausées",
+                    "Un nystagmus pur",
+                    "Syndrome disharmonieux et incomplet",
+                    "D'autres signes neurologiques associés",
+                    "Signes cochléaires associés"
+                ],
+                correct: [1, 2, 3],
+                official: "B, C, D"
+            },
+            {
+                id: 19,
+                cat: "semiologie",
+                q: "Dans l'ataxie vestibulaire, on trouve :",
+                options: [
+                    "Un signe de Romberg labyrinthique",
+                    "Une latéro-déviation à l'épreuve des index",
+                    "Une marche pseudo-ébrieuse",
+                    "Apparition des signes à la fermeture des yeux",
+                    "Toutes les réponses sont justes"
+                ],
+                correct: [0, 1, 3],
+                official: "A, B, D"
+            },
+            {
+                id: 20,
+                cat: "semiologie",
+                q: "Dans le syndrome cérébelleux (cocher la ou les réponses justes) :",
+                options: [
+                    "Il existe toujours un élargissement du polygone de sustentation",
+                    "On trouve une hypermétrie doigt-nez aux yeux ouverts",
+                    "On peut le suspecter en présence du signe de Fournier et d'une marche en funambule impossible",
+                    "On trouve une hypotonie de passivité",
+                    "Il existe un tremblement de repos"
+                ],
+                correct: [1, 2, 3],
+                official: "B, C, D"
+            },
+            {
+                id: 21,
+                cat: "semiologie",
+                q: "Au cours de l'atteinte cérébelleuse hémisphérique, le syndrome cérébelleux (cocher la ou les réponses fausses) :",
+                options: [
+                    "Est statique bilatéral",
+                    "Est cinétique",
+                    "Est controlatéral à la lésion",
+                    "Caractérisé par une hypotonie plus nette aux membres inférieurs",
+                    "Caractérisé par l'importance du tremblement"
+                ],
+                correct: [0, 2, 4],
+                official: "A, C, E"
+            },
+            {
+                id: 22,
+                cat: "semiologie",
+                q: "La maladie de Parkinson se caractérise par :",
+                options: [
+                    "Tremblement de repos + akinésie + hypertonie plastique",
+                    "Tremblement d'attitude + akinésie + hypertonie spastique",
+                    "Tremblement de repos et d'attitude + akinésie + hypertonie spastique",
+                    "Troubles de la marche + chutes",
+                    "Troubles végétatifs surtout hypotension orthostatique"
+                ],
+                correct: [0, 3, 4],
+                official: "A, D, E"
+            },
+            {
+                id: 23,
+                cat: "semiologie",
+                q: "Le tremblement parkinsonien :",
+                options: [
+                    "Est aggravé lors des mouvements volontaires",
+                    "Peut être aggravé par l'émotion, le calcul mental, le stress",
+                    "Est un tremblement de repos qui disparaît pendant le sommeil",
+                    "Touche principalement les extrémités des membres",
+                    "Peut toucher le cou"
+                ],
+                correct: [1, 2, 3],
+                official: "B, C, D"
+            },
+            {
+                id: 24,
+                cat: "semiologie",
+                q: "La maladie de Parkinson se caractérise par toutes ces réponses sauf :",
+                options: [
+                    "Tremblement de repos + akinésie + hypertonie plastique",
+                    "Tremblement d'attitude + akinésie + hypertonie spastique",
+                    "Troubles de l'écriture et de la parole : micrographie, dysarthrie monotone, voix faible",
+                    "Troubles de la marche",
+                    "Chutes"
+                ],
+                correct: [1],
+                official: "B"
+            },
+            {
+                id: 25,
+                cat: "semiologie",
+                q: "L'érythème est caractérisé par les propositions suivantes : cocher la ou les réponses justes",
+                options: [
+                    "Est dû à une dilatation vasculaire",
+                    "Résulte d'une extravasation de sang",
+                    "Est dû à une hyperhémie inflammatoire",
+                    "Est une diminution du pigment cutané",
+                    "Est une lésion primitive"
+                ],
+                correct: [2, 4],
+                official: "C, E"
+            },
+            {
+                id: 26,
+                cat: "semiologie",
+                q: "Les propositions ci-dessous définissent le dermographisme : cocher la réponse juste",
+                options: [
+                    "Un décollement épidermique",
+                    "Une papule œdémateuse",
+                    "Une excroissance papillomateuse",
+                    "Une érosion linéaire des plis",
+                    "Un tissu de néoformation"
+                ],
+                correct: [1],
+                official: "B"
+            },
+            {
+                id: 27,
+                cat: "semiologie",
+                q: "Une douleur articulaire inflammatoire (arthrite) est caractérisée par : cocher la réponse fausse",
+                options: [
+                    "C'est une douleur articulaire qui survient au repos",
+                    "Elle empêche le sommeil et réveille le malade à la deuxième moitié de la nuit",
+                    "Elle survient à l'effort en fin de journée",
+                    "Elle s'accompagne d'un dérouillage (raideur articulaire) matinal",
+                    "Elle est en rapport avec une atteinte de la synoviale (synovite)"
+                ],
+                correct: [2],
+                official: "C"
+            },
+            {
+                id: 28,
+                cat: "physiopathologie",
+                q: "L'ostéoporose est caractérisée par : cocher les deux réponses fausses",
+                options: [
+                    "Une perte de la masse osseuse",
+                    "Des altérations de la microarchitecture osseuse",
+                    "Elle est asymptomatique sur le plan clinique sauf en cas de fracture où elle est douloureuse",
+                    "Elle est accompagnée de douleurs osseuses et musculaires",
+                    "Une calcémie et une phosphorémie basses et un taux de phosphatases alcalines augmenté"
+                ],
+                correct: [3, 4],
+                official: "D, E"
+            },
+            {
+                id: 29,
+                cat: "semiologie",
+                q: "L'épilepsie est :",
+                options: [
+                    "Une crise cérébrale liée à une hypoxie",
+                    "Une crise neuronale liée à une décharge cérébrale",
+                    "Le petit mal dure 20 secondes",
+                    "Le grand mal se déroule en trois phases",
+                    "La phase clonique est la deuxième phase"
+                ],
+                correct: [1, 4],
+                official: "B, E"
+            },
+            {
+                id: 30,
+                cat: "semiologie",
+                q: "L'obnubilation est :",
+                options: [
+                    "L'orientation temporo-spatiale est perturbée",
+                    "Réactivité moins rapide et moins précise",
+                    "Persistance d'une réaction aux ordres complexes",
+                    "Altération de la réaction aux ordres complexes",
+                    "Réactivité totalement altérée"
+                ],
+                correct: [1, 2],
+                official: "B, C"
+            },
+            {
+                id: 31,
+                cat: "radiologie",
+                q: "Un jeune homme présente un traumatisme crânien grave par chute avec réception sur la voûte occipitale. Le scanner cérébral en urgence peut montrer : cocher la ou les réponses justes",
+                options: [
+                    "Des lésions du coup en région occipitale",
+                    "Des lésions du contrecoup en région frontale",
+                    "Une collection hématique hyperdense lenticulaire frontale",
+                    "Une fracture frontale",
+                    "Un hématome sous-dural occipital"
+                ],
+                correct: [0, 1],
+                official: "A, B"
+            },
+            {
+                id: 32,
+                cat: "radiologie",
+                q: "Un scanner cérébral sans injection chez une vieille dame montre une image hypodense fronto-pariétale gauche de densité liquidienne avec élargissement du ventricule homolatéral et des espaces péricérébraux. Il s'agit le plus probablement de :",
+                options: [
+                    "Hématome sous-dural chronique",
+                    "Infarctus cérébral récent",
+                    "Hématome extradural",
+                    "AVC au stade séquellaire",
+                    "Hématome intraparenchymateux"
+                ],
+                correct: [3],
+                official: "D"
+            },
+            {
+                id: 33,
+                cat: "radiologie",
+                q: "L'hémorragie sous-arachnoïdienne se manifeste en tomodensitométrie par :",
+                options: [
+                    "Une hypodensité corticale",
+                    "Une hyperdensité des citernes",
+                    "Un aspect hyperdense des ventricules",
+                    "Une hyperdensité en forme de croissant",
+                    "Une hypodensité des sillons corticaux"
+                ],
+                correct: [1],
+                official: "B"
+            },
+            {
+                id: 34,
+                cat: "radiologie",
+                q: "Dans l'imagerie de l'ischémie cérébrale avant les 3 premières heures, on peut trouver :",
+                options: [
+                    "Une augmentation de la différenciation substance blanche / substance grise au scanner",
+                    "Un effacement du ruban insulaire au scanner",
+                    "Une hyperdensité de forme triangulaire à sommet périphérique",
+                    "Un renforcement des noyaux gris centraux au scanner",
+                    "Un hyposignal diffusion en IRM"
+                ],
+                correct: [1],
+                official: "B"
+            },
+            {
+                id: 35,
+                cat: "radiologie",
+                q: "Concernant l'imagerie dans le glioblastome, cocher la ou les réponses justes :",
+                options: [
+                    "Nette prédominance de l'étage sous-tentoriel",
+                    "Tumeur cérébrale maligne fréquente",
+                    "Œdème vasogénique toujours présent en hypersignal FLAIR",
+                    "Peut avoir un centre nécrotique en hyposignal T1 et hypersignal T2",
+                    "Tumeur secondaire"
+                ],
+                correct: [1, 2, 3],
+                official: "B, C, D"
+            },
+            {
+                id: 36,
+                cat: "radiologie",
+                q: "Dans l'imagerie des infections du système nerveux central, cocher la réponse juste :",
+                options: [
+                    "L'imagerie doit être pratiquée avant la ponction lombaire",
+                    "L'injection de produit de contraste n'est pas indiquée à la recherche de complications",
+                    "Une méningite ne complique jamais",
+                    "L'étiologie est rarement mise en évidence",
+                    "Toutes les réponses sont fausses"
+                ],
+                correct: [4],
+                official: "E"
+            },
+            {
+                id: 37,
+                cat: "radiologie",
+                q: "Dans l'IRM de l'hémangioblastome médullaire, cocher la réponse juste :",
+                options: [
+                    "Le nodule mural prend fortement le contraste après injection",
+                    "Toujours sporadique",
+                    "Tumeur maligne",
+                    "Associée à des vaisseaux peu dilatés",
+                    "Moelle atrophiée"
+                ],
+                correct: [0],
+                official: "A"
+            },
+            {
+                id: 38,
+                cat: "radiologie",
+                q: "L'IRM médullaire dans la sclérose en plaques montre : cocher la ou les réponses justes",
+                options: [
+                    "Une lésion toujours unique",
+                    "Une lésion de forme triangulaire",
+                    "Peut être associée à des localisations cérébrales",
+                    "Prédominance masculine",
+                    "Atteinte médullaire en hyposignal T2"
+                ],
+                correct: [1, 2],
+                official: "B, C"
+            },
+            {
+                id: 39,
+                cat: "radiologie",
+                q: "Concernant l'imagerie dans les fractures rachidiennes non traumatiques, cocher la réponse juste :",
+                options: [
+                    "Le tassement ostéoporotique est asymétrique avec destruction de la corticale",
+                    "Le pincement discal peut être d'origine tumorale",
+                    "Le tassement tumoral est symétrique avec des signes d'agressivité",
+                    "Le tassement ostéoporotique ne peut pas affecter plusieurs vertèbres",
+                    "On peut avoir plusieurs aspects de tassement : cunéiforme, biconcave"
+                ],
+                correct: [4],
+                official: "E"
+            },
+            {
+                id: 40,
+                cat: "radiologie",
+                q: "Sémiologie radiographique standard de profil dans les traumatismes du rachis cervical : cocher la ou les réponses justes",
+                options: [
+                    "Interruption d'une ou de plusieurs lignes spinales",
+                    "Épaississement des parties molles prévertébrales à partir de C5 > 7 mm",
+                    "Épaississement des parties molles prévertébrales de C2 à C4 > 14 mm",
+                    "Dans l'entorse grave on visualise un anté- ou un rétrolisthésis",
+                    "Fracture du corps vertébral et du processus épineux"
+                ],
+                correct: [0, 3, 4],
+                official: "A, D, E"
+            },
+            {
+                id: 41,
+                cat: "radiologie",
+                q: "Imagerie des tumeurs osseuses : cocher la ou les réponses justes",
+                options: [
+                    "Taille des tumeurs malignes à la découverte généralement inférieure à 3 cm",
+                    "Destruction corticale et réaction périostée sont des signes d'agressivité",
+                    "Les tumeurs bénignes ont des limites floues",
+                    "Les métastases osseuses des cancers ostéophiles sont fréquentes",
+                    "L'hémangiome vertébral est une tumeur bénigne fréquente"
+                ],
+                correct: [1, 3, 4],
+                official: "B, D, E"
+            },
+            {
+                id: 42,
+                cat: "radiologie",
+                q: "Concernant l'imagerie des infections osseuses, cocher la ou les réponses justes",
+                options: [
+                    "Secondaires à des infections bactériennes",
+                    "Les radiographies sont toujours pathologiques au tout début",
+                    "Ostéolyse et réaction périostée visualisées sur la radiographie",
+                    "L'IRM est la technique de choix pour une bonne analyse de l'extension",
+                    "Le scanner représente toujours le premier examen à indiquer"
+                ],
+                correct: [0, 2, 3],
+                official: "A, C, D"
+            },
+            {
+                id: 43,
+                cat: "biochimie",
+                q: "Concernant le liquide céphalo-rachidien (LCR) :",
+                options: [
+                    "Est produit au niveau du cervelet",
+                    "Sa résorption se fait dans les plexus choroïdes",
+                    "Modifie la pression intracrânienne",
+                    "Il est toujours limpide",
+                    "Contient moins de 100 leucocytes/µl"
+                ],
+                correct: [3],
+                official: "D"
+            },
+            {
+                id: 44,
+                cat: "biochimie",
+                q: "Lors de l'exploration du LCR :",
+                options: [
+                    "La glycémie représente 50 à 75 % de la glycorachie",
+                    "La chlorurachie et la chlorémie sont presque identiques",
+                    "20 % des protéines sont synthétisées dans le SNC",
+                    "L'analyse des protéines permet l'évaluation de l'intégrité de la barrière hémato-encéphalique",
+                    "La teneur en lactate est dépendante de celle du plasma"
+                ],
+                correct: [2, 3],
+                official: "C, D"
+            },
+            {
+                id: 45,
+                cat: "biochimie",
+                q: "Concernant le LCR provenant d'une méningite bactérienne, on note le plus souvent une augmentation de :",
+                options: [
+                    "Protéines",
+                    "Glucose",
+                    "Chlorures",
+                    "Polynucléaires neutrophiles",
+                    "Plaquettes"
+                ],
+                correct: [0, 3],
+                official: "A, D"
+            },
+            {
+                id: 46,
+                cat: "biochimie",
+                q: "Concernant les enzymes tissulaires :",
+                options: [
+                    "Une enzyme peut catalyser plusieurs substrats",
+                    "Apprécient l'étendue des lésions",
+                    "Sont exprimées en mg/l ou UI/l selon les écoles",
+                    "Agissent toutes au pH physiologique",
+                    "Les enzymes plasmatiques ont des taux variables en fonction de leur production"
+                ],
+                correct: [1],
+                official: "B"
+            },
+            {
+                id: 47,
+                cat: "biochimie",
+                q: "À propos des enzymes :",
+                options: [
+                    "L'ASAT et l'ALAT sont de localisation cytosolique et mitochondriale",
+                    "La LPL hydrolyse les triglycérides et le cholestérol, c'est le facteur clarifiant",
+                    "Les enzymes de coagulation reflètent la fonction hépatique",
+                    "La PAL et la GGT reflètent la fonction osseuse",
+                    "La CK possède des isoenzymes"
+                ],
+                correct: [2, 4],
+                official: "C, E"
+            },
+            {
+                id: 48,
+                cat: "biochimie",
+                q: "Parmi les coenzymes suivants, indiquer celui qui est nécessaire au fonctionnement des transaminases (ALAT et ASAT) :",
+                options: [
+                    "Acide tétrahydrofolique",
+                    "FAD",
+                    "Thiamine pyrophosphate",
+                    "Phosphate de pyridoxal",
+                    "NAD"
+                ],
+                correct: [3],
+                official: "D"
+            },
+            {
+                id: 49,
+                cat: "physiopathologie",
+                q: "L'augmentation de la pression intracrânienne grave entraîne : (cocher la réponse fausse)",
+                options: [
+                    "L'ischémie cérébrale",
+                    "L'engagement cérébral",
+                    "L'anoxie cérébrale",
+                    "L'arrêt de la circulation cérébrale",
+                    "Une augmentation de la pression de perfusion cérébrale"
+                ],
+                correct: [4],
+                official: "E"
+            },
+            {
+                id: 50,
+                cat: "physiopathologie",
+                q: "L'hypertension intracrânienne par augmentation du volume vasculaire cérébral peut être la conséquence : (cocher les réponses justes)",
+                options: [
+                    "D'une vasodilatation cérébrale",
+                    "D'une perte d'autorégulation cérébrale",
+                    "D'une hyperhémie",
+                    "D'une vasoconstriction cérébrale",
+                    "D'une augmentation des résistances vasculaires cérébrales"
+                ],
+                correct: [0, 1, 2],
+                official: "A, B, C"
+            },
+            {
+                id: 51,
+                cat: "physiopathologie",
+                q: "L'hypertension intracrânienne peut être compensée par : (cocher la réponse juste)",
+                options: [
+                    "Augmentation de l'eau intracellulaire",
+                    "Augmentation du volume sanguin cérébral",
+                    "Augmentation de l'eau extracellulaire du parenchyme cérébral",
+                    "Diminution de la résorption du liquide céphalorachidien",
+                    "Augmentation de la résorption du liquide céphalorachidien"
+                ],
+                correct: [4],
+                official: "E"
+            },
+            {
+                id: 52,
+                cat: "physiopathologie",
+                q: "L'œdème périphérique peut se former lorsque : (cocher les réponses justes)",
+                options: [
+                    "La pression veineuse diminue",
+                    "La pression artérielle diminue",
+                    "La pression oncotique diminue",
+                    "La pression hydrostatique capillaire diminue",
+                    "Le flux lymphatique régional diminue"
+                ],
+                correct: [2, 4],
+                official: "C, E"
+            },
+            {
+                id: 53,
+                cat: "physiopathologie",
+                q: "Dans les conditions normales on a : (cocher la réponse juste)",
+                options: [
+                    "Une pression hydrostatique artériolaire supérieure à la pression oncotique artériolaire",
+                    "Une pression hydrostatique artériolaire inférieure à la pression hydrostatique veinulaire",
+                    "Une pression oncotique artériolaire supérieure à la pression hydrostatique artériolaire",
+                    "Une pression oncotique artériolaire supérieure à la pression oncotique veinulaire",
+                    "Une pression hydrostatique artériolaire égale à la pression hydrostatique veinulaire"
+                ],
+                correct: [0],
+                official: "A"
+            },
+            {
+                id: 54,
+                cat: "physiopathologie",
+                q: "La filtration au niveau des capillaires dépend de : (cocher les réponses justes)",
+                options: [
+                    "La pression hydrostatique intracapillaire",
+                    "La pression oncotique vasculaire",
+                    "La pression hydrostatique intracellulaire",
+                    "La perméabilité de la paroi capillaire",
+                    "La diurèse"
+                ],
+                correct: [0, 1, 3],
+                official: "A, B, D"
+            },
+            {
+                id: 55,
+                cat: "physiopathologie",
+                q: "Concernant l'acidose tubulaire rénale type 1 : cocher les réponses justes",
+                options: [
+                    "Défaut d'excrétion d'ions H+ dans le canal collecteur",
+                    "Défaut de réabsorption du bicarbonate",
+                    "Marquée par une hyperkaliémie",
+                    "Le rein n'arrive pas à acidifier les urines",
+                    "Toutes les réponses sont justes"
+                ],
+                correct: [0, 3],
+                official: "A, D"
+            },
+            {
+                id: 56,
+                cat: "physiopathologie",
+                q: "Les réactions d'électroneutralité assurées par le rein : cocher la réponse fausse",
+                options: [
+                    "Les ions Na+ sont retenus par échange avec un ion K+ ou un H+",
+                    "Les anions comme Cl- et HCO3- doivent être en équilibre avec les cations Na+, K+",
+                    "Les ions Na+ sont retenus par échange avec un ion Cl-",
+                    "La nécessité d'assurer l'électroneutralité peut parfois interférer avec la régulation du pH",
+                    "La perte digestive en HCO3- est compensée par une réabsorption rénale de Cl-"
+                ],
+                correct: [2],
+                official: "C"
+            },
+            {
+                id: 57,
+                cat: "physiopathologie",
+                q: "Le trou anionique plasmatique : cocher les réponses justes",
+                options: [
+                    "Toujours augmenté dans l'acidose métabolique",
+                    "Toujours augmenté dans l'acidose respiratoire",
+                    "Augmenté dans l'acidose tubulaire rénale type 1",
+                    "Augmenté dans l'acidose lactique",
+                    "Augmenté dans l'acidocétose diabétique"
+                ],
+                correct: [3, 4],
+                official: "D, E"
+            },
+            {
+                id: 58,
+                cat: "physiopathologie",
+                q: "L'influx douloureux suit le chemin suivant : (cocher la ou les réponses justes)",
+                options: [
+                    "Protoneurone - Neurone thalamo-cortical - Deutoneurone",
+                    "Deutoneurone - Protoneurone - Neurone thalamo-cortical",
+                    "Deutoneurone - Neurone thalamo-cortical - Protoneurone",
+                    "Protoneurone - Deutoneurone - Neurone thalamo-cortical",
+                    "Neurone thalamo-cortical - Protoneurone - Deutoneurone"
+                ],
+                correct: [3],
+                official: "D"
+            },
+            {
+                id: 59,
+                cat: "physiopathologie",
+                q: "Le contrôle de la douleur se fait par : (cocher la ou les réponses justes)",
+                options: [
+                    "Des systèmes de protection contre la douleur situés au niveau médullaire, du tronc cérébral et du thalamus",
+                    "Uniquement au niveau bulbaire",
+                    "Les voies inhibitrices descendantes à partir du cortex",
+                    "Un déséquilibre en faveur des messages excitateurs",
+                    "L'arrivée dans la moelle épinière à la fois d'influx nerveux nociceptifs et sensitifs non nociceptifs"
+                ],
+                correct: [0, 4],
+                official: "A, E"
+            },
+            {
+                id: 60,
+                cat: "physiopathologie",
+                q: "Le phénomène de douleur projetée s'explique par : (cocher la ou les réponses justes)",
+                options: [
+                    "Une analyse erronée de l'origine de la douleur à l'étage cortical",
+                    "La multiplicité des relais dans la moelle épinière",
+                    "La présence de fibres nerveuses de conduction rapide",
+                    "Une perturbation de la transmission nerveuse de l'influx douloureux",
+                    "L'existence de neurones convergents"
+                ],
+                correct: [0, 4],
+                official: "A, E"
+            }
+        ];
+
         const dataConstantine21 = [
             { id: 1, cat: "semiologie", q: "L'adiadococinésie est :", options: ["Difficulté d'exécuter les mouvements alternatifs rapides", "Impossibilité d'exécuter les mouvements lents", "Impossibilité d'exécuter les mouvements finalisés", "Impossibilité de reconnaitre les objets familiers", "Difficulté de maintenir l'attitude"], correct: [0], official: "A", details: "L’adiadococinésie = difficulté à réaliser des mouvements alternatifs rapides (comme pronation/supination)." },
             { id: 2, cat: "semiologie", q: "Toutes les assertions suivantes caractérisent l'hypertonie spastique sauf une :", options: ["Prédomine sur fléchisseurs-pronateurs aux membres supérieurs", "Prédomine sur extenseurs-adducteurs aux membres inférieurs", "Prédomine sur extenseurs-abducteurs aux membres inférieurs", "Elective", "Elastique"], correct: [2], official: "C", details: "Hypertonie spastique prédomine sur fléchisseurs-pronateurs (MS) et extenseurs-adducteurs (MI)." },
@@ -708,6 +1696,282 @@
             { id: 79, cat: "semiologie", q: "Lésions cutanées primaires :", options: ["Nævus plan = macule pigmentée", "Pétéchies = macules érythémateuses s'effaçant", "Bulle = cavité liquide derme/hypoderme", "Nodule = lésion solide hypoderme infracentimétrique", "Pustule = élevure sérosité"], correct: [0, 2], official: "A, C", details: "Pétéchies ne s'effacent pas." }
         ];
 
+        const dataAnapath2022_2023 = [
+            { id: 1, cat: "anapath", q: "Comment doit parvenir une biopsie cutanée mesurant 10 mm de grand axe au service d'anatomie pathologique : (RJ)", options: ["Dans du liquide de Bouin à 10 %", "Dans un tube stérile", "Dans du formol tamponné à 20 %", "Congelé dans du liquide d'azote", "Dans 10 fois le volume du prélèvement de formol tamponné à 10 %"], correct: [4], official: "E" },
+            { id: 2, cat: "anapath", q: "Concernant l'ordre chronologique des différentes étapes techniques dans un laboratoire d'anatomo-pathologie, quelle est la combinaison juste : Montage entre lame et lamelle, Inclusion en paraffine, Déshydratation, Coupe au microtome, Coloration hématéine éosine", options: ["(1-3-5-2-4)", "(4-5-1-2-3)", "(3-2-4-5-1)", "(3-1-4-5-2)", "(5-1-3-1-2)"], correct: [2], official: "C" },
+            { id: 3, cat: "anapath", q: "L'examen cytologique d'un liquide de cytoponction d'un abcès cérébral peut mettre en évidence : (RF)", options: ["Des polynucléaires neutrophiles", "Des macrophages", "De la nécrose suppurée", "Une néogenèse vasculaire", "Des fibroblastes"], correct: [3], official: "D" },
+            { id: 4, cat: "anapath", q: "Pour un examen histologique extemporané, le prélèvement doit parvenir au service d'anatomie pathologique : (RJ)", options: ["Dans de l'alcool acétique", "Dans du formol à 10 %", "Dans de l'azote liquide", "Dans du glutaraldéhyde", "Frais non fixé"], correct: [1], official: "B" },
+            { id: 5, cat: "anapath", q: "L'immunohistochimie est une technique d'étude anatomo-pathologique qui permet : (RJ)", options: ["De rendre un résultat immédiat en cours d'intervention chirurgicale", "De mettre en évidence la muco-sécrétion", "De détecter des constituants cellulaires se comportant comme des antigènes à l'aide d'anticorps spécifiques", "De reconnaître des acids nucléiques à l'aide de sondes complémentaires marquées", "De déceler la présence d'un corps radioactif sur une préparation histologique"], correct: [2], official: "C" },
+            { id: 6, cat: "anapath", q: "Pour mettre en évidence des dépôts de mélanine sur coupes tissulaires, on peut avoir recours à : (RJ)", options: ["Masson", "La coloration de Fontana", "La coloration par le PAS", "La coloration de Von Kossa", "La coloration par le rouge Congo"], correct: [0], official: "A" },
+            { id: 7, cat: "anapath", q: "L'apoptose : (RF)", options: ["Est une mort cellulaire programmée", "Concerne des cellules isolées", "Est le plus souvent un mécanisme physiologique de 'suicide' cellulaire essentiel au développement, à la maturation, et au renouvellement normal des tissus", "Est un processus actif", "Induit une réponse inflammatoire importante"], correct: [1], official: "B" },
+            { id: 8, cat: "anapath", q: "Parmi les caractéristiques phénotypiques des cellules sénescentes : (RF)", options: ["Instabilité génomique", "Allongement des télomères", "Altérations épigénétiques", "Dysfonctionnement mitochondrial", "Arrêt du cycle cellulaire"], correct: [3], official: "D" },
+            { id: 9, cat: "anapath", q: "Concernant la nécrose : (RF)", options: ["Elle induit une réaction inflammatoire autour des cellules nécrosées", "Aboutit soit à une restitution ad integrum soit à une cicatrice", "La nécrose fibrinoïde est décrite dans les lésions de vascularite", "La nécrose de coagulation est retrouvée au cours de l'ischémie, des brûlures, de l'action des caustiques", "La nécrose de liquéfaction se caractérise par une architecture tissulaire préservée, fantomatique"], correct: [2], official: "C" },
+            { id: 10, cat: "anapath", q: "Les dépôts amyloïdes sont : (RF)", options: ["Intra et extracellulaires", "Homogènes", "Anhistes", "Souvent périvasculaires", "Retrouvés dans le tissu conjonctif interstitiel des parenchymes"], correct: [0], official: "A" },
+            { id: 11, cat: "anapath", q: "Le diagnostic de l'amyloïdose est conseillé sur l'examen histologique de : (RF)", options: ["La biopsie rectale", "La biopsie hépatique", "La biopsie de glandes salivaires accessories", "L'aspiration des graisses sous-cutanées abdominales", "La biopsie rénale"], correct: [2], official: "C" },
+            { id: 12, cat: "anapath", q: "Le diagnostic de la fibrose se fait sur : (RF)", options: ["Hématéine éosine", "Trichrome", "Noir soudan", "Réticuline", "Rouge Sirius"], correct: [1], official: "B" },
+            { id: 13, cat: "anapath", q: "La plaque d'athérosclérose au cours de son évolution peut : (RF)", options: ["Confluer et réaliser un aspect 'd'aorte pavée'", "Peut se calcifier", "Se transformer en véritables 'coquilles d'œufs'", "Être le siège de métaplasie osseuse associée", "Régresser et disparaître"], correct: [3], official: "D" },
+            { id: 14, cat: "anapath", q: "L'athérosclérose atteint : (RF)", options: ["Les carotides internes au niveau de la bifurcation", "Les artères coronaires", "Les veines pulmonaires", "L'aorte sous-diaphragmatique", "Les artères des membres inférieurs"], correct: [0], official: "A" },
+            { id: 15, cat: "anapath", q: "La surcharge en glycogène : (RF)", options: ["Peut être acquise", "Peut être congénitale par déficit enzymatique", "Se traduit par une hypertrophie hépatique, musculaire striée ou cardiaque qui prennent une teinte plus pâle que normalement", "Les cellules prennent un aspect végétal à l'examen microscopique", "Peut être mise en évidence par le rouge Congo"], correct: [4], official: "E" },
+            { id: 16, cat: "anapath", q: "La maladie de Gaucher : (RF)", options: ["Est une maladie liée à l'accumulation de lipide complexe", "Est liée au déficit de l'enzyme β-glucocérébrosidase", "La substance accumulée est le cérébroside", "Les cellules sont faites d'histiocytes globuleux à cytoplasme clair d'aspect feuilleté lamellaire", "La surcharge a lieu au niveau des hépatocytes et des cellules de Kupffer"], correct: [1], official: "B" },
+            { id: 17, cat: "anapath", q: "L'hémochromatose : (RF)", options: ["Est une cause génétique", "Est responsable de diabète et de troubles cardiaques", "Est responsable d'une hypertrophie du foie qui prend une coloration brun-rouille", "Le fer s'accumule dans les cellules de Kupffer et se colore en bleu en coloration de Perls", "D'évolution variable selon le siège, l'intensité et la rapidité d'installation"], correct: [2], official: "C" },
+            { id: 18, cat: "anapath", q: "Une thrombose veineuse profonde peut se compliquer de : (RF)", options: ["Embolie pulmonaire", "Extension de la thrombose", "Infarctus du myocarde", "Endocardite infectieuse", "Ischémie mésentérique"], correct: [3], official: "D" },
+            { id: 19, cat: "anapath", q: "La diapédèse leucocytaire : (RF)", options: ["Fait intervenir des récepteurs de surface", "Est une traversée passive des parois vasculaires", "Débute par une margination des leucocytes", "Est favorisée par le ralentissement du courant sanguin", "S'accompagne d'une dépolymérisation transitoire des membranes basales vasculaires"], correct: [0], official: "A" },
+            { id: 20, cat: "anapath", q: "Toutes ces inflammations sont aiguës sauf une, laquelle ?", options: ["Inflammation granulomateuse", "Inflammation congestive", "Inflammation fibrineuse", "Inflammation gangréneuse", "Inflammation hémorragique"], correct: [4], official: "E" },
+            { id: 21, cat: "anapath", q: "L'inflammation purulente ou suppurée : (RF)", options: ["Est une inflammation aiguë", "Est une inflammation chronique", "Le foyer inflammatoire contient de très nombreux polynucléaires altérés (pyocytes)", "Elle est le plus souvent d'origine microbienne", "Peut se présenter sous forme d'un abcès"], correct: [3], official: "D" },
+            { id: 22, cat: "anapath", q: "L'œdème est : (RF)", options: ["Une augmentation de la quantité d'eau dans les espaces extravasculaires", "Pauvre en protéines dans les œdèmes hémodynamiques", "Un transsudat dans les œdèmes hémodynamiques", "Un exsudat dans les œdèmes inflammatoires", "Peut être localisé ou généralisé"], correct: [1], official: "B" },
+            { id: 23, cat: "anapath", q: "Le processus inflammatoire : (RF)", options: ["Est une réponse des tissus vivants à une agression", "Il comprend des phénomènes généraux et locaux", "Se déroule dans un tissu épithélial vascularisé", "Se déroule dans un tissu conjonctif vascularisé", "Est habituellement bénéfique"], correct: [0], official: "A" },
+            { id: 24, cat: "anapath", q: "Rôles du granulome inflammatoire : (RF)", options: ["Assurer la détersion par les phagocytes", "Développer une réaction immunitaire lymphocytaire T et/ou B", "Sécréter de multiples médiateurs intervenant dans l'inflammation", "Libérer des métabolites toxiques et des protéases dans l'espace extracellulaire responsables des lésions tissulaires", "Diluer les toxines accumulées dans la lésion / œdème"], correct: [2], official: "C" },
+            { id: 25, cat: "anapath", q: "La cellule épithélioïde : (RJ)", options: ["Est un macrophage", "Est une cellule épithéliale modifiée", "Possède une importante activité phagocytaire", "Est témoin d'une inflammation aiguë ou chronique", "Libère des cytokines", "Est particulièrement riche en mitochondries"], correct: [4], official: "E" },
+            { id: 26, cat: "anapath", q: "Laquelle des propositions citées ci-dessous n'est pas associée à l'immunité innée :", options: ["Anticorps", "Défense antivirale", "Système du complément", "Barrière épithéliale", "Réponse initiale contre les infections"], correct: [0], official: "A" },
+            { id: 27, cat: "anapath", q: "Dans les états d'hypersensibilité : (RF)", options: ["L'hypersensibilité de type II est médiée par l'activation du complément", "Les anémies hémolytiques de type auto-immunes sont un exemple d'hypersensibilité de type II", "Dans l'hypersensibilité de type IV des cellules T sensibilisées peuvent agir en absence d'anticorps", "L'anaphylaxie est un état d'hypersensibilité de type IV", "L'histamine est libérée dans les états d'hypersensibilité de type I"], correct: [3], official: "D" },
+            { id: 28, cat: "anapath", q: "La glomérulonéphrite algue de l'enfant (GNA): (RJ)", options: ["Implique des anticorps de type IgM", "type III: cytotoxique", "Implique une réaction de type", "Se caractérise par la formation de follicule épithélio-giganto-cellulaire", "Est secondaire à une Infection staphylococcique", "Fait intervenir une activation du complément"], correct: [1], official: "B" },
+            { id: 29, cat: "anapath", q: "Le bourgeon charnu inflammatoire : (RF)", options: ["Précède et prépare la régénération épithéliale", "Résulte de l'organisation du granulome inflammatoire", "Son but est de combler la perte de substance", "Apparaît tardivement après agression", "Son évolution se fait vers la cicatrisation"], correct: [4], official: "E" },
+            { id: 30, cat: "anapath", q: "La cicatrisation rétractile : (RF)", options: ["Est une exagération du processus normal de contraction du tissu fibreux cicatriciel", "Apparaît le plus souvent après des traumatismes sévères (brûlures)", "Gêne la mobilité articulaire", "Peut régresser spontanément", "Peut toucher les parenchymes entraînant une mutilation"], correct: [2], official: "C" },
+            { id: 31, cat: "anapath", q: "Toutes ces inflammations granulomateuses sont d'origine infectieuse sauf une, laquelle ?", options: ["La lèpre", "La maladie de Crohn", "La syphilis", "La brucellose", "La tuberculose"], correct: [0], official: "A" },
+            { id: 32, cat: "anapath", q: "Parmi les différentes propositions ci-dessus, quelle est celle qui ne caractérise pas l'évolution de la nécrose caséeuse ?", options: ["Peut se résorber spontanément", "Peut se dessécher et se calcifier", "Peut se liquéfier et se ramollir", "Peut s'enkyster", "Peut s'évacuer"], correct: [1], official: "B" },
+            { id: 33, cat: "anapath", q: "Les tumeurs bénignes sont : (RF)", options: ["Des tumeurs d'évolution lente", "Bien circonscrites", "Bien différenciées", "Ne présentent pas de critères cytologiques de malignité", "Peuvent donner des métastases"], correct: [3], official: "D" },
+            { id: 34, cat: "anapath", q: "Dans la nomenclature, le préfixe 'adéno' définit : (RJ)", options: ["Tumeur d'origine lymphoïde", "Tumeur d'origine musculaire lisse", "Tumeur d'origine épithéliale maligne", "Tumeur à différenciation glandulaire", "Tumeur à différenciation vasculaire"], correct: [4], official: "E" },
+            { id: 35, cat: "anapath", q: "Le stade des cancers se base sur : (RF)", options: ["L'activité mitotique", "La taille de la tumeur primitive", "L'extension aux tissus et organes de voisinage", "L'importance de la dissémination aux ganglions lymphatiques régionaux", "La présence ou l'absence de métastases"], correct: [2], official: "C" },
+            { id: 36, cat: "anapath", q: "Le rhabdomyosarcome : (RJ)", options: ["Est une tumeur musculaire lisse bénigne", "Est une tumeur à différenciation musculaire striée maligne", "Est une tumeur à différenciation vasculaire", "Est une tumeur à différenciation adipeuse", "Est une tumeur à différenciation fibroblastique"], correct: [0], official: "A" },
+            { id: 37, cat: "anapath", q: "Le carcinome baso-cellulaire : (RF)", options: ["Est une tumeur de localisation cutanée", "Est une tumeur à différenciation épithéliale", "Présente les caractères macroscopiques de malignité", "Présente les caractères histologiques de malignité", "Donne souvent des métastases"], correct: [1], official: "B" },
+            { id: 38, cat: "anapath", q: "Les fibromatoses sont : (RF)", options: ["Des tumeurs malignes", "Des tumeurs qui présentent des critères histologiques de bénignité", "Des tumeurs à agressivité locale", "D'exérèse difficile", "Des tumeurs qui ont tendance à récidiver"], correct: [3], official: "D" },
+            { id: 39, cat: "anapath", q: "Le grade tumoral histologique des sarcomes se fait sur : (RJ)", options: ["Le degré de différenciation tumorale", "L'activité mitotique", "Degré d'atypies cyto-nucléaires", "L'extension de la nécrose", "La présence ou non d'emboles vasculaires"], correct: [2], official: "C" },
+            { id: 40, cat: "anapath", q: "Parmi ces propositions laquelle est fausse ?", options: ["Les gènes BRCA-1 et BRCA-2 sont associés au développement de cancers familiaux du sein et des ovaires", "La mutation du gène APC entraîne une polypose colique adénomateuse familiale", "Toutes ces réponses sont fausses"], correct: [2], official: "E" },
+            { id: 41, cat: "anapath", q: "Parmi ces propositions laquelle est fausse ?", options: ["Les télomères sont des complexes nucléoprotéiques spécialisés localisés à l'extrémité des chromosomes", "Les télomères sont des régulateurs du nombre de réplications programmées pour une cellule", "Les télomères permettent les fusions termino-terminale des chromosomes", "Dans la cellule cancéreuse les télomères gardent une longueur stable", "L'activité télomérase est responsable du pouvoir prolifératif indéfini des cellules tumorales"], correct: [1], official: "B" },
+            { id: 42, cat: "anapath", q: "Concernant les mécanismes épigénétiques : (RF)", options: ["Ils modulent l'activité génomique sans affecter la séquence du génome", "Les modifications post-traductionnelles des histones et la méthylation de l'ADN n'ont pas d'impact sur la transcription", "La méthylation de l'ADN est dépendante de la méthylation des histones", "La méthylation provoque une répression de la transcription", "L'épigénétique intervient dans l'inactivation du chromosome X (corpuscule de Barr) chez la femme"], correct: [0], official: "A" },
+            { id: 43, cat: "anapath", q: "Les proto-oncogènes sont : (RF)", options: ["Des gènes présents à l'état normal", "Sont régulateurs de la croissance et de la différenciation cellulaire normale", "Acquièrent un pouvoir oncogène par transduction virale ou par lésions génomiques", "Les oncogènes sont responsables de la transformation de la cellule normale en cellule cancéreuse", "L'atteinte des 2 allèles du proto-oncogène est nécessaire pour induire une perte de la fonction qu'il contrôle"], correct: [3], official: "D" },
+            { id: 44, cat: "anapath", q: "Les étapes de la carcinogenèse : (RJ)", options: ["On distingue trois étapes : initiation, promotion et progression", "L'initiation correspond à l'acquisition par mutation ou délétion des propriétés de multiplication non contrôlée, l'acquisition de l'indépendance, la perte de la différenciation, l'invasion locale et métastatique", "La promotion correspond à une lésion rapide non létale et irréversible du DNA après exposition à un facteur carcinogène", "La progression correspond à une exposition prolongée, répétée ou continue, à une substance qui entretient et stabilise la lésion initiée", "Toutes ces réponses sont justes"], correct: [2], official: "C" },
+            { id: 45, cat: "anapath", q: "La cellule cancéreuse se distingue de la cellule normale : (RF)", options: ["Des critères cytologiques de malignité", "Acquisition de propriétés phagocytaires", "Arrête de proliférer dès qu'elle arrive au contact d'une autre cellule adjacente", "Perte de la cohésion intercellulaire", "Sécrétions anormales ou inappropriées"], correct: [4], official: "E" },
+            { id: 46, cat: "anapath", q: "Concernant l'angiogenèse : (RF)", options: ["C'est un processus qui apparaît au cours du développement embryonnaire précoce", "Correspond à la formation de néovaisseaux à partir de structures vasculaires en place", "Joue un rôle primordial dans le processus néoplasique", "L'hypoxie est l'un des facteurs inducteurs de la production d'angiogènes", "Les facteurs de croissance fibroblastiques FGF-1 et FGF-2, l'angiogenine et le VEGF ont des activités pro-angiogènes"], correct: [1], official: "B" },
+            { id: 47, cat: "anapath", q: "Les cellules inflammatoires associées aux tumeurs : (RJ)", options: ["Modifient le micro-environnement tumoral", "Ont des interactions directes avec les cellules tumorales", "Ont des effets sur les fibroblastes associés au cancer et les cellules endothéliales", "Produisent des facteurs de croissance qui favorisent l'angiogenèse, l'invasion tumorale locale et les métastases", "Toutes ces réponses sont justes"], correct: [0], official: "A" },
+            { id: 48, cat: "anapath", q: "Concernant les métastases : (RF)", options: ["Les localisations métastatiques sont les mêmes pour tous les cancers quel que soit le type histologique du primitif", "Les sièges souvent retrouvé sont : ganglion lymphatique, cerveau, foie, poumon, os, surrénale", "Selon le type histologique ou la topographie du primitif on distingue différentes voies de dissémination", "La voie de dissémination lymphatique concerne préférentiellement les carcinomes", "La voie de dissémination hématogène concerne préférentiellement les sarcomes mésenchymateux"], correct: [3], official: "D" },
+            { id: 49, cat: "anapath", q: "Quelle association d'agent cancérigène / cancer est fausse :", options: ["UV et cancers cutanés", "Maladie inflammatoire chronique de l'intestin et cancer de vessie", "Hépatite virale B et C et carcinome hépatocellulaire", "HPV et cancer du col", "EBV et cancer du cavum, lymphomes, cancers estomac"], correct: [2], official: "C" },
+            { id: 50, cat: "anapath", q: "Un condylome : (RF)", options: ["Est une tumeur bénigne d'origine virale (HPV)", "Est une tumeur des muqueuses ano-génitales", "Peut siéger au niveau de la muqueuse oro-pharyngée", "Se transforme toujours en carcinome épidermoïde", "Est une prolifération des cellules malpighiennes"], correct: [4], official: "E" },
+            { id: 51, cat: "anapath", q: "Une tumeur végétante associant une papillomatose, une acanthose et une hyperkératose est : (RJ)", options: ["Un nævus", "Un papillome", "Un polype", "Un condylome plan", "Un carcinome basocellulaire"], correct: [0], official: "A" },
+            { id: 52, cat: "anapath", q: "Un carcinome épidermoïde différencié mature primitif peut siéger au niveau : (RF)", options: ["Du larynx", "Du pharynx", "De la plèvre", "Du col utérin", "Des bronches"], correct: [1], official: "B" },
+            { id: 53, cat: "anapath", q: "Une biopsie osseuse d'une tumeur du fémur a été effectuée. L'examen anatomopathologique retrouve une prolifération cellulaire avec de nombreuses mitoses atypiques et nécrose. De la substance ostéoïde a été notée. Le diagnostic histologique est : (RJ)", options: ["Un ostéo-chondrome", "Un ostéome ostéoïde", "Un ostéosarcome", "Un chondrosarcome", "Un ostéoblastome"], correct: [3], official: "D" },
+            { id: 54, cat: "anapath", q: "Toutes ces tumeurs germinales sont malignes sauf :", options: ["Séminome", "Carcinome embryonnaire", "Tumeur vitelline", "Tératome mature", "Choriocarcinome"], correct: [3], official: "D" },
+            { id: 55, cat: "anapath", q: "Les corps de Schiller-Duval se voient dans :", options: ["Le carcinome embryonnaire", "Le dysgerminome", "La tumeur vitelline", "Le séminome", "Le tératome"], correct: [4], official: "E" },
+            { id: 56, cat: "anapath", q: "Parmi ces tumeurs laquelle n'est pas une tumeur du blastème :", options: ["Le rétinoblastome", "Le néphroblastome", "L'hépatoblastome", "Le neuroblastome", "Le séminome"], correct: [1], official: "B" },
+            { id: 57, cat: "anapath", q: "Les lymphomes B diffus à grandes cellules : (RJ)", options: ["Sont des lymphomes non agressifs", "Sont les moins fréquents des lymphomes", "Se caractérisent par la prolifération de cellules B renfermant une translocation (8;14)", "Sont faits de grandes cellules centroblastiques, immunoblastiques se disposant en plages diffuses", "Sont toujours primitifs"], correct: [0], official: "A" },
+            { id: 58, cat: "anapath", q: "Tous les éléments suivants sont utilisés dans le grading histologique des astrocytomes diffus sauf :", options: ["Cellularité", "Atypies cyto-nucléaires", "Nécrose", "Statut IDH", "Prolifération vasculaire"], correct: [3], official: "D" },
+            { id: 59, cat: "anapath", q: "Lequel des paramètres suivants n'est pas un facteur histopronostique des mélanomes :", options: ["Envahissement lympho-vasculaire", "L'index mitotique", "Invasion nerveuse", "Épaisseur de la tumeur", "La nécrose"], correct: [2], official: "C" },
+            { id: 60, cat: "anapath", q: "Schéma d'un kyste hydatique – cochez la combinaison correcte : (RJ)", options: ["1-membrane proligère, 2-scolex, 3-cuticule, 4-adventice, 5-vésicule fille", "1-scolex, 2-scolex, 3-vésicule fille, 4-membrane proligère, 5-cuticule", "1-adventice, 2-cuticule, 3-membrane proligère, 4-vésicule fille, 5-scolex", "1-adventice, 2-membrane proligère, 3-cuticule, 4-scolex, 5-vésicule fille", "1-cuticule, 2-adventice, 3-scolex, 4-membrane proligère, 5-vésicule fille"], correct: [4], official: "E" }
+        ];
+
+        const dataAnapath2021_2022 = [
+            { id: 1, cat: "anapath", q: "Les prélèvements tissulaires en anatomie et cytologie pathologiques sont représentés par : (RJ)", options: ["Biopsie", "Biopsie exérèse", "Pièce opératoire", "Cytoponction d'organes", "Pièce de nécropsie"], correct: [0, 1, 2, 4], official: "A B C E" },
+            { id: 2, cat: "anapath", q: "L'examen anatomopathologique extemporané : (RJ)", options: ["Est effectué au cours d'un acte chirurgical", "Est réalisé sur un prélèvement tissulaire fixé au formol", "Nécessite l'inclusion en paraffine du prélèvement fixé", "Permet un diagnostic rapide susceptible de modifier le déroulement d'un acte chirurgical", "Peut être indiqué pour vérifier que les limites d'exérèse d'une lésion tumorale sont saines"], correct: [0, 3, 4], official: "A D E" },
+            { id: 3, cat: "anapath", q: "Parmi ces lésions cellulaires, laquelle ou lesquelles sont réversibles ?", options: ["Gonflement mitochondrial de faible amplitude", "Pycnose", "Dégénérescence hydropique du cytoplasme", "Caryorrhexis", "Caryolyse"], correct: [0, 2], official: "A C" },
+            { id: 4, cat: "anapath", q: "La nécrose de coagulation : (RF)", options: ["Est fréquente", "Survient lorsque la dénaturation protéique est l'évènement essentiel", "Est secondaire à une infection à germes pyogènes", "Se voit dans les ischémies et brûlures", "S'accompagne d'une perte totale de l'architecture tissulaire"], correct: [2, 4], official: "C E" },
+            { id: 5, cat: "anapath", q: "Au cours de l'apoptose : (RF)", options: ["Le volume cellulaire est augmenté", "Les constituants cellulaires sont dégradés à l'intérieur de la cellule", "Le noyau subit une rétraction", "La membrane cellulaire reste intacte", "Les corps apoptotiques sont phagocytés par les cellules de voisinage"], correct: [0], official: "A" },
+            { id: 6, cat: "anapath", q: "À l'examen macroscopique, la glande thyroïde est augmentée de taille, il s'agit d'une :", options: ["Dystrophie", "Hyperplasie", "Hypertrophie", "Métaplasie", "Hypoplasie"], correct: [2], official: "C" },
+            { id: 7, cat: "anapath", q: "À l'examen microscopique, cette lésion tissulaire élémentaire est liée à une :", options: ["Dystrophie", "Hyperplasie", "Hypertrophie", "Métaplasie", "Hypoplasie"], correct: [1], official: "B" },
+            { id: 8, cat: "anapath", q: "Concernant ce mécanisme d'adaptation tissulaire : (RJ)", options: ["Est l'augmentation du nombre de cellules dans un tissu ou un organe", "Peut s'accompagner d'une désorganisation architecturale", "Reste contrôlé par les mécanismes de régulation de la prolifération cellulaire", "Est témoin d'une hyperréactivité fonctionnelle", "Survient dans les tissus à renouvellement rapide, lent ou stable"], correct: [0, 2, 3], official: "A C D" },
+            { id: 9, cat: "anapath", q: "La fibrose jeune se caractérise par : (RJ)", options: ["Sa richesse en substance fondamentale", "Sa richesse en cellules inflammatoires", "Son caractère irréversible", "Sa richesse en collagène de type III et IV", "La rareté des vaisseaux"], correct: [0, 1, 3], official: "A B D" },
+            { id: 10, cat: "anapath", q: "Quelle coloration histochimique permet la détection des fibres de réticuline ?", options: ["Bleu Alcian", "Gordon Sweet", "Perls", "PAS", "Rouge Congo"], correct: [1], official: "B" },
+            { id: 11, cat: "anapath", q: "L'amylose : (RF)", options: ["Est la conséquence de dépôts de substances protéiques", "Est la conséquence de dépôts protéiques de localisation intracellulaire", "Peut être la conséquence d'une production excessive d'immunoglobulines", "Peut être localisée ou généralisée", "Est la conséquence d'une accumulation d'une protéine de structure anormale en feuillet alpha plissé"], correct: [1, 4], official: "B E" },
+            { id: 12, cat: "anapath", q: "Le tophus goutteux : (RF)", options: ["Se traduit par des crises douloureuses des petites articulations distales", "Témoigne d'une hyperuricémie", "Est l'accumulation de cholestérol en excès dans le tissu interstitiel", "Est caractérisé histologiquement par un aspect en cocarde avec un centre nécrotique éosinophile peigné", "Entraîne une réaction granulomateuse à corps étranger"], correct: [2], official: "C" },
+            { id: 13, cat: "anapath", q: "La plaque d'athérome : (RF)", options: ["Est une lésion constituée", "Est une lésion lenticulaire de 0,5 à 3 cm de diamètre à surface lisse jaunâtre devenant irrégulière et grisâtre lorsqu'elle augmente de volume", "Se caractérise par de l'œdème sous-endothélial dépourvu de lipides", "Peut se calcifier", "Peut s'ulcérer"], correct: [2], official: "C" },
+            { id: 14, cat: "anapath", q: "L'œdème hémodynamique : (RJ)", options: ["Est un exsudat", "Se voit au cours de la phase initiale du processus inflammatoire", "Est dû à une augmentation de la perméabilité endothéliale", "Est riche en protéines", "Peut résulter d'une augmentation de la pression hydrostatique dans le secteur veineux"], correct: [4], official: "E" },
+            { id: 15, cat: "anapath", q: "Le thrombus peut évoluer vers : (RF)", options: ["La thrombolyse", "L'organisation", "Le ramollissement", "La coagulation", "La migration"], correct: [3], official: "D" },
+            { id: 16, cat: "anapath", q: "L'infarcissement hémorragique : (RF)", options: ["Est une nécrose viscérale hémorragique", "Est secondaire à une obstruction d'une veine de drainage", "Est consécutif à une obstruction artérielle complète et brutale", "Est consécutif à l'obstruction d'une artère terminale", "Est causé par une thrombose veineuse"], correct: [2, 3], official: "C D" },
+            { id: 17, cat: "anapath", q: "La réaction vasculo-exsudative au cours du processus inflammatoire : (RJ)", options: ["Survient à la phase cellulaire", "Fait intervenir les vaisseaux", "La congestion active est l'une de ses étapes", "La leucodiapédèse ne se voit jamais pendant cette réaction", "Fait intervenir des cellules de Langerhans"], correct: [1, 2], official: "B C" },
+            { id: 18, cat: "anapath", q: "Quel est ou quels sont les rôles du granulome inflammatoire formé lors de la phase cellulaire ?", options: ["Détersion", "Déclenchement d'une réaction immunitaire", "Inhibition des médiateurs chimiques", "Modification de la matrice extracellulaire", "Phagocytose"], correct: [0, 1, 3, 4], official: "A B D E" },
+            { id: 19, cat: "anapath", q: "L'inflammation granulomateuse est : (RJ)", options: ["Est une forme particulière d'inflammation chronique", "Est constituée de polynucléaires éosinophiles", "Est constituée de cellules épithélioïdes et géantes", "Renferme constamment de la nécrose caséeuse", "S'organise en nodule appelé granulome"], correct: [0, 2, 4], official: "A C E" },
+            { id: 20, cat: "anapath", q: "Parmi ces étiologies, laquelle est la moins probable chez notre patiente ?", options: ["Brucellose", "Lèpre", "Tuberculose", "Sarcoïdose", "Syphilis"], correct: [2], official: "C" },
+            { id: 21, cat: "anapath", q: "L'inflammation granulomateuse est dite spécifique (propositions fausses) :", options: ["Les caractéristiques morphologiques sont suffisamment évocatrices pour permettre de suspecter fortement l'agent causal", "Il est possible de mettre en évidence, dans les tissus, l'agent causal", "Elle évolue de façon chronique", "Oriente vers un groupe d'étiologies", "Est caractérisée par d'importants phénomènes vasculaires"], correct: [4], official: "E" },
+            { id: 22, cat: "anapath", q: "Quels facteurs influençant la cicatrisation allez-vous rechercher par l'interrogatoire ? (RJ)", options: ["Une prise de glucocorticoïdes", "Une mauvaise nutrition", "Une infection", "Une immobilisation", "Une surcharge protéique"], correct: [0, 1, 2, 3], official: "A B C D" },
+            { id: 23, cat: "anapath", q: "Les conditions d'une bonne cicatrisation chez ce patient sont ? (RJ)", options: ["Détersion suivie d'une coaptation", "Coaptation suivie d'une détersion", "Cicatrisation sans coaptation", "Cicatrisation sans détersion", "Coaptation avec cicatrisation sans détersion"], correct: [0], official: "A" },
+            { id: 24, cat: "anapath", q: "À la fin du 6e mois après prise du traitement, on note la présence d'une lésion hypertrophique du tissu conjonctif. Il s'agit :", options: ["D'un botryomycome", "D'une hyperplasie épithéliale", "D'une cicatrice rétractile", "D'une chéloïde", "D'une transformation maligne"], correct: [3], official: "D" },
+            { id: 25, cat: "anapath", q: "Sur le plan histologique cette lésion se traduit par :", options: ["D'épais trousseaux anormaux de collagène", "Un bourgeon charnu hypervascularisé", "Une hyperplasie pseudo-épithéliomateuse", "Une prolifération de cellules mésenchymateuses malignes", "Une prolifération de cellules épithéliales"], correct: [0], official: "A" },
+            { id: 26, cat: "anapath", q: "L'effet cytopathogène des inflammations virales se manifeste par :", options: ["Une réaction inflammatoire", "Des corps d'inclusions", "Une fibrose", "La formation de plasmodes par fusion membranaire", "Une lyse cellulaire"], correct: [1, 3, 4], official: "B D E" },
+            { id: 27, cat: "anapath", q: "Plusieurs techniques anatomopathologiques peuvent contribuer au diagnostic des inflammations virales : (RF)", options: ["Mise en évidence d'inclusions virales aux colorations habituelles (hématéine éosine)", "Par la coloration histochimique de Perls", "La microscopie électronique", "Immunohistochimie", "Biologie moléculaire (par hybridation in situ)"], correct: [1], official: "B" },
+            { id: 28, cat: "anapath", q: "Une autopsie a été réalisée, quels sont les aspects macroscopiques pulmonaires que l'on peut décrire : (RF)", options: ["La présence d'une masse blanchâtre de consistance dure, mal limitée", "Des foyers hémorragiques", "Des foyers d'infarctus", "Des territoires de condensations pulmonaires", "Des thrombis dans les vaisseaux pulmonaires"], correct: [0], official: "A" },
+            { id: 29, cat: "anapath", q: "Des prélèvements ont été réalisés et examinés au microscope ; les lésions décrites sont : (RF)", options: ["Le caractère diffus des lésions", "Des membranes hyalines tapissent la surface des alvéoles", "Une desquamation des pneumocytes", "Les pneumocytes sont le siège de mitoses anormales", "Des pneumocytes atypiques d'aspect syncytial"], correct: [3], official: "D" },
+            { id: 30, cat: "anapath", q: "L'inflammation virale à coronavirus est une inflammation de type : (RJ)", options: ["Purulente", "Congestive", "Thrombosante", "Fibrineuse", "Gangréneuse"], correct: [2], official: "C" },
+            { id: 31, cat: "anapath", q: "Quelle est la nature de l'embole chez ce patient ? (RJ)", options: ["Embole amniotique", "Embole cruorique", "Embole gazeux", "Embole tumoral", "Embole graisseux"], correct: [1], official: "B" },
+            { id: 32, cat: "anapath", q: "La classification histogénétique des tumeurs est basée sur : (RJ)", options: ["L'origine cellulaire", "L'aspect histopathologique", "Le comportement de la tumeur", "Le niveau d'invasion de la tumeur", "L'infiltration des ganglions"], correct: [0, 1, 2], official: "A B C" },
+            { id: 33, cat: "anapath", q: "Parmi ces anticorps, un seul est à visée double : diagnostique et thérapeutique, lequel ?", options: ["PS100", "Synaptophysine", "CD20", "Myogénine", "TTF1"], correct: [2], official: "C" },
+            { id: 34, cat: "anapath", q: "Parmi ces mécanismes d'activation des proto-oncogènes en oncogènes, lequel correspond à un mécanisme épigénétique ?", options: ["Réarrangement génique par translocation avec fusion entre 2 gènes", "Hyperexpression par transposition de la région codante", "Hyperméthylation d'une séquence régulatrice", "Amplification génique", "Mutation somatique"], correct: [2], official: "C" },
+            { id: 35, cat: "anapath", q: "Quels virus sont cancérigènes ?", options: ["L'Epstein-Barr virus", "Papilloma virus humain", "HTLV-I", "Le virus de l'hépatite C", "Le virus de l'hépatite A"], correct: [0, 1, 2, 3], official: "A B C D" },
+            { id: 36, cat: "anapath", q: "Ces lésions correspondent à : (RJ)", options: ["Une néoplasie intraépithéliale cervicale 1 (CIN1)", "Une néoplasie intraépithéliale cervicale 2 (CIN2)", "Une néoplasie intraépithéliale cervicale 3 (CIN3)", "Un carcinome in situ", "Une dysplasie légère"], correct: [1], official: "B" },
+            { id: 37, cat: "anapath", q: "Toutes ces propositions concernant ces lésions sont justes sauf une, laquelle ?", options: ["Elles font partie des lésions pré-néoplasiques du col utérin", "Elles se caractérisent par un stroma richement vascularisé", "Elles sont induites le plus souvent par une infection au virus HPV", "Elles peuvent régresser spontanément", "Elles peuvent évoluer vers un cancer invasif"], correct: [1], official: "B" },
+            { id: 38, cat: "anapath", q: "Cette prolifération tumorale correspond à :", options: ["Un adénocarcinome bien différencié", "Un sarcome épithélioïde", "Un carcinome épidermoïde bien différencié mature", "Un mélanome", "Un angiosarcome"], correct: [2], official: "C" },
+            { id: 39, cat: "anapath", q: "Les critères de malignité nucléaire des cellules tumorales comprennent : (RF)", options: ["Inégalité de la taille", "Chromatine en amas irréguliers", "Altérations des contours", "Nucléoles multiples et volumineux", "Diminution du rapport nucléocytoplasmique"], correct: [4], official: "E" },
+            { id: 40, cat: "anapath", q: "Le stroma tumoral dans ce cancer présente toutes ces caractéristiques sauf une, laquelle ?", options: ["Il correspond à un tissu conjonctif néoformé sous l'influence des cellules tumorales", "Il est indispensable pour la nutrition et la croissance des cellules tumorales", "Il est composé d'une proportion variable de fibroblastes, de fibres collagènes et de cellules inflammatoires", "Il nécessite pour sa formation une étape d'angiogenèse tumorale", "Il est réduit à un réseau de capillaires"], correct: [4], official: "E" },
+            { id: 41, cat: "anapath", q: "Les mécanismes d'échappement des cellules cancéreuses à la réponse immunitaire sont : (RF)", options: ["Augmentation de la présentation d'antigènes tumoraux", "Production de cytokines immunosuppressives", "Expression de molécules de co-inhibition", "Recrutement de cellules suppressives d'origine myéloïde", "Surexpression de molécules anti-apoptotiques qui les protègent de la lyse par les lymphocytes T cytotoxiques"], correct: [0], official: "A" },
+            { id: 42, cat: "anapath", q: "Le virus HPV est incriminé dans la genèse de ce cancer par un de ces mécanismes, lequel ?", options: ["Activation de la télomérase", "Hyperméthylation d'une séquence activatrice d'un gène", "L'inactivation d'un gène suppresseur de tumeur après intégration dans le génome de la cellule infectée", "Activation d'un oncogène après intégration dans le génome de la cellule infectée", "Altération du système de réparation des mésappariements"], correct: [3], official: "D" },
+            { id: 43, cat: "anapath", q: "La principale voie de dissémination empruntée par ce type de cancer est :", options: ["Lymphatique", "Voie veineuse", "Cavité péritonéale", "Le long des nerfs", "Voie artérielle"], correct: [0], official: "A" },
+            { id: 44, cat: "anapath", q: "Chez cette patiente, les métastases présentent toutes ces caractéristiques sauf une, lesquelles ?", options: ["Elles peuvent être identiques à la tumeur primitive", "Elles peuvent être mieux différenciées que la tumeur primitive", "Elles peuvent être moins bien différenciées que la tumeur primitive", "Elles sont contemporaines de la tumeur", "Elles sont souvent très nécrotiques"], correct: [3], official: "D" },
+            { id: 45, cat: "anapath", q: "La polypose colique familiale : (RJ)", options: ["Se traduit par l'apparition de multiples adénomes coliques", "Justifie une colectomie", "Se caractérise par l'âge de survenue supérieur à 60 ans", "Se complique constamment de cancer colique", "Son apparition est liée à une mutation du gène Myc"], correct: [0, 1, 3], official: "A B D" },
+            { id: 46, cat: "anapath", q: "Les tératomes : (RF)", options: ["Sont les tumeurs germinales les plus fréquentes de l'ovaire", "Sont des tumeurs germinales avec une différenciation somatique", "Reproduisent des tissus dérivés des 3 feuillets embryonnaires", "Peuvent être matures ou immatures", "Ne cancérisent jamais"], correct: [4], official: "E" },
+            { id: 47, cat: "anapath", q: "Quel est le premier diagnostic que vous évoquez ?", options: ["Neuroblastome", "Rétinoblastome", "Néphroblastome", "Médulloblastome", "Hépatoblastome"], correct: [2], official: "C" },
+            { id: 48, cat: "anapath", q: "Un bilan sanguin et urinaire a été réalisé chez la patiente, quel marqueur biologique est élevé ?", options: ["BHCG", "Alpha-FP", "Catécholamines", "Glycémie", "Aucun marqueur"], correct: [4], official: "E" },
+            { id: 49, cat: "anapath", q: "Une biopsie rénale percutanée a été réalisée chez elle, quels sont les aspects histologiques en faveur de cette tumeur ?", options: ["Tissu nerveux immature", "Prolifération de petites cellules rondes indifférenciées", "Prolifération tubulaire avec ébauches gloméruloïdes", "Flaques d'hémorragie", "Tissu mésenchymateux"], correct: [1, 2, 4], official: "B C E" },
+            { id: 50, cat: "anapath", q: "Quel aspect macroscopique caractérise cette tumeur ?", options: ["Tumeur volumineuse, bien limitée, molle, blanc rosée", "Petite tumeur fibreuse stellaire", "Tumeur volumineuse comportant des poils et des dents", "Formation kystique comportant des végétations exophytiques", "Tumeur solide très hémorragique"], correct: [0], official: "A" },
+            { id: 51, cat: "anapath", q: "Les caractéristiques macroscopiques d'un polype pédiculé sont :", options: ["Base d'implantation large", "Base d'implantation étroite", "Ulcéré", "Végétant", "Infiltrant"], correct: [2, 3], official: "C D" },
+            { id: 52, cat: "anapath", q: "L'adénome colique est : (RJ)", options: ["De bon pronostic après exérèse endoscopique", "Une tumeur épithéliale bénigne", "Est une tumeur mésenchymateuse bénigne", "Peut se transformer en tumeur maligne", "Souvent dysplasique"], correct: [2], official: "C" },
+            { id: 53, cat: "anapath", q: "Macroscopiquement, l'adénocarcinome colique peut être : (RF)", options: ["Ulcéré", "Ulcéro-bourgeonnant", "Ulcéro-bourgeonnant et infiltrant", "Fasciculé", "En chair de poisson"], correct: [3, 4], official: "D E" },
+            { id: 54, cat: "anapath", q: "L'adénocarcinome colique : (RJ)", options: ["Est une tumeur épithéliale glandulaire maligne", "Peut être secondaire à la dégénérescence d'un adénome dysplasique", "Est une tumeur épithéliale malpighienne maligne", "Est bien différencié lorsque l'architecture glandulaire est prédominante", "Nécessite une confirmation immunohistochimique s'il est indifférencié"], correct: [0, 1, 3, 4], official: "A B D E" },
+            { id: 55, cat: "anapath", q: "Sur le compte rendu anatomopathologique, tous ces éléments sont évalués par l'examen histologique de ce carcinome sauf un, lequel ?", options: ["Les emboles vasculaires", "La nature de la tumeur", "Le profil immunohistochimique", "Le degré de différenciation", "Le niveau d'invasion pTNM"], correct: [2], official: "C" },
+            { id: 56, cat: "anapath", q: "Macroscopiquement cette collection blanc jaunâtre correspond à :", options: ["Empyème", "Furoncle", "Abcès", "Phlegmon", "Pustule"], correct: [2], official: "C" },
+            { id: 57, cat: "anapath", q: "Quels phénomènes prédominent au cours de cette inflammation ?", options: ["La congestion vasculaire", "L'extravasation des hématies", "La diapédèse leucocytaire", "La production de fibrose", "La formation de pus"], correct: [2, 4], official: "C E" },
+            { id: 58, cat: "anapath", q: "Décrivez cette collection : cochez la combinaison exacte", options: ["1 : Membrane pyogène, 2 : Coque fibreuse, 3 : Cavité centrale", "1 : Cavité centrale, 2 : Membrane pyogène, 3 : Coque fibreuse", "1 : Cavité centrale, 2 : Coque fibreuse, 3 : Membrane pyogène", "1 : Coque fibreuse, 2 : Membrane pyogène, 3 : Cavité centrale", "1 : Membrane pyogène, 2 : Cavité centrale, 3 : Coque fibreuse"], correct: [1], official: "B" },
+            { id: 59, cat: "anapath", q: "Le pus est composé de :", options: ["Pyocytes", "Lymphocytes", "Plasmocytes", "Fibrine", "Débris tissulaires"], correct: [0, 3, 4], official: "A D E" },
+            { id: 60, cat: "anapath", q: "Il s'agit de quelle forme d'inflammation aiguë ?", options: ["Inflammation gangréneuse", "Inflammation thrombosante", "Inflammation purulente", "Inflammation congestive", "Inflammation hémorragique"], correct: [2], official: "C" }
+        ];
+
+        // Constantine Anapath 2021-2022
+        const dataConstantineAnapath2122 = [
+            { id: 1, cat: "anapath", q: "En anatomie pathologique la fixation :", options: ["Est une étape secondaire", "On utilise le formol dilué à 30 %", "Le volume du fixateur doit représenter environ 20 fois le volume de la pièce", "La durée de fixation est fixe quel que soit la taille du prélèvement", "Le formol est le plus utilisé pour ses qualités de bon fixateur et conservateur."], correct: [4], official: "e" },
+            { id: 2, cat: "anapath", q: "Après l'agression, la 1ère cellule qui donne l'alerte est :", options: ["Le leucocyte", "L'histiocyte", "Le lymphocyte", "La cellule endothéliale", "Le plasmocyte"], correct: [0], official: "a" },
+            { id: 3, cat: "anapath", q: "Dans l'épithélium malpighien, la tumeur bénigne est :", options: ["Un papillome", "Un adénome", "Une dysplasie", "Un polype", "Un hamartome"], correct: [0], official: "a" },
+            { id: 4, cat: "anapath", q: "Les adénomes des organes creux :", options: ["Sont des tumeurs endophytiques", "Les sessiles sont attachés à la muqueuse par un axe conjonctif", "Les pédiculés sont implantés directement sur la muqueuse", "Sont toujours villeux", "Peuvent comporter une éventuelle dysplasie"], correct: [4], official: "e" },
+            { id: 5, cat: "anapath", q: "Les tumeurs épithéliales glandulaires :", options: ["Sont des tumeurs rares", "Les bénignes sont dénommées adénocarcinomes", "Elles reproduisent morphologiquement des structures mésenchymateuses", "Leurs aspects macro et microscopiques varient selon le type d'organe qu'elles touchent", "Elles sont développées à partir des épithéliums paramalpighiens"], correct: [3], official: "d" },
+            { id: 6, cat: "anapath", q: "Le choriocarcinome :", options: ["Est une tumeur bénigne", "Est une tumeur blastémateuse", "Sécrète l'alphafoetoprotéine", "Est fait de cellules cyto et syncytiotrophoblastiques", "Ne présente pas des foyers hémorragiques"], correct: [3], official: "d" },
+            { id: 7, cat: "anapath", q: "La nécrose :", options: ["Est une mort cellulaire programmée", "Est un phénomène réversible", "Est un phénomène actif", "Est un phénomène passif", "Concerne des cellules isolées"], correct: [3], official: "d" },
+            { id: 8, cat: "anapath", q: "Les organes œdémateux :", options: ["Sont mous et durs par endroit", "Sont fermes", "Peuvent garder l'empreinte du doigt à la pression", "Laissent couler du sang rouge vif à la coupe", "Présentent à l'examen microscopique une importante fibrose"], correct: [2], official: "c" },
+            { id: 9, cat: "anapath", q: "Parmi ces propositions, laquelle confirme la malignité ?", options: ["La bonne limitation", "Les calcifications du stroma tumoral", "Les atypies cyto-nucléaires et les mitoses atypiques", "Une croissance lente avec refoulement du tissu normal", "La présence de signes de dysplasie"], correct: [2], official: "c" },
+            { id: 10, cat: "anapath", q: "Une tumeur maligne du muscle strié est :", options: ["Un leiomyosarcome", "Un rhabdomyocarcinome", "Un rhabdomyome", "Un leiomyocarcinome", "Un rhabdomyosarcome"], correct: [4], official: "e" },
+            { id: 11, cat: "anapath", q: "Le thrombus blanc est :", options: ["Élastique", "Fait de stries parallèles", "Long", "Non adherent", "Friable"], correct: [0], official: "a" },
+            { id: 12, cat: "anapath", q: "L'histopronostic de certaines tumeurs malignes est basé sur :", options: ["L'absence des anomalies cyto-nucléaires", "L'absence de nécrose", "Les caractères de différenciation", "La présence de mitoses normales", "L'apoptose"], correct: [2], official: "c" },
+            { id: 13, cat: "anapath", q: "La réponse immune anti-tumorale fait intervenir :", options: ["Une activité métabolique intense", "La sécrétion des facteurs spécifiques VEGF", "L'immunité reproductive", "L'immunité adaptative", "L'élaboration de substances qui vont favoriser la multiplication des vaisseaux"], correct: [3], official: "d" },
+            { id: 14, cat: "anapath", q: "La cholestase se manifeste par :", options: ["Une coloration jaune du foie", "Des dépôts d'hémosidérine", "Une coloration rougeâtre des organes", "Une dilatation des hépatocytes", "L'accumulation de la bile dans le tissu hépatique"], correct: [4], official: "e" },
+            { id: 15, cat: "anapath", q: "L'apoptose est un événement biologique qui désigne un processus :", options: ["Essentiel pour la différenciation cellulaire", "Actif de mort cellulaire programmée", "Physiologique qui fait que toute cellule subit une métaplasie", "Initié par l'activation des points de contrôle du cycle cellulaire P53, P16 INK", "Qui exprime l'inactivation de la télomérase TERT"], correct: [1], official: "b" },
+            { id: 16, cat: "anapath", q: "La valeur des biopsies repose sur :", options: ["Leur poids", "Leur coloration", "Leur taille ou représentativité", "Leur nombre", "Le choix de la zone à biopsier"], correct: [2, 3, 4], official: "c, d, e" },
+            { id: 17, cat: "anapath", q: "Le médecin préleveur et prescripteur a une responsabilité en s'assurant :", options: ["De la bonne réalisation technique du prélèvement", "De son acheminement au laboratoire dans les plus brefs délais", "De sa fixation", "D'une demande d'examen sans renseignements", "D'une description histopathologique rigoureuse"], correct: [0, 1, 2], official: "a, b, c" },
+            { id: 18, cat: "anapath", q: "Une nécrose de coagulation est caractérisée par :", options: ["Des foyers à limites nettes à la macroscopie", "De couleur brunâtre", "L'architecture tissulaire n'est pas préservée", "Des cellules qui prennent un aspect fantomatique", "Des cytoplasmes condensés, éosinophiles, homogènes"], correct: [0, 3, 4], official: "a, d, e" },
+            { id: 19, cat: "anapath", q: "L'athérosclérose est :", options: ["Une affection artérielle aiguë", "Une association variable de remaniements de l'intima des grosses et moyennes artères", "Une affection du sujet jeune", "Une affection chronique artérielle et veineuse", "Une affection qui s'intègre à la fois dans la pathologie vasculaire et métabolique"], correct: [1, 4], official: "b, e" },
+            { id: 20, cat: "anapath", q: "Les principales complications de l'athérosclérose sont :", options: ["L'hypertension", "Le diabète", "L'anévrysme", "L'infection", "L'embolie"], correct: [2, 4], official: "c, e" },
+            { id: 21, cat: "anapath", q: "Les principaux facteurs de risque de l'athérosclérose sont :", options: ["Les maladies auto-immunes", "Le régime alimentaire", "L'obésité", "Le tabagisme", "Le sexe"], correct: [1, 2, 3, 4], official: "b, c, d, e" },
+            { id: 22, cat: "anapath", q: "Le nævus cellulaire :", options: ["Est riche en mitoses", "Est fait de mélanocytes d'aspect pléomorphe", "Est lymphophile", "Est une lésion unique ou multiple", "Est fait de thèques bien individualisées dans le derme superficiel"], correct: [3, 4], official: "d, e" },
+            { id: 23, cat: "anapath", q: "L'hyperplasie :", options: ["Correspond à l'augmentation du nombre des cellules", "Correspond à l'augmentation de la taille des cellules", "Peut survenir dans le processus dystrophique", "Est souvent associée à une augmentation du volume de l'organe", "Peut être associée à une hypertrophie cellulaire"], correct: [0, 2, 3, 4], official: "a, c, d, e" },
+            { id: 24, cat: "anapath", q: "Les altérations réversibles du noyau sont :", options: ["La condensation et margination de la chromatine", "L'hypertrophie du nucleole", "La condensation intense de la chromatine", "La formation d'une pseudo-vacuole intra-nucléaire", "La désintégration de la chromatine"], correct: [0, 1, 3], official: "a, b, d" },
+            { id: 25, cat: "anapath", q: "La virulence de l'agent pathogène dépend :", options: ["De sa capacité à produire des toxines", "De sa capacité à détruire les tissus et les cellules", "Des antécédents du malade", "De sa capacité à entraîner des réactions d'hypersensibilité", "De sa capacité à entraîner une hémorragie"], correct: [0, 1, 3], official: "a, b, d" },
+            { id: 26, cat: "anapath", q: "Le tableau histologique d'une maladie auto-immune comporte :", options: ["Une fibrose tissulaire", "Une atrophie des structures épithéliales tissulaires", "Un infiltrat inflammatoire fait toujours de polynucléaires neutrophiles", "Des lésions de vascularite constantes", "Un infiltrat inflammatoire lympho-plasmocytaire"], correct: [0, 1, 4], official: "a, b, e" },
+            { id: 27, cat: "anapath", q: "Le rejet aigu d'un greffon hépatique se présente par :", options: ["Des lésions de portite", "Une fibrose hépatique", "Une cholangite", "Une ductopénie", "Des lésions d'endothélite"], correct: [0, 2, 4], official: "a, c, e" },
+            { id: 28, cat: "anapath", q: "Le rejet chronique d'un greffon est reconnu par la présence :", options: ["Des lésions d'endothélite", "Des remaniements œdémateux et hémorragiques tissulaires", "Une fibrose tissulaire", "Une atrophie des structures épithéliales tissulaires", "Un épaississement des parois vasculaires"], correct: [2, 3, 4], official: "c, d, e" },
+            { id: 29, cat: "anapath", q: "Le processus inflammatoire :", options: ["Est un phénomène physiologique chronique qui tend à limiter les effets de l'agresseur", "Est un phénomène pathologique dû à une réaction de défense insuffisante", "Déclenché seulement par des lésions infectieuses", "Parfois néfaste du point de vue local ou général", "Chronique peut évoluer vers la restitution ad integrum"], correct: [1, 3], official: "b, d" },
+            { id: 30, cat: "anapath", q: "La phase vasculo-exsudative est régie par plusieurs phénomènes :", options: ["Congestion active", "L'œdème inflammatoire", "Diapédèse leucocytaire", "La détersion", "La coaptation"], correct: [0, 1, 2], official: "a, b, c" },
+            { id: 31, cat: "anapath", q: "La phagocytose :", options: ["Se déroule en 03 phases", "Le phagolysosome est créé au cours de l'englobement", "La digestion se fait grâce à des enzymes lysosomiales", "Les macrophages ont mission de phagocyter des particules solubles", "Les microphages ont pour mission de phagocyter des particules de petites tailles"], correct: [0, 2, 4], official: "a, c, e" },
+            { id: 32, cat: "anapath", q: "Dans la tuberculose :", options: ["Le granulome milliaire est difficile à voir car il a la taille d'une tête d'épingle", "La nécrose caséeuse est toujours présente", "La nécrose caséeuse a un aspect différent selon qu'elle soit récente ou vieillie", "Les cellules épithelioïdes sont appelées cellules de Langerhans", "Le follicule épithelioïde est occupé en périphérie par une couronne lymphocytaire"], correct: [0, 2, 4], official: "a, c, e" },
+            { id: 33, cat: "anapath", q: "Les tumeurs malignes indifférenciées sont :", options: ["Des tumeurs malignes ressemblant aux cellules du tissu qui lui a donné naissance", "Des tumeursdites métaplasiques", "Des tumeurs malignes caractérisées par l'absence totale de différenciation", "Des pseudotumeurs dystrophiques", "Des tumeursdites anaplasiques"], correct: [2, 4], official: "c, e" },
+            { id: 34, cat: "anapath", q: "Les caractéristiques histologiques du fibrosarcome :", options: ["Une architecture fusocellulaire", "Une densité cellulaire élevée", "Une densité cellulaire hétérogène avec des zones myxoïdes", "Une organisation des cellules tumorales en longs faisceaux entrecroisés", "Une organisation des cellules tumorales en rayon de rueda"], correct: [0, 1, 3], official: "a, b, d" },
+            { id: 35, cat: "anapath", q: "La tumeur vitelline :", options: ["Est une tumeur germinale", "Est mi-solide mi-kystique à la macroscopie", "Est positive à l'anticorps anti-ß HCG", "Est caractérisée par les corps de Schiller-Duval", "Est caractérisée par un stroma lymphoïde"], correct: [0, 1, 3], official: "a, b, d" },
+            { id: 36, cat: "anapath", q: "Le paragranulome nodulaire de Poppema et Lennert :", options: ["Est un lymphome hodgkinien", "Est un lymphome non hodgkinien de type B", "Caractérisé par la présence de cellules tumorales en Pop-corn", "Caractérisé par la présence de cellules tumorales de type lacunaire", "Peut évoluer vers un LMNH de type B"], correct: [0, 2, 4], official: "a, c, e" },
+            { id: 37, cat: "anapath", q: "L'infarctus blanc :", options: ["Se présente comme un territoire exsangue", "Présente une consistance plus ferme que le tissu adjacent", "Est plus pâle et plus mou que le reste de l'organe", "S'observe dans les organs avec une double circulation", "Présente une forme pyramidale"], correct: [0, 2, 4], official: "a, c, e" },
+            { id: 38, cat: "anapath", q: "Le carcinome baso-cellulaire :", options: ["Est une forme particulière d'un carcinome épidermoïde", "S'associe à une dyskératose et devient mature", "Se développe à partir des cellules basales", "Donne des métastases ganglionnaires", "A une agressivité locale"], correct: [0, 2, 4], official: "a, c, e" },
+            { id: 39, cat: "anapath", q: "L'angiogenèse est une prolifération vasculaire :", options: ["Due au bourgeonnement vasculaire à partir de vaisseaux préexistants", "Due au recrutement et à la différenciation de cellules péricytaires", "À la multiplication de cellules musculaires striées", "Conditionne le développement tumoral", "Conditionne le développement des métastases"], correct: [0, 1, 3, 4], official: "a, b, d, e" },
+            { id: 40, cat: "anapath", q: "Les lésions précancéreuses :", options: ["Sont des lésions précurseurs des maladies héréditaires", "Sont visées par le dépistage", "Précèdent toujours les néoplasies malignes", "Correspondent souvent aux dysplasies ou métaplasies", "Peuvent être traitées comme cancers"], correct: [1, 3], official: "b, d" },
+        ];
+
+        // Constantine Anapath 2022-2023
+        const dataConstantineAnapath2223 = [
+            { id: 1, cat: "anapath", q: "L'Anatomie et Cytologie Pathologiques : (cocher la ou les R.J)", options: ["Est une spécialité médicale", "Étudie les lésions provoquées par les maladies ou associées à celles-ci", "Utilise des techniques principalement basées sur la morphologie macroscopique et microscopique", "Permet le diagnostic des maladies", "Ne permet pas le pronostic"], correct: [0, 1, 2, 3], official: "A, B, C, D" },
+            { id: 2, cat: "anapath", q: "Quels sont les buts de l'Anatomie et Cytologie-Pathologiques ? (Cocher la ou les R.J)", options: ["Épidémiologique", "Diagnostique", "Évaluation du pronostic", "Évaluation de la réponse aux thérapeutques", "Étude in vitro des lésions"], correct: [0, 1, 2, 3], official: "A, B, C, D" },
+            { id: 3, cat: "anapath", q: "Devant une lésion gastrique suspecte à la fibroscopie. Quel type de prélèvement réalisez-vous en première intention ?", options: ["Biopsie exérèse", "Ponction gastrique", "Biopsie", "Gastrectomie totale", "Examen extemporané"], correct: [2], official: "C" },
+            { id: 4, cat: "anapath", q: "Le prélèvement parvenu au service d'Anatomie et Cytologie Pathologiques doit être fixé dans : (cocher la ou les R.J)", options: ["L'alcool", "Le xylène", "Le formol tamponné à 10%", "Le formol concentré", "Le liquide de Bouin"], correct: [2], official: "C" },
+            { id: 5, cat: "anapath", q: "Quelle est la durée et la condition de sa fixation en fonction du prélèvement réalisé ? (cocher les R.J)", options: ["4H à 6H", "24H", "10X le volume du prélèvement", "5X le volume du prélèvement", "48H"], correct: [0, 2], official: "A, C" },
+            { id: 6, cat: "anapath", q: "Une fois le prélèvement enregistré, citez les étapes techniques par ordre chronologique : (cocher la combinaison juste)", options: ["(1, 2, 3, 4, 5)", "(1, 2, 3)", "(1, 2, 5, 4, 3)", "(2, 5, 4, 3, 1)", "(4, 2, 5, 1, 3)"], correct: [2], official: "C" },
+            { id: 7, cat: "anapath", q: "L'apoptose (cocher la ou les R.J)", options: ["Est une mort cellulaire accidentelle", "Est une mort cellulaire génétiquement programmée", "Induit une réaction inflammatoire", "Est un phénomène passif", "Affecte les cellules séparément"], correct: [1, 4], official: "B, E" },
+            { id: 8, cat: "anapath", q: "Concernant la nécrose (cocher la ou les R.J)", options: ["Est une mort cellulaire pathologique", "Les modifications morphologiques observées en microscopie optique traduisent la dénaturation protéique et la digestion enzymatique des organites", "Est un phénomène actif", "Les lésions élémentaires touchent le noyau uniquement", "N'induit pas de réaction inflammatoire"], correct: [0, 1], official: "A, B" },
+            { id: 9, cat: "anapath", q: "Quelles sont les lésions nucleares de la nécrose ? (Cocher les R.J)", options: ["Caryolyse", "Caryorrhexis", "Corps apoptotiques", "Pycnose", "Anisocaryose"], correct: [0, 1, 3], official: "A, B, D" },
+            { id: 10, cat: "anapath", q: "L'hypertrophie cellulaire : (cocher la ou les R.J)", options: ["Est une augmentation réversible de la taille d'une cellule", "Est en rapport avec une augmentation de la taille et du nombre des constituants de la cellule", "Ne peut pas être associée à une hyperplasie", "Peut se voir en cas de stimulation hormonale", "Peut se voir en cas de dilatation des cavités cardiaques"], correct: [0], official: "A" },
+            { id: 11, cat: "anapath", q: "Concernant l'hyperplasie : (R.J)", options: ["Augmentation anormale du nombre des cellules", "Peut s'accompagner d'une désorganisation architecturale", "Est témoin d'une hyperactivité fonctionnelle", "S'observe dans les tissus capables de renouvellement", "Ne s'observe pas dans les tissus à renouvellement stable et lent"], correct: [0, 1, 2, 3], official: "A, B, C, D" },
+            { id: 12, cat: "anapath", q: "La métaplasie : (cocher les R.J)", options: ["Est une anomalie acquise", "Ne concerne que les épithéliums", "Survient en réponse à une agression chronique pour aboutir à un tissu mieux adapté", "Ne peut pas se voir dans des conditions physiologiques", "Résulte de la transformation d'un tissu normal en un autre tissu normal, de structure et de fonction différentes"], correct: [0, 2], official: "A, C" },
+            { id: 13, cat: "anapath", q: "La fibrose : (cocher la ou les R.J)", options: ["Peut être atrophique ou hypertrophique", "Elle est le plus souvent secondaire à une cause inflammatoire", "Est mise en évidence par le Trichrome de Masson", "Est dite 'ancienne' lorsqu'elle est riche en fibroblastes", "Régresse systématiquement"], correct: [0, 1, 2], official: "A, B, C" },
+            { id: 14, cat: "anapath", q: "Concernant l'amylose : (cocher la ou les R.J)", options: ["Son diagnostic est strictement histologique", "Est recherchée par des biopsies des glandes salivaires accessories ou rectales", "Est mise en évidence par le Rouge Congo", "Les dépôts de chaînes légères d'une Ig caractérisent la classe 'Amylose AA'", "Est 'secondaire' dans les myélomes"], correct: [0, 1, 2], official: "A, B, C" },
+            { id: 15, cat: "anapath", q: "La stéatose hépatique : (cocher la ou les R.J)", options: ["Est une accumulation des triglycérides dans les hépatocytes", "Est une maladie de surcharge", "Présente un foie mou de coloration pâle et jaunâtre", "Peut être macro ou micro vacuolaire", "Est mise en évidence par le Carmin de Best"], correct: [0, 1, 2, 3], official: "A, B, C, D" },
+            { id: 16, cat: "anapath", q: "L'évolution d'une plaque d'athérome peut se faire vers : (cocher la ou les R.J)", options: ["Une ulcération avec embolie athéromateuse", "Une thrombose pariétale", "Un anévrysme", "Une régression spontanée", "Une calcification"], correct: [0, 1, 2, 4], official: "A, B, C, E" },
+            { id: 17, cat: "anapath", q: "Les lésions initiales de l'athérosclérose débutent dans : (cocher la ou les R.J)", options: ["L'intima des veines de gros calibre", "La limitante élastique interne des artères de moyen et gros calibre", "L'intima des artères de moyen et gros calibre", "La média des artères de moyen et gros calibre", "Les artérioles"], correct: [1, 2], official: "B, C" },
+            { id: 18, cat: "anapath", q: "Parmi les propositions suivantes, laquelle (lesquelles) est (sont) une évolution de la thrombose ?", options: ["Organisation", "Thrombolyse", "Coagulation intravasculaire disséminée (CIVD)", "Ramollissement", "Migration"], correct: [0, 1, 4], official: "A, B, E" },
+            { id: 19, cat: "anapath", q: "L'embolie est : (cocher la ou les R.J)", options: ["La circulation d'un corps étranger dans le courant circulatoire et son arrêt dans un vaisseau trop petit pour lui livrer passage", "Souvent d'origine cruorique", "Toujours artérielle", "Une cause d'hémorragie tissulaire", "Le plus souvent fatale"], correct: [0, 1], official: "A, B" },
+            { id: 20, cat: "anapath", q: "La maladie de Horton : (cocher la ou les R.J)", options: ["Est une vascularite des petits vaisseaux et capillaires", "Touche le sujet jeune", "Est accompagnée d'un important syndrome inflammatoire", "Est diagnostiquée par la biopsie de l'artère temporale", "Se traduit microscopiquement par une inflammation granulomateuse de l'intima et de la média artérielle"], correct: [2, 3, 4], official: "C, D, E" },
+            { id: 21, cat: "anapath", q: "La phase vasculo-exsudative de l'inflammation est caractérisée par (cocher la combinaison juste)", options: ["(1, 2, 3, 5)", "(2, 5)", "(1, 2, 5)", "(1, 2, 4)", "(2, 4, 5)"], correct: [2], official: "C" },
+            { id: 22, cat: "anapath", q: "Parmi les propositions suivantes lesquelles correspondent à l'œdème inflammatoire ? (cocher la combinaison juste)", options: ["(1+2+3)", "(1+4+5)", "(2+3+4)", "(2+4+5)", "(1+3+4+5)"], correct: [3], official: "D" },
+            { id: 23, cat: "anapath", q: "Parmi ces médiateurs chimiques quels sont ceux qui jouent un rôle important dans le chimiotactisme : (Cocher la R.J)", options: ["Histamine et prostaglandine", "C5a et leucotriènes", "Kinines et C5a", "Sérotonine et histamine", "IL1 et IL6"], correct: [1], official: "B" },
+            { id: 24, cat: "anapath", q: "Quels sont les rôles du granulome inflammatoire : (cocher la ou les R.J)", options: ["Assurer la détersion par les phagocytes", "Développer une réaction immunitaire lymphocytaire B et/ou T", "Sécréter de multiples médiateurs intervenant dans l'inflammation", "Libérer des métabolites toxiques et des protéases dans l'espace extracellulaire, responsables des lésions tissulaires", "Diluer les toxines accumulées dans la lésion"], correct: [0, 1, 2, 3], official: "A, B, C, D" },
+            { id: 25, cat: "anapath", q: "Parmi les propositions suivantes relatives à la détersion, lesquelles sont exactes ?", options: ["La détersion c'est le nettoyage du foyer lésionnel", "La détersion est l'accolement des bords de la perte de substance", "La détersion succède progressivement à la phase vasculo-exsudative", "La détersion est contemporaine de la phase cellulaire", "La détersion externe se fait par phagocytose et pinocytose"], correct: [0, 2, 3, 4], official: "A, C, D, E" },
+            { id: 26, cat: "anapath", q: "Parmi ces lésions engendrées par une infection liée au SARS-CoV2 les plus décrites sont : (Cocher la ou les R.J)", options: ["Des lésions de dommage alvéolaire diffus", "Une pneumopathie organisée fibreuse chronique", "Des foyers étendus d'infarctus pulmonaire", "Présence de pneumocytes atypiques de grande taille", "Les lésions vasculaires à type de thrombi avec une inflammation pariétale"], correct: [0, 3, 4], official: "A, D, E" },
+            { id: 27, cat: "anapath", q: "Parmi les lésions suivantes lesquelles sont considérées comme effet cytopathogène direct des virus ?", options: ["Congestion vasculaire", "Production de cellules géantes plurinucléées", "Corps d'inclusion nucléaire et/ou cytoplasmiques", "Infiltrat mononucléé", "Fibrose"], correct: [1, 2], official: "B, C" },
+            { id: 28, cat: "anapath", q: "Quels sont les moyens de diagnostic d'une infection parasitaire utilisés en anatomie pathologique ?", options: ["Étude analytique avec coloration de routine", "Colorations histochimiques du PAS et Giemsa", "Étude immunohistochimique utilisant des anticorps spécifiques", "Examen sérologique", "Examen direct"], correct: [0, 1, 2, 4], official: "A, B, C, E" },
+            { id: 29, cat: "anapath", q: "Une tumeur bénigne : (Cocher la ou les R.J)", options: ["Est bien limitée", "Détruit le tissu d'origine", "Présente un aspect hétérogène", "Ne donne jamais de métastases", "Présente des remaniements nécrotiques"], correct: [0, 3], official: "A, D" },
+            { id: 30, cat: "anapath", q: "Les propriétés de la cellule cancéreuse sont : (Cocher la ou les R.J)", options: ["Déclenchement autonome du signal de multiplication", "Potentiel métastatique", "Capacité à induire une néo-angiogenèse", "Capacité d'envahissement locorégional", "Capacité de récupérer ses fonctions normales et homéostatiques après traitement spécifique"], correct: [0, 1, 2, 3], official: "A, B, C, D" },
+            { id: 31, cat: "anapath", q: "L'HPV favorise la survenue de : (Cocher la ou les R.J)", options: ["Lymphome de la zone marginale du MALT", "Adénocarcinome gastrique", "Lymphome de Hodgkin", "Carcinome épidermoïde du col utérin", "Carcinome épidermoïde cutané"], correct: [3, 4], official: "D, E" },
+            { id: 32, cat: "anapath", q: "Le léiomyome : (cocher la ou les R.J)", options: ["Siege le plus souvent dans l'utérus", "Se présente sous forme d'un nodule blanchâtre fasciculé et bien limité", "Correspond à une prolifération de cellules musculaires lisses", "Peut contenir des mitoses anormales", "Est plus fréquent que le léiomyosarcome"], correct: [0, 1, 2, 4], official: "A, B, C, E" },
+            { id: 33, cat: "anapath", q: "Il s'agit de : (cocher la R.J)", options: ["Un adénome tubuleux", "Un adénome villeux", "Un adénome tubulo-villeux", "Un pseudo-polype inflammatoire", "Une hyperplasie polypoïde de la muqueuse colique"], correct: [0], official: "A" },
+            { id: 34, cat: "anapath", q: "Ces lésions correspondent à : (cocher la R.J)", options: ["Une dysplasie de bas grade", "Une dysplasie légère", "Des lésions dystrophiques", "Une dysplasie de haut grade", "Des lésions réactionnelles secondaires à une inflammation chronique"], correct: [3], official: "D" },
+            { id: 35, cat: "anapath", q: "Toutes ces propositions concernant cette lésion sont justes sauf une, laquelle ?", options: ["C'est une tumeur bénigne de nature épithéliale glandulaire", "Elle est considérée comme lésion précancéreuse", "Elle s'accompagne d'un risque de dégénérescence dans 10 à 15% des cas", "Elle nécessite une surveillance par des contrôles endoscopiques réguliers", "Elle peut donner des métastases"], correct: [0], official: "A" },
+            { id: 36, cat: "anapath", q: "Dans l'histoire naturelle de cette lésion, celle-ci va évoluer vers :", options: ["Un carcinome in situ", "Une dysplasie de bas grade", "Une dysplasie de haut grade", "Une métaplasie", "Une dystrophie"], correct: [2], official: "C" },
+            { id: 37, cat: "anapath", q: "Parmi les critères suivants, lequel définit le carcinome in situ ?", options: ["Anisocaryose", "Désorganisation architecturale", "Absence de franchissement de la membrane basale", "Présence de mitoses anormales", "Anisocytose"], correct: [2], official: "C" },
+            { id: 38, cat: "anapath", q: "Cette prolifération tumorale correspond à : (Cocher la R.J)", options: ["Un adénocarcinome colique bien différencié", "Un adénocarcinome colique moyennement différencié", "Un adénocarcinome colique peu différencié", "Un adénocarcinome colique avec composante de cellules isolées", "Un adénocarcinome colique de type mucineux"], correct: [1], official: "B" },
+            { id: 39, cat: "anapath", q: "Parmi ces facteurs, quel est celui qui conditionne le pronostic :", options: ["L'architecture", "La mucosécrétion", "La taille de la tumeur", "Le stroma tumoral"], correct: [2], official: "C" },
+            { id: 40, cat: "anapath", q: "Ce carcinome est classé pT3N2M1. La classification TNM tient compte (cocher la ou les R.J)", options: ["De la taille de la tumeur", "De l'existence éventuelle de métastases ganglionnaires", "De l'existence de métastases à distance", "Du degré de différenciation", "Des données cliniques ou d'imagerie"], correct: [0, 1, 2, 4], official: "A, B, C, E" }
+        ];
+
+        const dataAnapath2024_2025 = [
+            { id: 1, cat: "anapath", q: "L'Anatomie et Cytologie Pathologiques : (RF)", options: ["Est une spécialité médicale qui étudie les lésions provoquées par les maladies", "Repose sur l'analyse des cellules et des tissus par diverses méthodes", "A un but purement diagnostique", "Les lésions sont analysées en intégrant les données cliniques et paracliniques", "Est en constante évolution"], correct: [4], official: "E" },
+            { id: 2, cat: "anapath", q: "Le prélèvement cytologique : (RF)", options: ["Consiste à analyser des cellules isolées hors de leur tissu d'origine", "Est une technique rapide", "Est une technique de dépistage des cancers", "Est une méthode de suivi post-thérapeutique", "Permet de poser un diagnostic de certitude"], correct: [3], official: "D" },
+            { id: 3, cat: "anapath", q: "L'examen extemporané : (RF)", options: ["Est demandé par un chirurgien lors d'un acte chirurgical", "A pour but d'orienter le geste thérapeutique chirurgical", "Le résultat doit être rapide", "Est réalisé sur un prélèvement fixé par l'alcool", "Nécessite toujours une confirmation du diagnostic après techniques de routine"], correct: [0], official: "A" },
+            { id: 4, cat: "anapath", q: "L'hypertrophie : (RJ)", options: ["Signifie une diminution de taille", "Concerne uniquement les tissus", "Représente le phénomène inverse de l'hyperplasie", "S'accompagne d'une diminution de la transcription par l'ARNm", "L'hypertrophie tissulaire peut être liée à une hyperplasie cellulaire"], correct: [3], official: "D" },
+            { id: 5, cat: "anapath", q: "La métaplasie : (RJ)", options: ["Est la transformation d'un tissu normal en un autre tissu normal", "Le nouveau tissu est d'architecture bouleversée", "Elle ne s'établit qu'entre deux tissus d'origine embryologique différente", "Elle ne se rencontre jamais dans les muqueuses", "Elle ne se transforme jamais en cancer"], correct: [1], official: "B" },
+            { id: 6, cat: "anapath", q: "La nécrose est une : (RF)", options: ["Mort cellulaire accidentelle ou pathologique", "Elle est synonymous de l'autolyse", "La cellule nécrosée est habituellement éosinophile, par diminution de l'ARN cytoplasmique", "Les modifications nucléaire sont constantes et prennent plusieurs formes", "La nécrose de coagulation s'observe au cours des brûlures"], correct: [2], official: "C" },
+            { id: 7, cat: "anapath", q: "Toutes ces propositions concernant l'apoptose sont justes sauf une, laquelle ?", options: ["C'est une mort cellulaire programmée", "Elle concerne des cellules isolées, et non pas des groupes de cellules", "Est le plus souvent un mécanisme pathologique", "C'est un processus actif nécessitant des signaux d'activation et une transduction de signal", "Le rejet de greffe est un exemple de ce processus"], correct: [2], official: "C" },
+            { id: 8, cat: "anapath", q: "La fibrose : (RJ)", options: ["Peut être à l'origine d'une hypertrophie des organes", "Peut être à l'origine d'une atrophie des organes", "Au niveau hépatique, elle peut évoluer vers une cirrhose", "Elle est dite 'ancienne' lorsqu'elle est riche en fibroblastes", "Elle régresse systématiquement"], correct: [0, 1, 2], official: "E (1+2+3)" },
+            { id: 9, cat: "anapath", q: "La stéatose macrovacuolaire : (RF)", options: ["Est l'accumulation anormale de triglycérides dans les hépatocytes", "C'est la forme la plus fréquente de stéatose", "Les principales causes sont : l'alcool, l'obésité et le diabète", "Peut être responsable de petites perturbations du bilan hépatique", "Sur le plan microscopique on retrouve de multiples petites vacuoles intracytoplasmiques avec un noyau central"], correct: [3], official: "D" },
+            { id: 10, cat: "anapath", q: "La maladie de Gaucher : (RF)", options: ["Est une accumulation de lipides simples", "L'enzyme déficiente est la glucocérébrosidase", "Dans la biopsie ostéomédullaire, on peut trouver des cellules de Gaucher", "Se manifeste par une hépato-splénomégalie", "Elle touche le système macrophagique"], correct: [3], official: "D" },
+            { id: 11, cat: "anapath", q: "Il s'agit : (RJ)", options: ["Option A", "Option B", "Option C", "Option D", "Option E"], correct: [2], official: "C" },
+            { id: 12, cat: "anapath", q: "L'examen microscopique après exérèse de la lésion montre : (RJ)", options: ["Option A", "Option B", "Option C", "Option D", "Option E"], correct: [3], official: "D" },
+            { id: 13, cat: "anapath", q: "Les koilocytes sont associés à : (RJ)", options: ["Option A", "Option B", "Option C", "Option D", "Option E"], correct: [1], official: "B" },
+            { id: 14, cat: "anapath", q: "Les cristaux de Charcot-Leyden orientent vers : (RJ)", options: ["Option A", "Option B", "Option C", "Option D", "Option E"], correct: [0], official: "A" },
+            { id: 15, cat: "anapath", q: "La coloration Gomori-Grocott est utilisée pour : (RJ)", options: ["Option A", "Option B", "Option C", "Option D", "Option E"], correct: [0], official: "A" },
+            { id: 16, cat: "anapath", q: "Quel type d'inflammation est associé au SARS-COV-2 ? (RJ)", options: ["Option A", "Option B", "Option C", "Option D", "Option E"], correct: [2], official: "C" },
+            { id: 17, cat: "anapath", q: "Quelles sont les lésions histologiques caractéristiques observées dans les poumons des patients atteints de COVID-19 ? (RJ)", options: ["Option A", "Option B", "Option C", "Option D", "Option E"], correct: [2], official: "C" },
+            { id: 18, cat: "anapath", q: "Des pneumocytes atypiques de grande taille avec cellules syncytiales multinucléées sont observées, elles sont caractéristiques de : (RJ)", options: ["Option A", "Option B", "Option C", "Option D", "Option E"], correct: [4], official: "E" },
+            { id: 19, cat: "anapath", q: "Une étude immunohistochimique est réalisée par l'anticorps anti SARS-COV-2. Où se situe la positivité en immunohistochimie pour cet anticorps ? (RJ)", options: ["Option A", "Option B", "Option C", "Option D", "Option E"], correct: [1], official: "B" },
+            { id: 20, cat: "anapath", q: "Que traduit cette positivité en immunohistochimie ? (RJ)", options: ["Option A", "Option B", "Option C", "Option D", "Option E"], correct: [3], official: "D" },
+            { id: 21, cat: "anapath", q: "Quel mécanisme est impliqué dans le rejet de greffe hyperaigu ? (RJ)", options: ["Option A", "Option B", "Option C", "Option D", "Option E"], correct: [2], official: "C" },
+            { id: 22, cat: "anapath", q: "Lors d'une baisse de la fonction d'un organe greffé, le pathologiste réalise un examen anatomopathologique des biopsies. Quel(s) élément(s) peut-il évaluer lors de cet examen ? (RJ)", options: ["Option A", "Option B", "Option C", "Option D", "Option E"], correct: [0, 1, 3], official: "B (1+2+4)" },
+            { id: 23, cat: "anapath", q: "Quelle lésion est typique dans les déficits immunitaires secondaires liés au VIH au stade précoce ? (RJ)", options: ["Option A", "Option B", "Option C", "Option D", "Option E"], correct: [4], official: "E" },
+            { id: 24, cat: "anapath", q: "Parmi les caractères suivants quel est celui qui n'est pas propre aux tumeurs malignes : (RJ)", options: ["Option A", "Option B", "Option C", "Option D", "Option E"], correct: [2], official: "C" },
+            { id: 25, cat: "anapath", q: "Dans la nomenclature, le préfixe 'adéno' définit : (RJ)", options: ["Option A", "Option B", "Option C", "Option D", "Option E"], correct: [3], official: "D" },
+            { id: 26, cat: "anapath", q: "Le stade des cancers se base sur : (RF)", options: ["Option A", "Option B", "Option C", "Option D", "Option E"], correct: [2], official: "C" },
+            { id: 27, cat: "anapath", q: "Le rhabdomyosarcome : (RJ)", options: ["Option A", "Option B", "Option C", "Option D", "Option E"], correct: [4], official: "E" },
+            { id: 28, cat: "anapath", q: "Le carcinome baso-cellulaire : (RF)", options: ["Option A", "Option B", "Option C", "Option D", "Option E"], correct: [4], official: "E" },
+            { id: 29, cat: "anapath", q: "Les fibromatoses sont : (RF)", options: ["Option A", "Option B", "Option C", "Option D", "Option E"], correct: [2], official: "C" },
+            { id: 30, cat: "anapath", q: "Le grade tumoral histologique des sarcomes se fait sur : (RJ)", options: ["Option A", "Option B", "Option C", "Option D", "Option E"], correct: [0, 2, 4], official: "A (2+5+3)" },
+            { id: 31, cat: "anapath", q: "Parmi ces propositions laquelle est fausse ?", options: ["Option A", "Option B", "Option C", "Option D", "Option E"], correct: [0], official: "A" },
+            { id: 32, cat: "anapath", q: "Parmi ces propositions laquelle est fausse ?", options: ["Option A", "Option B", "Option C", "Option D", "Option E"], correct: [4], official: "E" },
+            { id: 33, cat: "anapath", q: "Concernant les mécanismes épigénétiques : (RF)", options: ["Option A", "Option B", "Option C", "Option D", "Option E"], correct: [3], official: "D" },
+            { id: 34, cat: "anapath", q: "Les proto-oncogènes sont : (RF)", options: ["Option A", "Option B", "Option C", "Option D", "Option E"], correct: [4], official: "E" },
+            { id: 35, cat: "anapath", q: "Les étapes de la carcinogenèse : (RJ)", options: ["Option A", "Option B", "Option C", "Option D", "Option E"], correct: [1], official: "B" },
+            { id: 36, cat: "anapath", q: "La cellule cancéreuse se distingue de la cellule normale : (RF)", options: ["Option A", "Option B", "Option C", "Option D", "Option E"], correct: [0], official: "A" },
+            { id: 37, cat: "anapath", q: "Concernant l'angiogenèse : (RF)", options: ["Option A", "Option B", "Option C", "Option D", "Option E"], correct: [4], official: "E" },
+            { id: 38, cat: "anapath", q: "Les cellules inflammatoires associées aux tumeurs : (RJ)", options: ["Option A", "Option B", "Option C", "Option D", "Option E"], correct: [2], official: "C" },
+            { id: 39, cat: "anapath", q: "Concernant les métastases : (RF)", options: ["Option A", "Option B", "Option C", "Option D", "Option E"], correct: [2], official: "C" },
+            { id: 40, cat: "anapath", q: "Quel est le diagnostic le plus probable : (RJ)", options: ["Option A", "Option B", "Option C", "Option D", "Option E"], correct: [4], official: "E" },
+            { id: 41, cat: "anapath", q: "Cette prolifération est faite de : (RJ)", options: ["Option A", "Option B", "Option C", "Option D", "Option E"], correct: [2], official: "C" },
+            { id: 42, cat: "anapath", q: "Afin de confirmer le diagnostic, on peut s'aider d'un immunomarquage en utilisant l'anticorps suivant : (RJ)", options: ["Option A", "Option B", "Option C", "Option D", "Option E"], correct: [3], official: "D" },
+            { id: 43, cat: "anapath", q: "Quelle lésion vous évoquez ? (RJ)", options: ["Option A", "Option B", "Option C", "Option D", "Option E"], correct: [3], official: "D" },
+            { id: 44, cat: "anapath", q: "Ce même type de lésion peut s'observer aussi dans les organs suivants", options: ["Option A", "Option B", "Option C", "Option D", "Option E"], correct: [0, 4], official: "D (1+5)" },
+            { id: 45, cat: "anapath", q: "Il s'agit d'un stade évolutif précoce de cette lésion, l'étude microscopique va montrer : (RJ)", options: ["Option A", "Option B", "Option C", "Option D", "Option E"], correct: [0, 1, 3], official: "B (1+2+4)" },
+            { id: 46, cat: "anapath", q: "Ces lésions correspondent à : (RJ)", options: ["Option A", "Option B", "Option C", "Option D", "Option E"], correct: [3], official: "D" },
+            { id: 47, cat: "anapath", q: "Cochez la combinaison juste :", options: ["Option A", "Option B", "Option C", "Option D", "Option E"], correct: [4], official: "E" },
+            { id: 48, cat: "anapath", q: "Devant ce tableau clinique de masse ovarienne, le diagnostic suspecté en premier lieu est celui de : (RJ)", options: ["Option A", "Option B", "Option C", "Option D", "Option E"], correct: [3], official: "D" },
+            { id: 49, cat: "anapath", q: "Ces aspects morphologiques correspondent au diagnostic de : (RJ)", options: ["Option A", "Option B", "Option C", "Option D", "Option E"], correct: [3], official: "D" },
+            { id: 50, cat: "anapath", q: "Il s'agit d'une : (RJ)", options: ["Option A", "Option B", "Option C", "Option D", "Option E"], correct: [1], official: "B" },
+            { id: 51, cat: "anapath", q: "Cette prolifération prend naissance à partir de : (RJ)", options: ["Option A", "Option B", "Option C", "Option D", "Option E"], correct: [2], official: "C" },
+            { id: 52, cat: "anapath", q: "Question 52", options: ["Option A", "Option B", "Option C", "Option D", "Option E"], correct: [0], official: "A" },
+            { id: 53, cat: "anapath", q: "Question 53", options: ["Option A", "Option B", "Option C", "Option D", "Option E"], correct: [0], official: "A" },
+            { id: 54, cat: "anapath", q: "Question 54", options: ["Option A", "Option B", "Option C", "Option D", "Option E"], correct: [0], official: "A" },
+            { id: 55, cat: "anapath", q: "Question 55", options: ["Option A", "Option B", "Option C", "Option D", "Option E"], correct: [0], official: "A" },
+            { id: 56, cat: "anapath", q: "Question 56", options: ["Option A", "Option B", "Option C", "Option D", "Option E"], correct: [0], official: "A" },
+            { id: 57, cat: "anapath", q: "Question 57", options: ["Option A", "Option B", "Option C", "Option D", "Option E"], correct: [0], official: "A" },
+            { id: 58, cat: "anapath", q: "Question 58", options: ["Option A", "Option B", "Option C", "Option D", "Option E"], correct: [0], official: "A" },
+            { id: 59, cat: "anapath", q: "Question 59", options: ["Option A", "Option B", "Option C", "Option D", "Option E"], correct: [0], official: "A" },
+            { id: 60, cat: "anapath", q: "Question 60", options: ["Option A", "Option B", "Option C", "Option D", "Option E"], correct: [0], official: "A" }
+        ];
 
         // --- 2. APPLICATION LOGIC ---
 
@@ -810,8 +2074,14 @@
             else if (yearKey === '2022') { currentQuestions = data2022_Full; quizTitle.innerText = "Blida - Session 2022/2023"; }
             else if (yearKey === '2023') { currentQuestions = data2023_Full; quizTitle.innerText = "Blida - Janvier 2024"; }
             else if (yearKey === '2024') { currentQuestions = data2024_Full; quizTitle.innerText = "Blida - Janvier 2025"; }
+            else if (yearKey === 'belabbes') { currentQuestions = dataBelAbbes; quizTitle.innerText = "Bel Abbès - Pack 60 QCM"; }
             else if (yearKey === 'constantine21') { currentQuestions = dataConstantine21; quizTitle.innerText = "Constantine - 2021/2022"; }
             else if (yearKey === 'constantine22') { currentQuestions = dataConstantine22; quizTitle.innerText = "Constantine - 2022/2023"; }
+            else if (yearKey === 'anapath2021') { currentQuestions = dataAnapath2021_2022; quizTitle.innerText = "Anapath - Session 2021/2022"; }
+            else if (yearKey === 'anapath2022') { currentQuestions = dataAnapath2022_2023; quizTitle.innerText = "Anapath - Session 2022/2023"; }
+            else if (yearKey === 'anapath2024') { currentQuestions = dataAnapath2024_2025; quizTitle.innerText = "Blida - Anapath Session 2024/2025"; }
+            else if (yearKey === 'constantineAnapath2122') { currentQuestions = dataConstantineAnapath2122; quizTitle.innerText = "Constantine - Anapath 2021/2022"; }
+            else if (yearKey === 'constantineAnapath2223') { currentQuestions = dataConstantineAnapath2223; quizTitle.innerText = "Constantine - Anapath 2022/2023"; }
 
             renderQuiz('all');
             document.getElementById('main-scroll-area').scrollTop = 0;
