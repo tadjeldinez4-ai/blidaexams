@@ -91,24 +91,15 @@
             
             <!-- HEADER -->
             <header class="bg-white/80 dark:bg-gray-800/90 backdrop-blur-sm sticky top-0 z-10 p-6 flex justify-between items-center border-b border-gray-100 dark:border-gray-700 transition-colors duration-300">
-                <div class="flex flex-col">
-                    <h1 id="header-title" class="text-2xl font-bold text-gray-800 dark:text-white">Exams Repository</h1>
-                    <p id="header-subtitle" class="text-sm text-gray-400">Select a university and session to practice.</p>
-                </div>
                 <div class="flex items-center gap-4">
+                    <div class="flex flex-col">
+                        <h1 id="header-title" class="text-2xl font-bold text-gray-800 dark:text-white">Exams Repository</h1>
+                        <p id="header-subtitle" class="text-sm text-gray-400">Select a university and session to practice.</p>
+                    </div>
                     <!-- Dark Mode Toggle -->
-                    <button onclick="toggleDarkMode()" class="w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 transition">
+                    <button onclick="toggleDarkMode()" class="w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 transition ml-4">
                         <i id="dark-icon" class="fas fa-moon"></i>
                     </button>
-
-                    <div class="relative hidden sm:block">
-                        <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-                        <input type="text" placeholder="Search..." class="pl-10 pr-4 py-2 rounded-full bg-gray-100 dark:bg-gray-700 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 w-64 dark:text-gray-200 placeholder-gray-400">
-                    </div>
-                    <button class="w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center text-gray-600 dark:text-gray-300 relative hover:bg-gray-200 dark:hover:bg-gray-600 transition">
-                        <i class="fas fa-bell"></i>
-                    </button>
-                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Tahsan" alt="User" class="w-10 h-10 rounded-full border-2 border-white shadow-sm hidden">
                 </div>
             </header>
 
@@ -317,6 +308,10 @@
                                     </button>
 
                                     <div id="list-anapath-constantine" class="hidden border-t border-gray-100 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-900/50 p-4 space-y-3">
+                                        <button onclick="startExam('constantineAnapath2324')" class="w-full flex items-center justify-between p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-red-500 dark:hover:border-red-500 hover:shadow-md transition-all group">
+                                            <div class="flex items-center gap-3"><span class="bg-red-100 text-red-700 text-xs font-bold px-2 py-1 rounded">NEW</span><span class="font-semibold text-gray-700 dark:text-gray-200 group-hover:text-red-600 dark:group-hover:text-red-400">Session 2023/2024</span></div>
+                                            <i class="fas fa-play text-gray-300 dark:text-gray-600 group-hover:text-red-500"></i>
+                                        </button>
                                         <button onclick="startExam('constantineAnapath2122')" class="w-full flex items-center justify-between p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-red-500 dark:hover:border-red-500 hover:shadow-md transition-all group">
                                             <div class="flex items-center gap-3"><span class="bg-red-100 text-red-700 text-xs font-bold px-2 py-1 rounded">NEW</span><span class="font-semibold text-gray-700 dark:text-gray-200 group-hover:text-red-600 dark:group-hover:text-red-400">Session 2021/2022</span></div>
                                             <i class="fas fa-play text-gray-300 dark:text-gray-600 group-hover:text-red-500"></i>
@@ -372,10 +367,16 @@
                 <!-- >>> VIEW 3: ACTIVE QUIZ INTERFACE <<< -->
                 <div id="view-quiz" class="hidden fade-in min-h-full flex flex-col">
                     <!-- Quiz Toolbar -->
-                    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 p-4 mb-6 sticky top-0 z-20 flex justify-between items-center transition-colors">
-                        <button onclick="closeQuiz()" class="text-gray-500 dark:text-gray-400 hover:text-primary dark:hover:text-primary font-medium flex items-center gap-2">
-                            <i class="fas fa-arrow-left"></i> Back
-                        </button>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 p-4 mb-6 fixed top-0 left-0 right-0 z-50 flex justify-between items-center transition-colors" style="margin-top: 0;">
+                        <div class="flex items-center gap-3">
+                            <button onclick="closeQuiz()" class="text-gray-500 dark:text-gray-400 hover:text-primary dark:hover:text-primary font-medium flex items-center gap-2">
+                                <i class="fas fa-arrow-left"></i> Back
+                            </button>
+                            <!-- Dark Mode Toggle in Quiz -->
+                            <button onclick="toggleDarkMode()" class="w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 transition">
+                                <i id="dark-icon" class="fas fa-moon"></i>
+                            </button>
+                        </div>
                         
                         <div class="flex items-center gap-2">
                             <span class="hidden sm:inline text-sm font-bold text-gray-400 uppercase tracking-wider" id="quiz-title-display">Session</span>
@@ -393,7 +394,7 @@
                     </div>
 
                     <!-- Question Container -->
-                    <div id="quiz-questions-container" class="max-w-3xl mx-auto w-full pb-10 space-y-6">
+                    <div id="quiz-questions-container" class="max-w-3xl mx-auto w-full pb-10 space-y-6" style="padding-top: 80px;">
                         <!-- Questions injected via JS -->
                     </div>
                 </div>
@@ -1866,6 +1867,50 @@
             { id: 40, cat: "anapath", q: "Les lésions précancéreuses :", options: ["Sont des lésions précurseurs des maladies héréditaires", "Sont visées par le dépistage", "Précèdent toujours les néoplasies malignes", "Correspondent souvent aux dysplasies ou métaplasies", "Peuvent être traitées comme cancers"], correct: [1, 3], official: "b, d" },
         ];
 
+        // Constantine Anapath 2023-2024
+        const dataConstantineAnapath2324 = [
+            { id: 1, cat: "anapath", q: "La membrane basale:", options: ["Constitue toujours un repère pour la détection d'une infiltration tumorale massive.", "Représente une barrière dont l'intégrité, définie le carcinome in-situ.", "Est la zone profonde, bien organisée de la matrice extracellulaire.", "Composée essentiellement de collagène III.", "Fait partie de l'épithélium."], correct: [1], official: "B" },
+            { id: 2, cat: "anapath", q: "La maladie de Creutzfeld Jacob:", options: ["Est une encéphalopathie dégénérative provoquée par un virus.", "Est l'encéphalopathie bovine.", "Se manifeste par des signes neurologiques d'évolution rapide.", "Transmise par voie transfusionnelle.", "Evolue de façon chronique chez l'Homme."], correct: [2], official: "C" },
+            { id: 3, cat: "anapath", q: "Au cours de l'athérosclérose les modifications structurales vasculaires interessent:", options: ["L'intima et la media des artérioles et veinules.", "La media et l'adventice des artères de moyen et grand calibre.", "L'intima et la media des artères de moyen et grand calibre.", "L'intima et media des veines de moyen et grand calibre.", "L'intima, la media et l'adventice des artérioles."], correct: [2], official: "C" },
+            { id: 4, cat: "anapath", q: "La maladie se déclenche:", options: ["Lorsqu' il y a une cohabitation entre le germe et le porteur.", "Une fois le germe pénètre dans l'organisme.", "Lorsque le germe entrainc des dommage fonctionnels et anatomiques.", "Lorsque le germe est non pathogène.", "Toutes les réponses sont vraies."], correct: [2], official: "C" },
+            { id: 5, cat: "anapath", q: "La métaplasie tissulaire:", options: ["Souvent associée à une hypertrophie cellulaire.", "Existe sous deux types épithéliales et conjonctive.", "La métaplasie conjonctive est la plus fréquente.", "Est définie comme une déformation acquise de l'architecture normale.", "Est un processus dégénératif lié à des troubles métaboliques."], correct: [1], official: "B" },
+            { id: 6, cat: "anapath", q: "Le vieillissement et la sénescence:", options: ["Altération polymorphe aboutissant à une transformation précancéreuse de la cellule.", "Traduisant des lésions des organites intracellulaires essentiellement le noyau.", "C'est l'ensemble des phénomènes qui marque l'évolution d'un organisme vivant vers la mort.", "Processus lié à des agressions variés.", "Phénomène souvent réversible, plus rarement évolue vers la nécrose."], correct: [2], official: "C" },
+            { id: 7, cat: "anapath", q: "L'angiogenèse:", options: ["Conditionne le développement tumoral et le développement des métastases.", "Phénomène observé seulement dans la carcinogénèse.", "Processus qui stimule les fibroblastes pour stabiliser le nouveau réseau vasculaire.", "Est déclenchée par la sécrétion des facteurs spécifiques tel que le TNF alpha.", "Est une anomalie structurale chromosomique."], correct: [0], official: "A" },
+            { id: 8, cat: "anapath", q: "Les hémorragies:", options: ["Peuvent être artérielle veineuse ou capillaire.", "Dues à un mécanisme nerveux reflexc.", "Les conséquences sont en générale bénéficiques.", "Résulte d'une hyperhémie artériclle par vasodilatation active.", "Sont dues à un obstacle au drainage lymphatique"], correct: [0], official: "A" },
+            { id: 9, cat: "anapath", q: "Les médiateurs chimiques d'origine cellulaire:", options: ["Sont toujours stockés dans des granules intracellulaires.", "Sont tous produits par des lymphocytes.", "Se composent seulement de substances lysosomiales.", "Peuvent déclencher la libération d'autres médiateurs.", "Interviennent au cours de l'inflammation aigüc"], correct: [3], official: "D" },
+            { id: 10, cat: "anapath", q: "L'edème inflammatoire:", options: ["Résulte de l'augmentation de la pression hydrostatique.", "Est un transudat.", "Se compose d'eau et de lipides.", "Se traduit cliniquement par une rougeur", "Responsable du gonflement des tissues."], correct: [4, 0], official: "E, A" },
+            { id: 11, cat: "anapath", q: "Les cellules géantes à corps étranger sont dérivées des:", options: ["de cellules épithélioïdes", "Neutrophiles", "Lymphocytes", "Macrophages", "Mastocytes"], correct: [3], official: "D" },
+            { id: 12, cat: "anapath", q: "Le follicule tuberculeux comporte:", options: ["Une couronne périphérique leucocytaire", "Des cellules de Langhans", "Des cellules de Müller", "Des mastocytes", "Une fibrose d'encorbeillement"], correct: [1], official: "B" },
+            { id: 13, cat: "anapath", q: "Les adénocarcinomes des parenchymes glandulaires sont :", options: ["De consistance généralement ferme, voire dure.", "Sont des cystadénocarcinomes s'ils ne sont pas kystiques", "La muco-sécrétion n'est pas en faveur de la différenciation glandulaire", "Ils ne présentent qu'un seul un degré de différenciation", "Une muco-sécrétion très abondante, est en faveur d'une tumeur à cellules en bague à chaton"], correct: [0], official: "A" },
+            { id: 14, cat: "anapath", q: "L'extension lymphatique des métastases est la voie de dissémination des :", options: ["Sarcomes", "Lymphomes", "Carcinomes", "Mélanomes"], correct: [4], official: "E" },
+            { id: 15, cat: "anapath", q: "Le pronostic du mélanome dépend:", options: ["Du phototype claire.", "Des contours irréguliers.", "De son extension en profondeur.", "Des atypies nucléaire.", "De la présence de pigment mélanique"], correct: [2], official: "C" },
+            { id: 16, cat: "anapath", q: "Le séminome :", options: ["est appelé dysgerminome au niveau du testicule", "Secrète de la ß HCG", "est composé de cellules polymorphes", "a un stroma grêle lymphoïde, épithélioïde ou gigantocellulaire", "est positif à l'anticorps anti a foeto protéine à l'examen immunohistochimique"], correct: [3], official: "D" },
+            { id: 17, cat: "anapath", q: "La maladie de Horton :", options: ["Touche l'aorte et ses principales branches de division en particulier la crosse aortique.", "C'est une artérite gigantocellulaire.", "Survient classiquement chez l'enfant.", "Associée souvent à un syndrome cutancomuqueuх.", "C'est une vascularite granulomateuse éosinophilique."], correct: [1], official: "B" },
+            { id: 18, cat: "anapath", q: "Le rejet aigu d'une greffe rénale associe", options: ["Des lésions de portite.", "Des lésions de glomérulite", "Une tubulite", "Une nécrose tubulaire focale", "Des lésions d'endothélite."], correct: [1, 2, 3, 4], official: "BCDE" },
+            { id: 19, cat: "anapath", q: "Les tumeurs épithéliales glandulaires:", options: ["Sont des tumeur fréquentes", "Les bénignes sont dénommées adénomes.", "Elles reproduisent morphologiquement des structures mésenchymateuses", "Leurs aspects macro et microscopiques varient selon le type d'organe qu'elles touchent", "Elles sont développées à partir des épithéliums paramalpighiens"], correct: [0, 1, 3], official: "ABD" },
+            { id: 20, cat: "anapath", q: "L'athérosclérose est un processus évolutif irréversible se complique de:", options: ["Anévrysme", "Thrombose.", "Restitution ad integrum (réparation intégrale)", "Embolic", "Sténose de la lumière vasculaire."], correct: [0, 1, 3, 4], official: "ABCE" },
+            { id: 21, cat: "anapath", q: "Parmi ces critèresmacroscopiques et microscopiques quels sont ceux en faveur de la bénignité d'un nævus?", options: ["Les contours irréguliers.", "La présence de plusieurs couleurs.", "L'absence d'infiltrat inflammatoire.", "L'individualisation en thèques à la partie supérieur du derme.", "L'absence d'atypies et de mitoses."], correct: [2, 3, 4], official: "CDE" },
+            { id: 22, cat: "anapath", q: "La diminution du volume cellulaire:", options: ["Est un phénomène irréversible.", "Est appelé atrophie cellulaire.", "Est un phénomène ou tous les éléments cellulaires participe de manière identique.", "Résulte d'un ralentissement des échanges entre la cellule et son milieu extérieur.", "Est une réponse cellulaire à des agressons non spécifiques"], correct: [1, 3, 4], official: "BDE" },
+            { id: 23, cat: "anapath", q: "Les conséquences de l'ædème:", options: ["Varient selon le siège et l'intensité de l'ædème.", "Entraine une hypernutrition favorable aux réparations tissulaires", "Entraine des lésions endothéliales aboutissant à l'erythrodiapédèse.", "Entraine une réaction inflammatoire et surinfection à la longue", "Entraine une compression gênant le fonctionnement d'un organe."], correct: [0, 4], official: "ADE" },
+            { id: 24, cat: "anapath", q: "L'ischémie:", options: ["Est la cause essentielle de l'infarctus blanc", "Est la diminution de l'apport du sang veineux dans un territoire limité de l'organisme.", "Peut être la cause d'une nécrose gangreneuse.", "Peut-être complète ou incomplète selon l'apport sanguin.", "Peut être la cause d'un thrombus le plus souvent mural."], correct: [0, 2, 3, 4], official: "ACDE" },
+            { id: 25, cat: "anapath", q: "la fibrose peut être:", options: ["Jeune", "Ancienne", "Atrophique", "Riche en polynucléaire", "Nécrosante"], correct: [0, 1, 2], official: "ABC" },
+            { id: 26, cat: "anapath", q: "Les lymphocytes B", options: ["sont responsables de l'immunité humorale.", "Constituent les centres germinatifs des follicules lymphoïdes.", "Se transforment en plasmocytes", "Sont responsables de la production de lymphokine", "Donnent naissance aux lymphocytes à mémoire"], correct: [0, 1, 2], official: "ABC" },
+            { id: 27, cat: "anapath", q: "La réaction inflammatoire aiguë:", options: ["Est toujours associée à une infection", "Peut être déclenchée par la présence de complexes antigène-anticorps", "Fait intervenir le système du complément", "Aboutit constamment au développement d'une cicatrice fibreuse", "Fait intervenir la vascularisation"], correct: [1, 2, 4], official: "BCE" },
+            { id: 28, cat: "anapath", q: "La cytopathologie est :", options: ["Etude des cellules isolées, ou des petits amas cellulaires en dehors de leur contexte tissulaire", "Etude des cellules isolées, ou des petits amas cellulaires dans leur contexte tissulaire", "A deux indications, dépistage et diagnostic", "A trois indications, dépistage, diagnostic et pronostic", "La fixation se fait au formol"], correct: [0, 2], official: "AC" },
+            { id: 29, cat: "anapath", q: "Le médecin préleveur et prescripteur a une responsabilité dans l'acte anatomopathologique en s'assurant", options: ["De la bonne réalisation technique du prélėvement", "De son acheminement au laboratoire dans les plus brefs délais", "De sa fixation", "D'une demande d'examen avec renseignements", "D'une description histopathologique rigoureuse"], correct: [0, 1, 2, 3], official: "ABCD" },
+            { id: 30, cat: "anapath", q: "La nécrose casécouse est", options: ["Observée au cours de l'actinomycose.", "Macroscopiquement ressemble à du fromage blanc.", "Spécifique de la tuberculose.", "L'agent responsable est le mycobacterium tuberculosis (B.de Koch)", "Entre dans le cadre des inflammations granulomateuses spécifiques"], correct: [1, 2, 3, 4], official: "BCDE" },
+            { id: 31, cat: "anapath", q: "Le schwannome est une tumeur", options: ["Développée à partir des méninges.", "Du système nerveux périphérique", "Encapsulée", "Qui peut présenter des calcifications", "Qui présente des nodules de verocay dans sa forme conventionnelle"], correct: [1, 2, 3, 4], official: "BCDE" },
+            { id: 32, cat: "anapath", q: "La dysplasie se caractérise par les éléments suivants", options: ["Trouble du renouvellement tissulaire", "Anomalie de maturation", "Est une lésion réversible", "Anomalie de différenciation", "La présence de mitoses normales"], correct: [0, 1, 3], official: "ABD" },
+            { id: 33, cat: "anapath", q: "Quelles sont les caractéristiques macroscopiques des tumeurs malignes?", options: ["Présence de capsule", "Croissance rapide", "Refoulement sans destruction des tissues", "Enucléation difficile car adherentes", "Mal limitées"], correct: [1, 3, 4], official: "BDE" },
+            { id: 34, cat: "anapath", q: "La plaque athéromateuse se caractérise par les caractéristiques suivantes:", options: ["Une formation lenticulaire de plus d'un centimètre", "Une plaque chondroide irrégulière et arrondie", "Des élevures gélatiniformes", "Une plaque laiteuse saillante", "Des stries lipidiques de quelques millimètres"], correct: [1, 3], official: "BD" },
+            { id: 35, cat: "anapath", q: "Les proto-oncogènes:", options: ["sont des gènes inhibiteurs de la croissance cellulaire.", "L'activation de ces gènes entraine une perte de fonction bi allelique.", "Codent pour des protéines qui interviennent dans les grandes fonctions cellulaires.", "Sont des gènes de maintien de l'intégrité du génome.", "Classés en deux catégories gènes transformants et gènes immortalisants"], correct: [2, 4], official: "CE" },
+            { id: 36, cat: "anapath", q: "Le tératome mature:", options: ["Est une tumeur épithéliale", "Est une tumeur du blastème", "Est une tumeur maligne", "Est composé de tissues derivants des trois feuillets embryonnaires", "Peut être mono ou pluritissulaire"], correct: [3, 4], official: "DE" },
+            { id: 37, cat: "anapath", q: "L'hémangiome capillaire:", options: ["Est une tumeur mésenchymateuse maligne", "Est d'origine vasculaire", "Peut survenir au niveau des organes (foie, rate...)", "Est constitué de petites cavités gorgées de sang", "Est de nature épithéliale"], correct: [1, 3], official: "BD" },
+            { id: 38, cat: "anapath", q: "Le léiomyome est une tumeur qui:", options: ["Peut-être unique ou multiple", "Survient le plus souvent au niveau de l'ovaire", "Est mal limité à l'examen macroscopique", "Est riche en atypics cytonucléaires à l'examen microscopique", "Est une tumeur mésenchymateuse"], correct: [0, 4], official: "AE" },
+            { id: 39, cat: "anapath", q: "Un néoplasme malin est caractérisé par :", options: ["Une prolifération tumorale sans anomalies cyto-nucléaires", "Une prolifération tumorale qui ne métastase jamais.", "Un stroma tumoral remanié par la nécrose", "La présence d'anomalies cyto-nucléaires", "La présence de mitoses"], correct: [2, 3, 4], official: "CDE" },
+            { id: 40, cat: "anapath", q: "Les cellules tumorales de Hodgkin et de Reed Sternberg sont :", options: ["CD3+", "CD30-", "CD45 +", "CD15+V", "CD30+"], correct: [3, 4], official: "DE" }
+        ];
+
         // Constantine Anapath 2022-2023
         const dataConstantineAnapath2223 = [
             { id: 1, cat: "anapath", q: "L'Anatomie et Cytologie Pathologiques : (cocher la ou les R.J)", options: ["Est une spécialité médicale", "Étudie les lésions provoquées par les maladies ou associées à celles-ci", "Utilise des techniques principalement basées sur la morphologie macroscopique et microscopique", "Permet le diagnostic des maladies", "Ne permet pas le pronostic"], correct: [0, 1, 2, 3], official: "A, B, C, D" },
@@ -1977,6 +2022,7 @@
 
         let currentQuestions = [];
         let selections = {};
+        let isAnapathExam = false;
         let score = 0;
 
         // --- Dark Mode ---
@@ -2082,12 +2128,27 @@
             else if (yearKey === 'anapath2024') { currentQuestions = dataAnapath2024_2025; quizTitle.innerText = "Blida - Anapath Session 2024/2025"; }
             else if (yearKey === 'constantineAnapath2122') { currentQuestions = dataConstantineAnapath2122; quizTitle.innerText = "Constantine - Anapath 2021/2022"; }
             else if (yearKey === 'constantineAnapath2223') { currentQuestions = dataConstantineAnapath2223; quizTitle.innerText = "Constantine - Anapath 2022/2023"; }
+            else if (yearKey === 'constantineAnapath2324') { currentQuestions = dataConstantineAnapath2324; quizTitle.innerText = "Constantine - Anapath 2023/2024"; isAnapathExam = true; }
+
+            // Hide category filters for anapath exams
+            const categoryFilters = document.querySelector('.flex.gap-2');
+            if (categoryFilters && isAnapathExam) {
+                categoryFilters.style.display = 'none';
+            } else if (categoryFilters) {
+                categoryFilters.style.display = 'flex';
+            }
 
             renderQuiz('all');
             document.getElementById('main-scroll-area').scrollTop = 0;
         }
 
         function closeQuiz() {
+            isAnapathExam = false;
+            // Show category filters when closing quiz
+            const categoryFilters = document.querySelector('.flex.gap-2');
+            if (categoryFilters) {
+                categoryFilters.style.display = 'flex';
+            }
             switchView('exams');
         }
 
